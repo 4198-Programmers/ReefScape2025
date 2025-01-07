@@ -16,4 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static final int LEFT_JOYSTICK_ID = 0;
+  public static final int MIDDLE_JOYSTICK_ID = 0;
+  public static final int RIGHT_JOYSTICK_ID = 0;
+
+  public static final int JOYSTICK_BUTTON_1 = 1;
+  public static final int JOYSTICK_BUTTON_2 = 2;
+
+
+  public static final int BALL_GRABBER_MOTOR_ID = 0;
+  public static final double BALL_GRABBER_SPEED = 0.5;
+  
 }
