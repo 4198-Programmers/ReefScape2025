@@ -9,11 +9,11 @@ public class BallIntakeCommand extends Command {
     BallIntakeSubsystem ballIntakeSubsystem;
 
     // Constructor for BallIntakeCommand
-    public BallIntakeCommand(BallIntakeSubsystem ballGrabberSubsystem) {
-        this.ballIntakeSubsystem = ballGrabberSubsystem;
+    public BallIntakeCommand(BallIntakeSubsystem ballIntakeSubsystem) {
+        this.ballIntakeSubsystem = ballIntakeSubsystem;
 
         // Optimizes command
-        addRequirements(ballGrabberSubsystem);
+        addRequirements(ballIntakeSubsystem);
     }
 
     // Execute the command at a positive speed
@@ -30,6 +30,6 @@ public class BallIntakeCommand extends Command {
 
     // @Override
     // public boolean isFinished() {
-    //     return RobotContainer.RobotContainer()
+    //     return false;
     // }
 }

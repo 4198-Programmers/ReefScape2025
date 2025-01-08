@@ -10,6 +10,7 @@ import frc.robot.commands.BallOutputCommand;
 import frc.robot.subsystems.BallIntakeSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -29,12 +30,18 @@ public class RobotContainer {
   JoystickButton ballIntakeButton = new JoystickButton(leftJoystick, Constants.JOYSTICK_BUTTON_1);
   JoystickButton ballOutputButton = new JoystickButton(leftJoystick, Constants.JOYSTICK_BUTTON_2);
 
+  // Declare SendableChooser
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    // Initialize SendableChooser with the default command
+    autoChooser.setDefaultOption("Default Auto", null);
   }
   
   private void configureBindings() {
