@@ -5,21 +5,25 @@ import frc.robot.Constants;
 import frc.robot.subsystems.BallIntakeSubsystem;
 
 public class BallOutputCommand extends Command {
-    BallIntakeSubsystem ballGrabberSubsystem;
+    // Initialize BallIntakeSubsystem
+    BallIntakeSubsystem ballIntakeSubsystem;
 
     public BallOutputCommand(BallIntakeSubsystem ballGrabberSubsystem) {
-        this.ballGrabberSubsystem = ballGrabberSubsystem;
+        this.ballIntakeSubsystem = ballGrabberSubsystem;
 
+        // Optimizes command
         addRequirements(ballGrabberSubsystem);
     }
 
+    // Execute the command at a negative speed
     @Override
     public void execute() {
-        ballGrabberSubsystem.setGrabberMotorSpeed(-Constants.BALL_GRABBER_SPEED);
+        ballIntakeSubsystem.setGrabberMotorSpeed(-Constants.BALL_INTAKE_SPEED);
     }
 
+    // Set motor speed to 0 when command ends
     @Override
     public void end(boolean interrupted) {
-        ballGrabberSubsystem.stop();
+        ballIntakeSubsystem.stop();
     }
 }

@@ -38,6 +38,7 @@ public class RobotContainer {
   }
   
   private void configureBindings() {
+    // Configure the button bindings
     ballIntakeButton.whileTrue(new BallIntakeCommand(ballIntakeSubsystem));
     ballOutputButton.whileTrue(new BallOutputCommand(ballIntakeSubsystem));
   }
