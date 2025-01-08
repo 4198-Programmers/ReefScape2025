@@ -13,6 +13,7 @@ public class BallIntakeSubsystem extends SubsystemBase {
     public void setGrabberMotorSpeed(double speed) {
         ballIntakeMotor.set(speed);
     }
+
     // Stop motor
     public void stop() {
         ballIntakeMotor.set(0);
