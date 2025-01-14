@@ -16,4 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+public static final int DRIVE_BASE_LED_ID = 0;
+public static final int AddressableLEDBuffer = 0;
 }
