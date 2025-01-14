@@ -27,9 +27,4 @@ public class BallIntakeCommand extends Command {
     public void end(boolean interrupted) {
         ballIntakeSubsystem.stop();
     }
-
-    // @Override
-    // public boolean isFinished() {
-    //     return false;
-    // }
 }

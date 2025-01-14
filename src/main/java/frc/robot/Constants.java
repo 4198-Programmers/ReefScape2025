@@ -25,9 +25,26 @@ public final class Constants {
   // Joystick Buttons
   public static final int JOYSTICK_BUTTON_1 = 1;
   public static final int JOYSTICK_BUTTON_2 = 2;
+  public static final int JOYSTICK_BUTTON_3 = 3;
+  public static final int JOYSTICK_BUTTON_4 = 4;
 
   // Ball Intake Constants
   public static final double BALL_INTAKE_SPEED = 0.5;
   public static final int BALL_INTAKE_MOTOR_ID = 0;
+
+  // Compressor Constants
+  public static final int COMPRESSOR_MODULE = 0;
+
+  // Solenoid Constants
+
+  // For Single Solenoids
+  public static final int SOLENOID_MODULE = 0;
+  public static final int SOLENOID_CHANNEL = 0;
+
+  // For Double Solenoids
+  public static final int SOLENOID_FORWARD_CHANNEL = 1;
+  public static final int SOLENOID_REVERSE_CHANNEL = 2;
+
+
   
 }

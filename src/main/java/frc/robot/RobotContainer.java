@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.commands.Autos;
 import frc.robot.commands.BallIntakeCommand;
 import frc.robot.commands.BallOutputCommand;
+import frc.robot.subsystems.BallIntakePneumaticSubsystem;
+import frc.robot.commands.BallIntakePneumaticCommand;
 import frc.robot.subsystems.BallIntakeSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,11 +17,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
+
   // Subsystem for getAutoCommand
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Subsystems
   private final BallIntakeSubsystem ballIntakeSubsystem = new BallIntakeSubsystem();
+  private final BallIntakePneumaticSubsystem ballIntakePneumaticSubsystem = new BallIntakePneumaticSubsystem();
 
   // Joysticks
   Joystick rightJoystick = new Joystick(Constants.RIGHT_JOYSTICK_ID);
@@ -30,14 +34,15 @@ public class RobotContainer {
   JoystickButton ballIntakeButton = new JoystickButton(leftJoystick, Constants.JOYSTICK_BUTTON_1);
   JoystickButton ballOutputButton = new JoystickButton(leftJoystick, Constants.JOYSTICK_BUTTON_2);
 
+  JoystickButton pneumaticsAmpBarButton = new JoystickButton(leftJoystick, Constants.JOYSTICK_BUTTON_3);
+
   // Declare SendableChooser
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Confilllture the trigger bindings
+
+    // Configure the trigger bindings
     configureBindings();
 
     // Initialize SendableChooser with the default command
@@ -48,6 +53,8 @@ public class RobotContainer {
     // Configure the button bindings
     ballIntakeButton.whileTrue(new BallIntakeCommand(ballIntakeSubsystem));
     ballOutputButton.whileTrue(new BallOutputCommand(ballIntakeSubsystem));
+
+    pneumaticsAmpBarButton.toggleOnTrue(new BallIntakePneumaticCommand(ballIntakePneumaticSubsystem));
   }
 
   /**

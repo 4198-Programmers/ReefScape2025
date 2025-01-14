@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -7,25 +8,34 @@ import frc.robot.Constants;
 
 public class BallIntakePneumaticSubsystem extends SubsystemBase {
     
-    private Solenoid ballIntakeSolenoidLeft = new Solenoid(Constants.LEFT_SOLENOID_MODULE, PneumaticsModuleType.CTREPCM, Constants.LEFT_SOLENOID_CHANNEL);
-    private Solenoid ballIntakeSolenoidRight = new Solenoid(Constants.RIGHT_SOLENOID_MODULE, PneumaticsModuleType.CTREPCM, Constants.RIGHT_SOLENOID_CHANNEL);
+    // Make a new Solenoid object
+    private Solenoid ballIntakeSolenoid = new Solenoid(Constants.SOLENOID_MODULE, PneumaticsModuleType.CTREPCM, Constants.SOLENOID_CHANNEL);
+    private Compressor compressor = new Compressor(Constants.COMPRESSOR_MODULE, PneumaticsModuleType.CTREPCM);
 
     public BallIntakePneumaticSubsystem() {
-        ballIntakeSolenoidLeft.set(false);
-        ballIntakeSolenoidRight.set(false);
+        this.initialize();
     }
 
+    // Intialize Method
+    public void initialize() {
+        compressor.enableDigital();
+        ballIntakeSolenoid.set(false);
+    }
+    // Intake Up Method
     public void intakeUp() {
-        ballIntakeSolenoidLeft.toggle();
-        ballIntakeSolenoidRight.toggle();
+        ballIntakeSolenoid.toggle();
     }
 
+    // Intake Down Method
     public void intakeDown() {
-        ballIntakeSolenoidLeft.toggle();
-        ballIntakeSolenoidRight.toggle();
+        ballIntakeSolenoid.toggle();
     }
 
-    
+    // Intake Ended Method
+    public void ended() {
+        ballIntakeSolenoid.set(false);
+    }
+
 
 
 }
