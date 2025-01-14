@@ -19,8 +19,8 @@ public final class Constants {
 
   // Joystick IDs
   public static final int LEFT_JOYSTICK_ID = 0;
-  public static final int MIDDLE_JOYSTICK_ID = 0;
-  public static final int RIGHT_JOYSTICK_ID = 0;
+  public static final int MIDDLE_JOYSTICK_ID = 1;
+  public static final int RIGHT_JOYSTICK_ID = 2;
 
   // Joystick Buttons
   public static final int JOYSTICK_BUTTON_1 = 1;
@@ -39,11 +39,7 @@ public final class Constants {
 
   // For Single Solenoids
   public static final int SOLENOID_MODULE = 0;
-  public static final int SOLENOID_CHANNEL = 0;
-
-  // For Double Solenoids
-  public static final int SOLENOID_FORWARD_CHANNEL = 1;
-  public static final int SOLENOID_REVERSE_CHANNEL = 2;
+  public static final int SOLENOID_CHANNEL = 4;
 
 
   
