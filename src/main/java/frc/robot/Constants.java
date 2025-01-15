@@ -18,4 +18,6 @@ public final class Constants {
   }
 
   public static final int SOLENOID_CHANNEL = 0;
+public static final int CLIMB_MOTOR_ID = 0;
+public static final int JOYSTICK_ID = 0;
 }
