@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LedSubsystem extends SubsystemBase {
-    
+
     private static final String LedBuffer = null;
 
     private static final String m_ledBuffer = null;
@@ -33,6 +33,10 @@ public class LedSubsystem extends SubsystemBase {
         driveBaseLED.setData(driveBaseLEDBuffer);
         driveBaseLED.start();
         this.alliance = DriverStation.getAlliance();
+    }
+
+    public void test(){
+        System.out.println("test");
     }
 
     public Command getDefaultCommand() {
@@ -66,20 +70,6 @@ public class LedSubsystem extends SubsystemBase {
                 driveBaseLEDBuffer.setLED(i, Color.kBlack);
             }
         }
-    }
-
-    public Command setColorCommand(Color color) {
-        return runOnce(() -> {
-            System.out.println("Setting Color: " + color.toHexString());
-            setColorCommand(color);
-        });
-    }
-
-    private Command circleSillyTime(boolean StupidIdiot) {
-        return runOnce(
-                () -> {
-                    circleMode = StupidIdiot;
-                });
     }
 
     // setHSV() -> color saturation
