@@ -18,7 +18,7 @@ public class ColorCommand extends Command {
 
     @Override
     public void execute() {
-
+        
     }
 
     // @Override
