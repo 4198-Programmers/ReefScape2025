@@ -33,12 +33,12 @@ public final class Constants {
   public static final int BALL_INTAKE_MOTOR_ID = 0;
 
   // Compressor Constants
-  public static final int COMPRESSOR_MODULE = 0;
+  public static final int COMPRESSOR_MODULE = 21;
 
   // Solenoid Constants
 
   // For Single Solenoids
-  public static final int SOLENOID_MODULE = 0;
+  public static final int SOLENOID_MODULE = 21;
   public static final int SOLENOID_CHANNEL = 4;
 
 

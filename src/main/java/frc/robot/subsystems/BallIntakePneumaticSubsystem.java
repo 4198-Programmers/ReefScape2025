@@ -10,7 +10,7 @@ public class BallIntakePneumaticSubsystem extends SubsystemBase {
     
     // Make a new Solenoid object
     private Solenoid ballIntakeSolenoid = new Solenoid(Constants.SOLENOID_MODULE, PneumaticsModuleType.CTREPCM, Constants.SOLENOID_CHANNEL);
-    private Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+    private Compressor compressor = new Compressor(Constants.COMPRESSOR_MODULE, PneumaticsModuleType.CTREPCM);
 
     public BallIntakePneumaticSubsystem() {
         this.initialize();
