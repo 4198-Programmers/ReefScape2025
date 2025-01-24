@@ -16,4 +16,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class ManipulatorConstants {
+    public static final int INTAKE_MOTOR_ID = 0;
+    public static final int PRIMARY_JOINT_MOTOR_ID = 0; // The joint closest to elevator
+    public static final int SECONDARY_JOINT_MOTOR_ID = 0; // The center joint
+  }
 }
