@@ -22,11 +22,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final ClimbMotorSubsystem m_climbMotorSubsystem = new ClimbMotorSubsystem();
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  private final Joystick m_rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
+
+  private final JoystickButton m_rightJoystickButton6 = new JoystickButton(m_rightJoystick, 6);
+  private final JoystickButton m_rightJoystickButton7 = new JoystickButton(m_rightJoystick, 7);
 
   
 
@@ -52,6 +58,8 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    m_rightJoystickButton6.whileTrue(new ClimbMotorCommand(m_climbMotorSubsystem, 0.5));
+    m_rightJoystickButton7.whileTrue(new ClimbMotorCommand(m_climbMotorSubsystem, -0.5));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
