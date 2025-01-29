@@ -17,22 +17,25 @@ public class ManipulatorSubsystem extends SubsystemBase {
   private RelativeEncoder primaryJointEncoder = primaryJointMotor.getEncoder();
   private RelativeEncoder secondaryJointEncoder = secondaryJointMotor.getEncoder();
 
+  final double deadband = ManipulatorConstants.MANIPULATOR_MOTOR_DEADBAND;
+
   public ManipulatorSubsystem() {
     
-  }
+  } //Maybe invert one of the motors if they're set up flipped so they can be the same direction 
 
 
-  public void turnPrimaryJoint(float speed) {
+  public void turnPrimaryJoint(float speed) { // More Manual Turning
     primaryJointMotor.set(speed);
   }
 
-  public void turnSecondaryJoint(float speed) {
+  public void turnSecondaryJoint(float speed) { // More Manual Turning
     secondaryJointMotor.set(speed);
   }
 
   public void turnPrimaryJointExact(float targetPosition) { // Turns the primary joint to a specific position
     double currentPosition = primaryJointEncoder.getPosition(); // Gets the current position of the primary joint
-    while (currentPosition != targetPosition) {
+
+    while (currentPosition < targetPosition-deadband || currentPosition > targetPosition+deadband) { // runs while the current position is not within the deadband of the target position
       if (currentPosition < targetPosition) { // If the current position is less than the target position it moves it forward
         primaryJointMotor.set(0.5);
       } else if (currentPosition > targetPosition) { // If the current position is greater than the target position it moves it back
@@ -47,7 +50,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
   public void turnSecondaryJointExact(float targetPosition) { // Turns the primary joint to a specific position
     double currentPosition = secondaryJointEncoder.getPosition(); // Gets the current position of the primary joint
-    while (currentPosition != targetPosition) {
+
+    while (currentPosition < targetPosition-deadband || currentPosition > targetPosition+deadband) { // runs while the current position is not within the deadband of the target position
       if (currentPosition < targetPosition) { // If the current position is less than the target position it moves it forward
         secondaryJointMotor.set(0.5);
       } else if (currentPosition > targetPosition) { // If the current position is greater than the target position it moves it back
