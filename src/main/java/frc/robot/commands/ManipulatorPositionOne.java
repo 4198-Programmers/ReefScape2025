@@ -26,7 +26,7 @@ public class ManipulatorPositionOne extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.turnPrimaryJointExact(30);
+    m_subsystem.turnPrimaryJointExact(0.30);
     m_subsystem.turnSecondaryJointExact(0);
   }
 
