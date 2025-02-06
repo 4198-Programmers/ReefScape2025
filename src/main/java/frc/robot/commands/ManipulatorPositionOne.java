@@ -27,7 +27,7 @@ public class ManipulatorPositionOne extends Command {
   @Override
   public void execute() {
     m_subsystem.turnPrimaryJointExact(0.30);
-    m_subsystem.turnSecondaryJointExact(0);
+    m_subsystem.turnSecondaryJointExact(-0.2);
   }
 
   // Called once the command ends or is interrupted.

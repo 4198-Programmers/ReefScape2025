@@ -24,4 +24,6 @@ public final class Constants {
     public static final double MANIPULATOR_MOTOR_DEADBAND = 0.1;
     public static final int ROTATING_MOTOR_ID = 0;
   }
+public static final int RIGHT_JOYSTICK_ID = 0;
+public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
 }
