@@ -11,10 +11,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
     private SparkMax intakeMotor = new SparkMax(ManipulatorConstants.INTAKE_MOTOR_ID, MotorType.kBrushless); // Motor for the wheels to suck in algae and coral
     private SparkMax rotatingMotor = new SparkMax(ManipulatorConstants.ROTATING_MOTOR_ID, MotorType.kBrushless); // Rotates the end of the manipulator
     private SparkMax primaryJointMotor = new SparkMax(ManipulatorConstants.PRIMARY_JOINT_MOTOR_ID, MotorType.kBrushless); // Turns the primary joint closest to the elevator
-    private SparkMax secondaryJointMotor = new SparkMax(ManipulatorConstants.SECONDARY_JOINT_MOTOR_ID, MotorType.kBrushless); // Turns the central joint
 
     private RelativeEncoder primaryJointEncoder = primaryJointMotor.getEncoder();
-    private RelativeEncoder secondaryJointEncoder = secondaryJointMotor.getEncoder();
 
     final double deadband = ManipulatorConstants.MANIPULATOR_MOTOR_DEADBAND;
     private boolean isRotated = false;
@@ -26,10 +24,6 @@ public class ManipulatorSubsystem extends SubsystemBase {
 
     public void turnPrimaryJoint(double speed) { // More Manual Turning
         primaryJointMotor.set(speed);
-    }
-
-    public void turnSecondaryJoint(double speed) { // More Manual Turning
-        secondaryJointMotor.set(speed);
     }
 
     public void turnPrimaryJointExact(double targetPosition) { // Turns the primary joint to a specific position
@@ -45,22 +39,6 @@ public class ManipulatorSubsystem extends SubsystemBase {
                 break; // breaks out of the loop if it reached that point
             }
         }
-    }
-
-    public void turnSecondaryJointExact(double targetPosition) { // Turns the primary joint to a specific position
-        double currentPosition = secondaryJointEncoder.getPosition(); // Gets the current position of the primary joint
-
-        while (currentPosition < targetPosition-deadband || currentPosition > targetPosition+deadband) { // runs while the current position is not within the deadband of the target position
-            if (currentPosition < targetPosition-deadband) { // If the current position is less than the target position it moves it forward
-                secondaryJointMotor.set(0.5);
-            } else if (currentPosition > targetPosition+deadband) { // If the current position is greater than the target position it moves it back
-                secondaryJointMotor.set(-0.5);
-            } else { // If the current position is equal to the target position
-                secondaryJointMotor.set(0);
-                break; // breaks out of the loop if it reached that point
-            }
-        }
-    
     }
 
     public void runIntake(double speed) { //Both to intake and outtake

@@ -19,11 +19,9 @@ public final class Constants {
   public static class ManipulatorConstants {
     public static final int INTAKE_MOTOR_ID = 0;
     public static final int PRIMARY_JOINT_MOTOR_ID = 0; // The joint closest to elevator
-    public static final int SECONDARY_JOINT_MOTOR_ID = 0; // The center joint
-
     public static final double MANIPULATOR_MOTOR_DEADBAND = 0.1;
     public static final int ROTATING_MOTOR_ID = 0;
   }
-public static final int RIGHT_JOYSTICK_ID = 0;
-public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
+    public static final int RIGHT_JOYSTICK_ID = 0;
+    public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
 }
