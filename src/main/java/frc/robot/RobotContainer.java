@@ -36,7 +36,7 @@ public class RobotContainer {
     private final Joystick rightJoystick = new Joystick(Constants.RIGHT_JOYSTICK_ID);
 
     private JoystickButton manipulatorPositionOneButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_TWELVE);
-
+    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -61,6 +61,7 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     manipulatorPositionOneButton.whileTrue(new ManipulatorPositionOne(manipulatorSubsystem));
+
   }
 
   /**
