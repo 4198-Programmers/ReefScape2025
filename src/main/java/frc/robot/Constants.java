@@ -16,4 +16,11 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static final int CLIMB_MOTOR_ID = 13;
+  public static final int JOYSTICK_RIGHT_ID = 2;
+  public static final int JOYSTICK_MIDDLE_ID = 1;
+  public static final int JOYSTICK_LEFT_ID = 0;
+
+  public static final double CLIMB_SPEED = 0.5;
 }
