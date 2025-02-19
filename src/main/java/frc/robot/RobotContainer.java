@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
+import frc.robot.commands.ClimbMotorReverseCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,7 +26,9 @@ public class RobotContainer {
   private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
 
   // Buttons
-  private final JoystickButton climbButton = new JoystickButton(rightJoystick, 1);
+  private final JoystickButton climbButton = new JoystickButton(rightJoystick, 6);
+  private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, 4);
+
 
 
 
@@ -40,6 +43,7 @@ public class RobotContainer {
   // Configure Button Bindings
   private void configureBindings() {
     climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem));
+    climbButtonReverse.whileTrue(new ClimbMotorReverseCommand(climbMotorSubsystem));
   }
 
   public Command getAutonomousCommand() {
