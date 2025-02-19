@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ElevatorCommand extends Command {
@@ -12,13 +14,19 @@ public class ElevatorCommand extends Command {
         // Makes a new instance of ElevatorSubsystem each time command in run
         this.elevatorSubsystem = elevatorSubsystem;
         this.speed = speed;
+        final DigitalInput limitSwitchTop = new DigitalInput(Constants.LIMIT_SWITCH_ELEVATOR_TOP);
 
         addRequirements(elevatorSubsystem);
     }
+    
         @Override 
         public void execute() {
+            if (speed > 0 && ((DigitalInput) elevatorSubsystem.limitSwitchTop).get()) {
+                elevatorSubsystem.move(0);
+            } else {
             elevatorSubsystem.move(speed);
         }
     }
+}
     
 

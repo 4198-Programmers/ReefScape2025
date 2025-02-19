@@ -14,15 +14,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   // Create an Encoder object for the elevator motor
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
-}
-    
+
+public Object limitSwitchTop;
+
   // Sets the elevator motor to a given speed
   public void move(double speed) {
     elevatorMotor.set(speed);
   }
-
-  // Checks if the elevator is at the top
-  if (limitSwitchTop.get()) {
-    elevatorMotor.set(0);
-  }
-
+}

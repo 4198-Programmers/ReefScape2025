@@ -23,4 +23,5 @@ public static final int RIGHT_JOYSTICK_ID = 0;
 public static final int RIGHT_JOYSTICK_BUTTON_THREE = 0;
 public static final int RIGHT_JOYSTICK_BUTTON_FIVE = 0;
 public static final int ELEVATOR_MOTOR_ID = 0;
+public static final int LIMIT_SWITCH_ELEVATOR_TOP = 0;
 }
