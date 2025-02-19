@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.GenericHID;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+  public static final int RIGHT_JOYSTICK_ID = 2;
+  public static final int RIGHT_JOYSTICK_BUTTON_THREE = 3;
+  public static final int RIGHT_JOYSTICK_BUTTON_FIVE = 5;
 
-public static final int RIGHT_JOYSTICK_ID = 0;
-public static final int RIGHT_JOYSTICK_BUTTON_THREE = 0;
-public static final int RIGHT_JOYSTICK_BUTTON_FIVE = 0;
-public static final int ELEVATOR_MOTOR_ID = 0;
-public static final int LIMIT_SWITCH_ELEVATOR_TOP = 0;
+  public static class ElevatorConstants {
+    public static final int ELEVATOR_MOTOR_ID = 9;
+    public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
+    public static final double ELEVATOR_SPEED = 1.0;
+  }
 }

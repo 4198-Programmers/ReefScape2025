@@ -14,18 +14,23 @@ public class ElevatorCommand extends Command {
         // Makes a new instance of ElevatorSubsystem each time command in run
         this.elevatorSubsystem = elevatorSubsystem;
         this.speed = speed;
-        final DigitalInput limitSwitchTop = new DigitalInput(Constants.LIMIT_SWITCH_ELEVATOR_TOP);
-
         addRequirements(elevatorSubsystem);
     }
     
-        @Override 
-        public void execute() {
-            if (speed > 0 && ((DigitalInput) elevatorSubsystem.limitSwitchTop).get()) {
-                elevatorSubsystem.move(0);
-            } else {
+    @Override 
+    public void execute() {
+        // System.out.println(elevatorSubsystem.checkSwitch());
+        if (speed < 0 && elevatorSubsystem.checkSwitch()) {
+            elevatorSubsystem.move(0);
+        } else {
             elevatorSubsystem.move(speed);
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        elevatorSubsystem.move(0);
+        elevatorSubsystem.setSteadyEncoderPosition();
     }
 }
     

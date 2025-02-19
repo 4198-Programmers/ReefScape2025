@@ -4,9 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.ElevatorSteadyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -27,15 +27,12 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
   //Create a Joystick object
   private final Joystick rightJoystick = new Joystick(Constants.RIGHT_JOYSTICK_ID);
 
   //create a button object 3 and 5
-  private JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_THREE);
-  private JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_FIVE);
+  private JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_FIVE);
+  private JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_THREE);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,17 +50,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    
-    
-    elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem,0.5));
-    elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem,-0.5));
+    elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem,-Constants.ElevatorConstants.ELEVATOR_SPEED));
+    elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
+    elevatorUpButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
+    elevatorDownButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
   }
 
   /**
