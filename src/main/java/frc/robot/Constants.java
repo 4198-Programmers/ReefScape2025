@@ -29,6 +29,8 @@ public final class Constants {
     public static class ClimbConstants {
         public static final int CLIMB_MOTOR_ID = 13;
         public static final double CLIMB_SPEED = 0.5;
+        public static final int CLIMB_FORWARD_BUTTON = 6;
+        public static final int CLIMB_REVERSE_BUTTON = 4;
 
     }
     public static final int JOYSTICK_RIGHT_ID = 2;
