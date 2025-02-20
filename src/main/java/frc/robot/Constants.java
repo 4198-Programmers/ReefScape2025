@@ -15,20 +15,26 @@ import edu.wpi.first.wpilibj.GenericHID;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final int RIGHT_JOYSTICK_ID = 2;
-  public static final int RIGHT_JOYSTICK_BUTTON_THREE = 3;
-  public static final int RIGHT_JOYSTICK_BUTTON_FIVE = 5;
 
-  public static class ElevatorConstants {
-    public static final int ELEVATOR_MOTOR_ID = 9;
-    public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
-    public static final double ELEVATOR_SPEED = 1.0;
-  }
 
-  public static final int CLIMB_MOTOR_ID = 13;
-  public static final int JOYSTICK_RIGHT_ID = 2;
-  public static final int JOYSTICK_MIDDLE_ID = 1;
-  public static final int JOYSTICK_LEFT_ID = 0;
+    public static class ElevatorConstants {
+        public static final int ELEVATOR_MOTOR_ID = 9;
+        public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
+        public static final double ELEVATOR_SPEED = 1.0;
 
-  public static final double CLIMB_SPEED = 0.5;
+        public static final int ELEVATOR_UP_BUTTON = 5;
+        public static final int ELEVATOR_DOWN_BUTTON = 3;
+    }
+
+    public static class ClimbConstants {
+        public static final int CLIMB_MOTOR_ID = 13;
+        public static final double CLIMB_SPEED = 0.5;
+        public static final int CLIMB_FORWARD_BUTTON = 6;
+        public static final int CLIMB_REVERSE_BUTTON = 4;
+
+    }
+    public static final int JOYSTICK_RIGHT_ID = 2;
+    public static final int JOYSTICK_MIDDLE_ID = 1;
+    public static final int JOYSTICK_LEFT_ID = 0;
+
 }

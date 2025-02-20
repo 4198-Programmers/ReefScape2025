@@ -7,7 +7,7 @@ import frc.robot.Constants;
 
 public class ClimbMotorSubsystem extends SubsystemBase{
     
-    private SparkMax climbMotor = new SparkMax(Constants.CLIMB_MOTOR_ID, MotorType.kBrushless);
+    private SparkMax climbMotor = new SparkMax(Constants.ClimbConstants.CLIMB_MOTOR_ID, MotorType.kBrushless);
 
     public void setClimbSpeed(double speed) {
         climbMotor.set(speed);

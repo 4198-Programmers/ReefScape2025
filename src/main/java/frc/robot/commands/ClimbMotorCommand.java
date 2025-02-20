@@ -6,16 +6,18 @@ import frc.robot.subsystems.ClimbMotorSubsystem;
 
 public class ClimbMotorCommand extends Command {
     private ClimbMotorSubsystem climbMotorSubsystem;
+    private double speed;
 
-    public ClimbMotorCommand(ClimbMotorSubsystem climbMotorSubsystem){
+    public ClimbMotorCommand(ClimbMotorSubsystem climbMotorSubsystem, double speed){
         this.climbMotorSubsystem = climbMotorSubsystem;
+        this.speed = speed;
         
         addRequirements(climbMotorSubsystem);
     }
 
     @Override
     public void execute(){
-        climbMotorSubsystem.setClimbSpeed(Constants.CLIMB_SPEED);
+        climbMotorSubsystem.setClimbSpeed(speed);
     }
 
     @Override
