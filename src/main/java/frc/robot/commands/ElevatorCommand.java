@@ -20,6 +20,8 @@ public class ElevatorCommand extends Command {
     @Override 
     public void execute() {
         // System.out.println(elevatorSubsystem.checkSwitch());
+
+        // Checks switch and if elevator is moving up and switch is pressed, stop moving, 
         if (speed < 0 && elevatorSubsystem.checkSwitch()) {
             elevatorSubsystem.move(0);
         } else {
@@ -30,7 +32,7 @@ public class ElevatorCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         elevatorSubsystem.move(0);
-        elevatorSubsystem.setSteadyEncoderPosition();
+        elevatorSubsystem.setSteadyEncoderPosition(); // Logs the encoder value for the steady command
     }
 }
     

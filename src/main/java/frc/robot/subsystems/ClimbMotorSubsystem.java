@@ -9,6 +9,9 @@ public class ClimbMotorSubsystem extends SubsystemBase{
     
     private SparkMax climbMotor = new SparkMax(Constants.ClimbConstants.CLIMB_MOTOR_ID, MotorType.kBrushless);
 
+    /**
+     * Sets the climber motor to a given speed, positive is clockwise (the way we want to go to climb)
+     */
     public void setClimbSpeed(double speed) {
         climbMotor.set(speed);
     }

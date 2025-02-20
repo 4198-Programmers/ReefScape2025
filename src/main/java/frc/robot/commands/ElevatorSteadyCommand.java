@@ -17,7 +17,7 @@ public class ElevatorSteadyCommand extends Command {
     public void execute() {
         encoderValue = elevatorSubsystem.getSteadyEncoderPosition();
         if (encoderValue < elevatorSubsystem.checkEncoder()) {
-            elevatorSubsystem.move(-0.025);
+            elevatorSubsystem.move(-0.025); // Moves very slowly up so there isn't any jittering
         } else {
             elevatorSubsystem.move(0);
         }

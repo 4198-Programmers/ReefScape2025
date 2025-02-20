@@ -34,22 +34,34 @@ public class ElevatorSubsystem extends SubsystemBase {
   // Create an Encoder object for the elevator motor
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
-  // Sets the elevator motor to a given speed
+  /**
+   *  Sets the elevator motor to a given speed
+   *  Negative is up and positive is down 
+   */
   public void move(double speed) {
     elevatorMotor.set(speed);
   }
 
-  /// Checks limit switch
+  /**
+   * Checks the status of the limit switch
+   * @return True if the limit switch is pressed (elevator is at the top)
+  */
   public boolean checkSwitch() {
-    return !limitSwitchTop.get();
+    return limitSwitchTop.get();
   }
 
-  /// Checks Encoder Value
+  /**
+   * Checks the encoder value of the elevator motor
+   * @return Encoder value
+   */
   public double checkEncoder() {
     return elevatorEncoder.getPosition();
   }
 
-  /// Sets encoder value for steady command
+  /**
+   * Sets the steady encoder position to the current encoder value
+   * used in commands to keep the elevator steady to keep track of where to keep it
+   */
   public void setSteadyEncoderPosition() {
     steadyValue = elevatorEncoder.getPosition();
   }
@@ -57,7 +69,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   /**
    * Gets Encoder value for the steady command
    *
-   * @return Encoder Value
+   * @return Steady encoder Value
    */
   public double getSteadyEncoderPosition() {
     return steadyValue;
