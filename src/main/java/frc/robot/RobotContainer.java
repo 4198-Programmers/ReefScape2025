@@ -6,20 +6,17 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
-import frc.robot.commands.ClimbMotorReverseCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ElevatorSteadyCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -49,8 +46,8 @@ public class RobotContainer {
 
   // Configure Button Bindings
   private void configureBindings() {
-    climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem));
-    climbButtonReverse.whileTrue(new ClimbMotorReverseCommand(climbMotorSubsystem));
+    climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
+    climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
     
     elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem,-Constants.ElevatorConstants.ELEVATOR_SPEED));
     elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
