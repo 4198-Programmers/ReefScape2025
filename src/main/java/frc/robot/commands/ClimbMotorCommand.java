@@ -15,7 +15,7 @@ public class ClimbMotorCommand extends Command {
 
     @Override
     public void execute(){
-        climbMotorSubsystem.setClimbSpeed(Constants.CLIMB_SPEED);
+        climbMotorSubsystem.setClimbSpeed(Constants.ClimbConstants.CLIMB_SPEED);
     }
 
     @Override

@@ -37,9 +37,8 @@ public class RobotContainer {
   private final JoystickButton climbButton = new JoystickButton(rightJoystick, 6);
   private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, 4);
 
-  //create a button object 3 and 5
-  private JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_FIVE);
-  private JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_THREE);
+  private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+  private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
