@@ -18,5 +18,5 @@ public final class Constants {
   }
 
 public static final int DRIVE_BASE_LED_ID = 1;
-public static final int AddressableLEDBuffer = 0;
+public static final int AddressableLEDBuffer = 60;
 }
