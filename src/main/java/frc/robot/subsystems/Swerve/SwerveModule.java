@@ -70,7 +70,7 @@ public class SwerveModule {
         turningConfig = new SparkMaxConfig();
         turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(0.01, 0.0000, 0.0)
+            .pid(0.009, 0.0000007, 0.0000) //0.15 0.0 2.6, 0.02 0.00003 0
             .outputRange(-1, 1)
             .positionWrappingInputRange(-Math.PI, Math.PI)
             .positionWrappingEnabled(true);
@@ -126,6 +126,9 @@ public class SwerveModule {
 
         //angleMotor.set(0.1);
 
+
+        // System.out.println("Module Number: " + moduleNumber + "Current Angle: " + new Rotation2d(moduleAngleRadians));
+
         return new Rotation2d(moduleAngleRadians);
 
         
@@ -151,13 +154,13 @@ public class SwerveModule {
         //used to prevent the robot wheels from spinning further that 90 degrees
         Rotation2d moduleAngle = getAngle();
         // System.out.println("Angle: " + moduleAngle + " Module Number: " + moduleNumber);
-        desiredStates.optimize(moduleAngle);
+        // desiredStates.optimize(moduleAngle);
         
         anglePID.setReference(desiredStates.angle.getRadians(), ControlType.kPosition);
         // double angleOutput = angleController.calculate(getState().angle.getRadians(), desiredStates.angle.getRadians());
         // angleMotor.set(angleOutput);
         driveMotor.set(desiredStates.speedMetersPerSecond);
-        System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + turningRelativeEncoder.getPosition());
+        System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (turningRelativeEncoder.getPosition() * (180/Math.PI)));
 
     }
 
