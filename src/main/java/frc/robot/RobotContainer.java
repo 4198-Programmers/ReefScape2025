@@ -71,19 +71,14 @@ public class RobotContainer {
     elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
     elevatorUpButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
     elevatorDownButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
-  }
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     // manipulatorRotateButton.whileTrue(new ManipulatorPositionOne(manipulatorSubsystem));
     manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
     intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
     outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
+  }
+
+
   
 
   /**
