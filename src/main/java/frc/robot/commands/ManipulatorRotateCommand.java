@@ -15,12 +15,14 @@ public class ManipulatorRotateCommand extends Command {
 
   @Override
   public void initialize() {
+    // Toggles it to the other rotation value when the command is initialized
     manipulatorSubsystem.toggleRotate();
     // System.out.println("initialized");
   }
 
   @Override
   public void execute() {
+    // keeps running the rotation to get to the target position
     manipulatorSubsystem.toggleRotateIntake();
 
   }

@@ -10,6 +10,10 @@ public class IntakeSubsystem extends SubsystemBase {
     
     private SparkMax intakeMotor = new SparkMax(ManipulatorConstants.INTAKE_MOTOR_ID, MotorType.kBrushless); // Motor for the wheels to suck in algae and coral
 
+    /**
+     * Runs the intake motor at a given speed.
+     * @param speed The speed at which to run the intake motor. Positive values for outtake, negative values for intake.
+     */
     public void runIntake(double speed) { //Both to intake and outtake
         intakeMotor.set(speed);
     }

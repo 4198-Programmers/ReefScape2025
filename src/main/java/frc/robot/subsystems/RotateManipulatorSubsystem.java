@@ -13,10 +13,16 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
     final double deadband = ManipulatorConstants.MANIPULATOR_MOTOR_DEADBAND;
 
 
+    /**
+     * Toggles the rotation state of the intake.
+     */
     public void toggleRotate() {
         isRotated = !isRotated;
     }
 
+    /**
+     * Rotates the intake to the toggled target position.
+     */
     public void toggleRotateIntake() { // Toggles the end between 0 and 90 degrees
         double currentPosition = rotatingMotor.getEncoder().getPosition() * 360; // Gets the current position of the rotating motor
         double targetPosition = isRotated ? 0.0 : 90.0; // Target position is 90 degrees if not rotated, otherwise 0 degrees
@@ -31,6 +37,9 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Stops the rotation of the intake.
+     */
     public void stopRotate() {
         rotatingMotor.set(0);
     }

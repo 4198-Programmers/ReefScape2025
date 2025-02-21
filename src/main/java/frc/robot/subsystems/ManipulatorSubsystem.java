@@ -19,10 +19,18 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
 
+    /**
+     * Turns the primary joint of the manipulator.
+     * @param speed The speed at which to turn the joint. Positive values turn it up, negative values turn it down.
+     */
     public void turnPrimaryJoint(double speed) { // More Manual Turning
         primaryJointMotor.set(speed);
     }
 
+    /**
+     * Turns the primary joint of the manipulator to a specific position.
+     * @param targetPosition The target position to turn the joint to.
+     */
     public void turnPrimaryJointExact(double targetPosition) { // Turns the primary joint to a specific position
         double currentPosition = primaryJointEncoder.getPosition(); // Gets the current position of the primary joint
 
