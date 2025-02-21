@@ -2,12 +2,6 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
-
-import static edu.wpi.first.units.Units.Value;
-
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 

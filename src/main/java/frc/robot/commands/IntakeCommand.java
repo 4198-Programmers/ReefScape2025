@@ -1,10 +1,5 @@
 package frc.robot.commands;
-
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends Command {
