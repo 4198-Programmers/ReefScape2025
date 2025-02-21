@@ -22,8 +22,8 @@ public final class Constants {
         public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
         public static final double ELEVATOR_SPEED = 1.0;
 
-        public static final int ELEVATOR_UP_BUTTON = 5;
-        public static final int ELEVATOR_DOWN_BUTTON = 3;
+        public static final int ELEVATOR_UP_BUTTON = 6;
+        public static final int ELEVATOR_DOWN_BUTTON = 4;
     }
 
     public static class ClimbConstants {

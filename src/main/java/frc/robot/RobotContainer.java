@@ -27,67 +27,70 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    // The robot's subsystems and commands are defined here...
+    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
-  private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
+    private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
+    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
 
-  // Subsystems
-  private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
+    // Subsystems
+    private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
 
-  // Joysticks
-  private final Joystick leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_ID);
-  private final Joystick middleJoystick = new Joystick(Constants.JOYSTICK_MIDDLE_ID);
-  private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
+    // Joysticks
+    private final Joystick leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_ID);
+    private final Joystick middleJoystick = new Joystick(Constants.JOYSTICK_MIDDLE_ID);
+    private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
 
-  // Buttons
-  private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
-  private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
+    // Buttons
+    private final JoystickButton climbButton = new JoystickButton(rightJoystick,
+            Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
+    private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick,
+            Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-  private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-  private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    private final JoystickButton elevatorUpButton = new JoystickButton(middleJoystick,
+            Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    private final JoystickButton elevatorDownButton = new JoystickButton(middleJoystick,
+            Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
-
-
-    private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick, Constants.RIGHT_JOYSTICK_BUTTON_TWELVE);
+    private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick,Constants.RIGHT_JOYSTICK_BUTTON_TWELVE);
     private JoystickButton intakeButton = new JoystickButton(rightJoystick, Constants.INTAKE_BUTTON);
     private JoystickButton outtakeButton = new JoystickButton(rightJoystick, Constants.OUTTAKE_BUTTON);
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
-    // Configure the trigger bindings
-    configureBindings();
-  }
 
-  // Configure Button Bindings
-  private void configureBindings() {
-    climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
-    climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
-    
-    elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem,-Constants.ElevatorConstants.ELEVATOR_SPEED));
-    elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
-    elevatorUpButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
-    elevatorDownButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
+        // Configure the trigger bindings
+        configureBindings();
+    }
 
-    // manipulatorRotateButton.whileTrue(new ManipulatorPositionOne(manipulatorSubsystem));
-    manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
-    intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
-    outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
-  }
+    // Configure Button Bindings
+    private void configureBindings() {
+        climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
+        climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
 
+        elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
+        elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
+        elevatorUpButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
+        elevatorDownButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
 
-  
+        // manipulatorRotateButton.whileTrue(new
+        // ManipulatorPositionOne(manipulatorSubsystem));
+        manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
+        intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
+        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
+    }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        return Autos.exampleAuto(m_exampleSubsystem);
+    }
 }
