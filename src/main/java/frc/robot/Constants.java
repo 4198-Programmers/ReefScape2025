@@ -44,6 +44,8 @@ public final class Constants {
     public static final int ROTATING_MOTOR_ID = 6;
     public static final double MANIPULATOR_MOTOR_SPEED = 0.25;
     public static final double INTAKE_MOTOR_SPEED = 0.25;
+
+    public static final int MANIPULATOR_ROTATE_BUTTON = 12;
   }
     public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
     public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;

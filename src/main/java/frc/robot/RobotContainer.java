@@ -22,6 +22,7 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ElevatorSteadyCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ManipulatorConstants;
 
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
@@ -41,17 +42,13 @@ public class RobotContainer {
     private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
 
     // Buttons
-    private final JoystickButton climbButton = new JoystickButton(rightJoystick,
-            Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
-    private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick,
-            Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
+    private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
+    private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    private final JoystickButton elevatorUpButton = new JoystickButton(middleJoystick,
-            Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    private final JoystickButton elevatorDownButton = new JoystickButton(middleJoystick,
-            Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    private final JoystickButton elevatorUpButton = new JoystickButton(middleJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    private final JoystickButton elevatorDownButton = new JoystickButton(middleJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
-    private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick,Constants.RIGHT_JOYSTICK_BUTTON_TWELVE);
+    private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick, ManipulatorConstants.MANIPULATOR_ROTATE_BUTTON);
     private JoystickButton intakeButton = new JoystickButton(rightJoystick, Constants.INTAKE_BUTTON);
     private JoystickButton outtakeButton = new JoystickButton(rightJoystick, Constants.OUTTAKE_BUTTON);
 
@@ -78,8 +75,8 @@ public class RobotContainer {
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
-        intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
-        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, Constants.ManipulatorConstants.INTAKE_MOTOR_SPEED));
+        intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED));
+        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
     }
 
     /**
