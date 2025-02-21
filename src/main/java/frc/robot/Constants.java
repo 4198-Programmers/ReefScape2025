@@ -17,12 +17,16 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static class ManipulatorConstants {
-    public static final int INTAKE_MOTOR_ID = 0;
-    public static final int PRIMARY_JOINT_MOTOR_ID = 0; // The joint closest to elevator
-    public static final double MANIPULATOR_MOTOR_DEADBAND = 0.1;
-    public static final int ROTATING_MOTOR_ID = 0;
+    public static final int INTAKE_MOTOR_ID = 1;
+    public static final int PRIMARY_JOINT_MOTOR_ID = 7; // The joint closest to elevator
+    public static final double MANIPULATOR_MOTOR_DEADBAND = 70;
+    public static final int ROTATING_MOTOR_ID = 6;
+    public static final double MANIPULATOR_MOTOR_SPEED = 0.25;
+    public static final double INTAKE_MOTOR_SPEED = 0.25;
   }
-    public static final int RIGHT_JOYSTICK_ID = 0;
+    public static final int RIGHT_JOYSTICK_ID = 2;
     public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
     public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
+    public static final int INTAKE_BUTTON = 1;
+    public static final int OUTTAKE_BUTTON = 3;
 }

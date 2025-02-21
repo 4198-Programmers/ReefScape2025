@@ -1,18 +1,29 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.ManipulatorSubsystem;
+
+import static edu.wpi.first.units.Units.Value;
+
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ManipulatorCommand extends Command {
-  private final ManipulatorSubsystem m_subsystem;
+  private final ManipulatorSubsystem manipulatorSubsystem;
+  private Double yValue;
+  private Joystick joystick;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ManipulatorCommand(ManipulatorSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public ManipulatorCommand(ManipulatorSubsystem subsystem, Joystick joystick) {
+    manipulatorSubsystem = subsystem;
+    this.joystick = joystick;
     
     addRequirements(subsystem);
   }
@@ -26,13 +37,20 @@ public class ManipulatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    System.out.println("Ran Manipulator Command");
+    yValue = joystick.getY();
+    System.out.println(yValue);
+    if(yValue > 0.3 || yValue < -0.1) {
+      manipulatorSubsystem.turnPrimaryJoint(yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
+    } else {
+      manipulatorSubsystem.turnPrimaryJoint(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.turnPrimaryJoint(0);
+    manipulatorSubsystem.turnPrimaryJoint(0);
   }
 
   // Returns true when the command should end.
