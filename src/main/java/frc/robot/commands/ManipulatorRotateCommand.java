@@ -14,12 +14,19 @@ public class ManipulatorRotateCommand extends Command {
   }
 
   @Override
+  public void initialize() {
+    manipulatorSubsystem.toggleRotate();
+    // System.out.println("initialized");
+  }
+
+  @Override
   public void execute() {
     manipulatorSubsystem.toggleRotateIntake();
+
   }
 
   @Override
   public void end(boolean interrupted) {
-    
+    manipulatorSubsystem.stopRotate();
   }
 }

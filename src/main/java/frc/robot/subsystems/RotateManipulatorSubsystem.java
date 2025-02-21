@@ -12,18 +12,26 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
     public boolean isRotated = false;
     final double deadband = ManipulatorConstants.MANIPULATOR_MOTOR_DEADBAND;
 
+
+    public void toggleRotate() {
+        isRotated = !isRotated;
+    }
+
     public void toggleRotateIntake() { // Toggles the end between 0 and 90 degrees
         double currentPosition = rotatingMotor.getEncoder().getPosition() * 360; // Gets the current position of the rotating motor
         double targetPosition = isRotated ? 0.0 : 90.0; // Target position is 90 degrees if not rotated, otherwise 0 degrees
 
         System.out.println("Encoder: " + currentPosition + ". Target position:" + targetPosition);
         if (currentPosition < targetPosition - deadband) { // If the current position is less than the target position it moves it forward
-                rotatingMotor.set(0.05);
+                rotatingMotor.set(0.04);
         } else if (currentPosition > targetPosition + deadband) { // If the current position is greater than the target position it moves it back
-                rotatingMotor.set(-0.05);
+                rotatingMotor.set(-0.04);
         } else { // If the current position is equal to the target position
                 rotatingMotor.set(0);
-                isRotated = !isRotated; // Toggle the state
         }
+    }
+
+    public void stopRotate() {
+        rotatingMotor.set(0);
     }
 }

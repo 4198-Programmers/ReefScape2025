@@ -19,7 +19,7 @@ public final class Constants {
   public static class ManipulatorConstants {
     public static final int INTAKE_MOTOR_ID = 1;
     public static final int PRIMARY_JOINT_MOTOR_ID = 7; // The joint closest to elevator
-    public static final double MANIPULATOR_MOTOR_DEADBAND = 70;
+    public static final double MANIPULATOR_MOTOR_DEADBAND = 20;
     public static final int ROTATING_MOTOR_ID = 6;
     public static final double MANIPULATOR_MOTOR_SPEED = 0.25;
     public static final double INTAKE_MOTOR_SPEED = 0.25;

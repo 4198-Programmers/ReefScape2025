@@ -37,9 +37,9 @@ public class ManipulatorCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Ran Manipulator Command");
+    // System.out.println("Ran Manipulator Command");
     yValue = joystick.getY();
-    System.out.println(yValue);
+    // System.out.println(yValue);
     if(yValue > 0.3 || yValue < -0.1) {
       manipulatorSubsystem.turnPrimaryJoint(yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
     } else {

@@ -36,6 +36,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
                 break; // breaks out of the loop if it reached that point
             }
         }
+        primaryJointMotor.set(0);
     }
 
     @Override
