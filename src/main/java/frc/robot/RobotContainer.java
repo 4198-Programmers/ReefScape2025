@@ -8,7 +8,14 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ElevatorCommand;
@@ -18,6 +25,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
+  // UsbCamera usbCamera = new UsbCamera("USB Camera 0", 0);
+  // MjpegServer mjpegServer1 = new MjpegServer("serve_USB Camera 0", 1181);
+  // // Creates the CvSink and connects it to the UsbCamera
+  // CvSink cvSink = new CvSink("opencv_USB Camera 0");
+  // // Creates the CvSource and MjpegServer [2] and connects them
+  // CvSource outputStream = new CvSource("Blur", PixelFormat.kMJPEG, 640, 480, 30);
+  // MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182);
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
@@ -36,10 +51,16 @@ public class RobotContainer {
 
   private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
   private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
-
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // mjpegServer1.setSource(usbCamera);
+    // cvSink.setSource(usbCamera);
+    // mjpegServer2.setSource(outputStream);
+
+    CameraServer.startAutomaticCapture();
+
     // Configure the trigger bindings
     configureBindings();
   }
