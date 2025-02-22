@@ -47,7 +47,8 @@ public class ElevatorSubsystem extends SubsystemBase {
    * @return True if the limit switch is pressed (elevator is at the top)
   */
   public boolean checkSwitch() {
-    return limitSwitchTop.get();
+    System.out.println("Used limit switch! " + limitSwitchTop.get());
+    return !limitSwitchTop.get();
   }
 
   /**

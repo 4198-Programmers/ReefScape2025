@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -20,10 +18,10 @@ public final class Constants {
     public static class ElevatorConstants {
         public static final int ELEVATOR_MOTOR_ID = 9;
         public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
-        public static final double ELEVATOR_SPEED = 1.0;
+        public static final double ELEVATOR_SPEED = .25;
 
-        public static final int ELEVATOR_UP_BUTTON = 5;
-        public static final int ELEVATOR_DOWN_BUTTON = 3;
+        public static final int ELEVATOR_UP_BUTTON = 6;
+        public static final int ELEVATOR_DOWN_BUTTON = 4;
     }
 
     public static class ClimbConstants {
@@ -37,4 +35,19 @@ public final class Constants {
     public static final int JOYSTICK_MIDDLE_ID = 1;
     public static final int JOYSTICK_LEFT_ID = 0;
 
+  public static class ManipulatorConstants {
+    public static final int INTAKE_MOTOR_ID = 12;
+    public static final int PRIMARY_JOINT_MOTOR_ID = 10; // The joint closest to elevator
+    public static final double MANIPULATOR_MOTOR_DEADBAND = 0.15;
+    public static final int ROTATING_MOTOR_ID = 11;
+    public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
+    public static final double INTAKE_MOTOR_SPEED = 1.0;
+    public static final int INTAKE_SENSOR_ID = 0;
+
+    public static final int MANIPULATOR_ROTATE_BUTTON = 12;
+  }
+    public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
+    public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
+    public static final int INTAKE_BUTTON = 1;
+    public static final int OUTTAKE_BUTTON = 3;
 }
