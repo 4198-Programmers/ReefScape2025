@@ -22,10 +22,39 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
 
+
+    public static class ElevatorConstants {
+        public static final int ELEVATOR_MOTOR_ID = 9;
+        public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
+        public static final double ELEVATOR_SPEED = .25;
+
+        public static final int ELEVATOR_UP_BUTTON = 6;
+        public static final int ELEVATOR_DOWN_BUTTON = 4;
+    }
+
+    public static class ClimbConstants {
+        public static final int CLIMB_MOTOR_ID = 13;
+        public static final double CLIMB_SPEED = 0.5;
+        public static final int CLIMB_FORWARD_BUTTON = 6;
+        public static final int CLIMB_REVERSE_BUTTON = 4;
+
+    }
+    public static final int JOYSTICK_RIGHT_ID = 2;
+    public static final int JOYSTICK_MIDDLE_ID = 1;
+    public static final int JOYSTICK_LEFT_ID = 0;
+
+  public static class ManipulatorConstants {
+    public static final int INTAKE_MOTOR_ID = 12;
+    public static final int PRIMARY_JOINT_MOTOR_ID = 10; // The joint closest to elevator
+    public static final double MANIPULATOR_MOTOR_DEADBAND = 0.15;
+    public static final int ROTATING_MOTOR_ID = 11;
+    public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
+    public static final double INTAKE_MOTOR_SPEED = 1.0;
+    public static final int INTAKE_SENSOR_ID = 0;
+
+    public static final int MANIPULATOR_ROTATE_BUTTON = 12;
+  }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
   public static final SensorDirectionValue ABSOLUTE_ENCODER_SENSOR_DIRECTION = SensorDirectionValue.Clockwise_Positive;
@@ -109,6 +138,8 @@ public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 public static final double DRIVE_POSITION_CONVERSION_FACTOR  = (WHEEL_DIAMETER * Math.PI) / DRIVE_GEAR_RATIO;
 public static final double DRIVE_VELOCITY_CONVERSION_FACOTR = DRIVE_POSITION_CONVERSION_FACTOR / 60;
 
-
-
+    public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
+    public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
+    public static final int INTAKE_BUTTON = 1;
+    public static final int OUTTAKE_BUTTON = 3;
 }
