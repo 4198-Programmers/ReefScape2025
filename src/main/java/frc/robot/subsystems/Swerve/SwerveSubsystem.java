@@ -3,6 +3,7 @@ package frc.robot.subsystems.Swerve;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -95,7 +96,11 @@ public class SwerveSubsystem extends SubsystemBase{
     public void setSwerveModuleStates(SwerveModuleState[] desiredStates){
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_DRIVE_SPEED_MPS);
         for(SwerveModule module : modules){
+            if(module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + 1 || module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - 1 ) {
+                module.setDesiredState(new SwerveModuleState(module.getState().speedMetersPerSecond, module.getAngle()));
+            } else {
             module.setDesiredState(desiredStates[module.getNumber()]);
+            }
         }
     }
 
