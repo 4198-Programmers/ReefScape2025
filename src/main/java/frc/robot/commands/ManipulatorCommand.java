@@ -35,7 +35,7 @@ public class ManipulatorCommand extends Command {
     yValue = joystick.getY();
     // System.out.println(yValue);
     if(yValue > 0.3 || yValue < -0.1) {
-      manipulatorSubsystem.turnPrimaryJoint(yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
+      manipulatorSubsystem.turnPrimaryJoint(-yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
     } else {
       manipulatorSubsystem.turnPrimaryJoint(0);
     }
