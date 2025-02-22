@@ -33,28 +33,32 @@ public class SwerveSubsystem extends SubsystemBase{
             Constants.FRONT_LEFT_CANCODER_ID, 
             Constants.FRONT_LEFT_ANGLE_OFFSET,
             Constants.FRONT_LEFT_MODULE_NUMBER,
-            Constants.FRONT_LEFT_DRIVE_INVERT);
+            Constants.FRONT_LEFT_DRIVE_INVERT,
+            Constants.FRONT_LEFT_ANGLE_INVERT);
         frontRightSwerveModule = new SwerveModule(
             Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, 
             Constants.FRONT_RIGHT_ANGLE_MOTOR_ID, 
             Constants.FRONT_RIGHT_CANCODER_ID, 
             Constants.FRONT_RIGHT_ANGLE_OFFSET,
             Constants.FRONT_RIGHT_MODULE_NUMBER,
-            Constants.FRONT_RIGHT_DRIVE_INVERT);
+            Constants.FRONT_RIGHT_DRIVE_INVERT,
+            Constants.FRONT_RIGHT_ANGLE_INVERT);
         backLeftSwerveModule = new SwerveModule(
             Constants.BACK_LEFT_DRIVE_MOTOR_ID, 
             Constants.BACK_LEFT_ANGLE_MOTOR_ID, 
             Constants.BACK_LEFT_CANCODER_ID, 
             Constants.BACK_LEFT_ANGLE_OFFSET,
             Constants.BACK_LEFT_MODULE_NUMBER,
-            Constants.BACK_LEFT_DRIVE_INVERT);
+            Constants.BACK_LEFT_DRIVE_INVERT,
+            Constants.BACK_LEFT_ANGLE_INVERT);
         backRightSwerveModule = new SwerveModule(
             Constants.BACK_RIGHT_DRIVE_MOTOR_ID, 
             Constants.BACK_RIGHT_ANGLE_MOTOR_ID, 
             Constants.BACK_RIGHT_CANCODER_ID, 
             Constants.BACK_RIGHT_ANGLE_OFFSET,
             Constants.BACK_RIGHT_MODULE_NUMBER,
-            Constants.BACK_RIGHT_DRIVE_INVERT);
+            Constants.BACK_RIGHT_DRIVE_INVERT,
+            Constants.BACK_RIGHT_ANGLE_INVERT);
 
         odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d(), getSwerveModulePositions());
         modules = new SwerveModule[]{frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule};
@@ -78,7 +82,7 @@ public class SwerveSubsystem extends SubsystemBase{
         System.out.println("Front Left Module Angle: " + frontLeftSwerveModule.getAngleOffset() +
          " Front Right Module Angle: " + frontRightSwerveModule.getAngleOffset()         + 
          " Back Left Module Angle: " + backLeftSwerveModule.getAngleOffset() + 
-         " Back Right Module Angle: " + backRightSwerveModule.getAngleOffset());
+         " Back Right Module Angle: " + backRightSwerveModule.getAngle().getDegrees());
     }
 
 
@@ -92,15 +96,32 @@ public class SwerveSubsystem extends SubsystemBase{
             backRightSwerveModule.getPosition()
         };
     }
-
+    public double deadband = 1;
     public void setSwerveModuleStates(SwerveModuleState[] desiredStates){
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_DRIVE_SPEED_MPS);
         for(SwerveModule module : modules){
-            if(module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + 1 || module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - 1 ) {
-                module.setDesiredState(new SwerveModuleState(module.getState().speedMetersPerSecond, module.getAngle()));
+            /* if 180 - abs desired + 180 - abs current < deadband
+             * 
+             */
+
+
+
+            if (Math.abs(desiredStates[module.getNumber()].angle.getDegrees() - module.getAngle().getDegrees()) < deadband || (180 - Math.abs(desiredStates[module.getNumber()].angle.getDegrees())) + (180 - Math.abs(module.getAngle().getDegrees())) < deadband) {
+                module.setWithinDeadzone(true);
             } else {
-            module.setDesiredState(desiredStates[module.getNumber()]);
+                module.setWithinDeadzone(false);
             }
+            module.setDesiredState(desiredStates[module.getNumber()]);
+
+            // if(module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + deadband || module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + deadband + 180  && module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - deadband || module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - deadband -180 ) {
+            //     System.out.println("Outside of deadzone!!!");
+                // System.out.println(desiredStates[module.getNumber()].angle.getDegrees());
+            // } else {
+            //     System.out.println("Inside Deadzone!!!");
+            //     module.setDesiredState(new SwerveModuleState(desiredStates[module.getNumber()].speedMetersPerSecond, module.getAngle()));
+                
+
+            // }
         }
     }
 

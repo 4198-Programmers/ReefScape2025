@@ -41,10 +41,11 @@ public class SwerveModule {
     private SparkMaxConfig turningConfig;
     private SparkMaxConfig driveConfig;
     private RelativeEncoder turningRelativeEncoder;
+    private boolean withinDeadzone;
     
 
     //Constructor that allows for all of the modules to be created in the subsytem by feeding in the ids and offsets
-    public SwerveModule(int driveMotorID, int angleMotorID, int CANCoderID, double angleEncoderOffset, int moduleNumber, boolean invertDriveMotor){
+    public SwerveModule(int driveMotorID, int angleMotorID, int CANCoderID, double angleEncoderOffset, int moduleNumber, boolean invertDriveMotor, boolean invertAngleMotor){
 
         //Defines the motor in the constructor to tell the rest of the clas it exists
         driveMotor = new SparkMax(driveMotorID, MotorType.kBrushless);
@@ -70,13 +71,15 @@ public class SwerveModule {
         turningConfig = new SparkMaxConfig();
         turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(0.009, 0.0000007, 0.0000) //0.15 0.0 2.6, 0.02 0.00003 0
+            .pid(3, 0, 0)
+            //  .pid(0.07, 0.000005, 1) //0.15 0.0 2.6, 0.02 0.00003 0
             .outputRange(-1, 1)
             .positionWrappingInputRange(-Math.PI, Math.PI)
             .positionWrappingEnabled(true);
-        // turningConfig.encoder
-            // .positionConversionFactor(Constants.ANGLE_CONVERSION_FACTOR);
+        turningConfig.encoder
+            .positionConversionFactor(1/12.8);
         turningConfig
+            .inverted(invertAngleMotor)
             .idleMode(IdleMode.kBrake)
             .smartCurrentLimit(20);
         angleMotor.configure(turningConfig, ResetMode.kResetSafeParameters,
@@ -96,7 +99,13 @@ public class SwerveModule {
         // angleController = new PIDController(0.05, 0.004, 0.0000);
         // angleController.enableContinuousInput(-Math.PI, Math.PI);
         resetToAbsolute();
-        this.moduleNumber = moduleNumber;    
+        this.moduleNumber = moduleNumber; 
+
+        withinDeadzone = false;  
+    }
+
+    public void setWithinDeadzone(Boolean withinDeadzone) {
+        this.withinDeadzone = withinDeadzone;
     }
 
     public void resetToAbsolute() {
@@ -108,7 +117,7 @@ public class SwerveModule {
     public Rotation2d getAngle(){
         //Gets the CTRE value from -0.5 to 0.5
 
-        double angleAsDouble = angleEncoder.getAbsolutePosition().getValueAsDouble();
+        double angleAsDouble = turningRelativeEncoder.getPosition();
         // turningRelativeEncoder.setPosition(angleAsDouble);
         // double findingOut = turningRelativeEncoder.getPosition();
 
@@ -117,10 +126,10 @@ public class SwerveModule {
 
         // System.out.println(findingOut);
 
-        double moduleAngle = (360 * angleAsDouble);
+        // double moduleAngle = (360 * angleAsDouble);
         // System.err.println(moduleAngle);
-        double moduleAngleRadians = moduleAngle * (Math.PI / 180);
-        turningRelativeEncoder.setPosition(moduleAngleRadians);
+        // double moduleAngleRadians = moduleAngle * (Math.PI / 180);
+        // turningRelativeEncoder.setPosition(angleAsDouble);
         // System.out.println(moduleAngleRadians);
         // System.out.println(turningRelativeEncoder.getPosition());
 
@@ -129,7 +138,7 @@ public class SwerveModule {
 
         // System.out.println("Module Number: " + moduleNumber + "Current Angle: " + new Rotation2d(moduleAngleRadians));
 
-        return new Rotation2d(moduleAngleRadians);
+        return Rotation2d.fromRotations(angleAsDouble);
 
         
     }
@@ -156,11 +165,16 @@ public class SwerveModule {
         // System.out.println("Angle: " + moduleAngle + " Module Number: " + moduleNumber);
         // desiredStates.optimize(moduleAngle);
         
-        anglePID.setReference(desiredStates.angle.getRadians(), ControlType.kPosition);
+        if (!withinDeadzone) {
+            anglePID.setReference(desiredStates.angle.getRotations() + 0.25, ControlType.kPosition);
+        } else {
+            angleMotor.stopMotor();
+        }
+        
         // double angleOutput = angleController.calculate(getState().angle.getRadians(), desiredStates.angle.getRadians());
         // angleMotor.set(angleOutput);
         driveMotor.set(desiredStates.speedMetersPerSecond);
-        System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (turningRelativeEncoder.getPosition() * (180/Math.PI)));
+        // System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (turningRelativeEncoder.getPosition() * (180/Math.PI)));
 
     }
 
