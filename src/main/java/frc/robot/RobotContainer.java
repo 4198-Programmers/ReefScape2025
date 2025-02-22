@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
+import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TankSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,10 +27,14 @@ public class RobotContainer {
   // Subsystems
   private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
 
+  private final TankSubsystem tankSubsystem = new TankSubsystem();
+
   // Joysticks
   private final Joystick leftJoystick = new Joystick(Constants.JOYSTICK_LEFT_ID);
   private final Joystick middleJoystick = new Joystick(Constants.JOYSTICK_MIDDLE_ID);
   private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
+  private final DriveCommand driveCommand = new DriveCommand(leftJoystick, middleJoystick, tankSubsystem);
+
 
   // Buttons
   private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
@@ -40,6 +46,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    tankSubsystem.setDefaultCommand(driveCommand);
     // Configure the trigger bindings
     configureBindings();
   }
