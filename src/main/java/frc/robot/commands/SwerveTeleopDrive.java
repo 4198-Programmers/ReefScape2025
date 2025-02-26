@@ -32,7 +32,7 @@ public class SwerveTeleopDrive extends Command {
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);
 
         //swerveSubsystem.getModuleAngles();
-        swerveSubsystem.drive(xSpeed, ySpeed, zSpeed, fieldOrientedSupplier.get());
+        swerveSubsystem.drive(-xSpeed, -ySpeed, zSpeed, fieldOrientedSupplier.get());
         int index = 0;
 
         // for (SwerveModuleState sModuleState : swerveSubsystem.getSwerveModuleStates()) {
@@ -41,7 +41,7 @@ public class SwerveTeleopDrive extends Command {
 
         // }
 
-        swerveSubsystem.getModuleAngles();
+        // swerveSubsystem.getModuleAngles();
         // System.out.println("ran");
     }
 

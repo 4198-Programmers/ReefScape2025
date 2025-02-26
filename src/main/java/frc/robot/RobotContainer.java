@@ -53,8 +53,8 @@ public class RobotContainer {
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    private final JoystickButton elevatorUpButton = new JoystickButton(middleJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    private final JoystickButton elevatorDownButton = new JoystickButton(middleJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
     private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick, ManipulatorConstants.MANIPULATOR_ROTATE_BUTTON);
     private JoystickButton intakeButton = new JoystickButton(rightJoystick, Constants.INTAKE_BUTTON);

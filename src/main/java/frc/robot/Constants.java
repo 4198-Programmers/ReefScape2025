@@ -36,8 +36,8 @@ public final class Constants {
     public static class ClimbConstants {
         public static final int CLIMB_MOTOR_ID = 13;
         public static final double CLIMB_SPEED = 0.5;
-        public static final int CLIMB_FORWARD_BUTTON = 6;
-        public static final int CLIMB_REVERSE_BUTTON = 4;
+        public static final int CLIMB_FORWARD_BUTTON = 8;
+        public static final int CLIMB_REVERSE_BUTTON = 7;
 
     }
     public static final int JOYSTICK_RIGHT_ID = 2;
@@ -63,40 +63,41 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.205810546875;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.155517578125;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
-  public static final boolean FRONT_LEFT_ANGLE_INVERT = true;
+  public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
   
 
   //Front Right Swerve Module Constants
   public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
   public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
   public static final int FRONT_RIGHT_CANCODER_ID = 15;
-  public static final double FRONT_RIGHT_ANGLE_OFFSET = 0.140869140625;
+  public static final double FRONT_RIGHT_ANGLE_OFFSET = 0.12890625;
   public static final int FRONT_RIGHT_MODULE_NUMBER = 1;
   public static final boolean FRONT_RIGHT_DRIVE_INVERT = true;
-  public static final boolean FRONT_RIGHT_ANGLE_INVERT = true;
+  public static final boolean FRONT_RIGHT_ANGLE_INVERT = false;
 
   //Back Left Swerve Module Constants
   public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
   public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
   public static final int BACK_LEFT_CANCODER_ID = 14;
-  public static final double BACK_LEFT_ANGLE_OFFSET = -0.04345703125;
+  public static final double BACK_LEFT_ANGLE_OFFSET = -0.04296875;
 
-  public static final int BACK_LEFT_MODULE_NUMBER = 3;
+  public static final int BACK_LEFT_MODULE_NUMBER = 2;
   public static final boolean BACK_LEFT_DRIVE_INVERT = false;
-  public static final boolean BACK_LEFT_ANGLE_INVERT = true;
+  public static final boolean BACK_LEFT_ANGLE_INVERT = false;
+  
 
-  //Back Right Swerve Module Constants
+  //Back Right Swerve Module Constant
   public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
   public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
   public static final int BACK_RIGHT_CANCODER_ID = 16;
-  public static final double BACK_RIGHT_ANGLE_OFFSET = -0.4228515625
-  ;
-  public static final int BACK_RIGHT_MODULE_NUMBER = 2;
+  public static final double BACK_RIGHT_ANGLE_OFFSET = -0.42333984375;
+  public static final int BACK_RIGHT_MODULE_NUMBER = 3;
   public static final boolean BACK_RIGHT_DRIVE_INVERT = false;
-  public static final boolean BACK_RIGHT_ANGLE_INVERT = true;
+  public static final boolean BACK_RIGHT_ANGLE_INVERT = false;
+  
 
   //DriveBase Lenghts
   public static final double ROBOT_BASE_LENGTH = 30;

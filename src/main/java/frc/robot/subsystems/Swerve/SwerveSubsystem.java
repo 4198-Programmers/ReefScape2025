@@ -96,7 +96,7 @@ public class SwerveSubsystem extends SubsystemBase{
             backRightSwerveModule.getPosition()
         };
     }
-    public double deadband = 1;
+    public double deadband = 0;
     public void setSwerveModuleStates(SwerveModuleState[] desiredStates){
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_DRIVE_SPEED_MPS);
         for(SwerveModule module : modules){
@@ -106,11 +106,11 @@ public class SwerveSubsystem extends SubsystemBase{
 
 
 
-            if (Math.abs(desiredStates[module.getNumber()].angle.getDegrees() - module.getAngle().getDegrees()) < deadband || (180 - Math.abs(desiredStates[module.getNumber()].angle.getDegrees())) + (180 - Math.abs(module.getAngle().getDegrees())) < deadband) {
-                module.setWithinDeadzone(true);
-            } else {
-                module.setWithinDeadzone(false);
-            }
+            // if (Math.abs(desiredStates[module.getNumber()].angle.getDegrees() - module.getAngle().getDegrees()) < deadband || (180 - Math.abs(desiredStates[module.getNumber()].angle.getDegrees())) + (180 - Math.abs(module.getAngle().getDegrees())) < deadband) {
+            //     module.setWithinDeadzone(true);
+            // } else {
+            //     module.setWithinDeadzone(false);
+            // }
             module.setDesiredState(desiredStates[module.getNumber()]);
 
             // if(module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + deadband || module.getAngle().getDegrees() > desiredStates[module.getNumber()].angle.getDegrees() + deadband + 180  && module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - deadband || module.getAngle().getDegrees() < desiredStates[module.getNumber()].angle.getDegrees() - deadband -180 ) {
@@ -128,10 +128,10 @@ public class SwerveSubsystem extends SubsystemBase{
     public void drive(double xSpeed, double ySpeed, double zSpeed, boolean fieldOriented){
         SwerveModuleState[] states;
         if (fieldOriented){
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed, gyro.getRotation2d()));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(ySpeed, xSpeed, zSpeed, gyro.getRotation2d()));
         }
         else {
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, zSpeed));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.2-5));
         }
         setSwerveModuleStates(states);
     }

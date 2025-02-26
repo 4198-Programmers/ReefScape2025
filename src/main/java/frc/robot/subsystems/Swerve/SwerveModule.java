@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.CANBus;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -66,12 +67,11 @@ public class SwerveModule {
         angleMotor = new SparkMax(angleMotorID, MotorType.kBrushless);
         angleEncoder = new CANcoder(CANCoderID);
         turningRelativeEncoder = angleMotor.getEncoder();
-        motorAbsoluteEncoder = angleMotor.getAbsoluteEncoder();
         anglePID = angleMotor.getClosedLoopController();
         turningConfig = new SparkMaxConfig();
         turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(3, 0, 0)
+            .pid(1, 0, 0)
             //  .pid(0.07, 0.000005, 1) //0.15 0.0 2.6, 0.02 0.00003 0
             .outputRange(-1, 1)
             .positionWrappingInputRange(-Math.PI, Math.PI)
@@ -79,7 +79,7 @@ public class SwerveModule {
         turningConfig.encoder
             .positionConversionFactor(1/12.8);
         turningConfig
-            .inverted(invertAngleMotor)
+            // .inverted(invertAngleMotor)
             .idleMode(IdleMode.kBrake)
             .smartCurrentLimit(20);
         angleMotor.configure(turningConfig, ResetMode.kResetSafeParameters,
@@ -98,9 +98,10 @@ public class SwerveModule {
         
         // angleController = new PIDController(0.05, 0.004, 0.0000);
         // angleController.enableContinuousInput(-Math.PI, Math.PI);
-        resetToAbsolute();
+        
         this.moduleNumber = moduleNumber; 
-
+        // turningRelativeEncoder.setPosition(0);
+        // resetToAbsolute();
         withinDeadzone = false;  
     }
 
@@ -109,8 +110,16 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute() {
-        double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
-        turningRelativeEncoder.setPosition(absolutePosition); 
+        Rotation2d absolutePosition = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble() * 2);
+        double rotations = absolutePosition.getRotations();
+        System.out.println("Module Number: " + moduleNumber + " Absoulte Position: " + rotations);
+        // System.out.println("Relative Position: " + turningRelativeEncoder.getPosition() + "Absoulte Position: " + absolutePosition);
+        System.out.println("Relative Position: " + turningRelativeEncoder.getPosition());
+        var error = turningRelativeEncoder.setPosition(rotations);
+        if (error == REVLibError.kOk) {
+            System.out.println("Sucess Module Number: " + moduleNumber);
+        }
+        System.out.println("Relative Position: " + turningRelativeEncoder.getPosition());
     }
 
     //Returns the module angle in degrees;
@@ -163,10 +172,12 @@ public class SwerveModule {
         //used to prevent the robot wheels from spinning further that 90 degrees
         Rotation2d moduleAngle = getAngle();
         // System.out.println("Angle: " + moduleAngle + " Module Number: " + moduleNumber);
-        // desiredStates.optimize(moduleAngle);
+        desiredStates.optimize(moduleAngle);
+
+
         
         if (!withinDeadzone) {
-            anglePID.setReference(desiredStates.angle.getRotations() + 0.25, ControlType.kPosition);
+            anglePID.setReference(desiredStates.angle.getRotations(), ControlType.kPosition);
         } else {
             angleMotor.stopMotor();
         }
@@ -174,7 +185,10 @@ public class SwerveModule {
         // double angleOutput = angleController.calculate(getState().angle.getRadians(), desiredStates.angle.getRadians());
         // angleMotor.set(angleOutput);
         driveMotor.set(desiredStates.speedMetersPerSecond);
-        // System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (turningRelativeEncoder.getPosition() * (180/Math.PI)));
+        // System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (moduleAngle.getDegrees()));
+        // System.out.println("Relative: " + turningRelativeEncoder.getPosition() + " Absolute: " + angleEncoder.getPosition());
+        // System.out.println("Module Number: " + moduleNumber + "Current Angle: " + (moduleAngle.getDegrees()) + " Absolute Angle: " + Rotation2d.fromRotations(angleAsDouble));
+
 
     }
 
