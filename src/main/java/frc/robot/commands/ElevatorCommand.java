@@ -8,11 +8,13 @@ public class ElevatorCommand extends Command {
 
     private ElevatorSubsystem elevatorSubsystem;
     private double speed;
+    private double elevatorTargetPosition;
 
     public ElevatorCommand(ElevatorSubsystem elevatorSubsystem, double speed) {
         // Makes a new instance of ElevatorSubsystem each time command in run
         this.elevatorSubsystem = elevatorSubsystem;
         this.speed = speed;
+        this.elevatorTargetPosition = elevatorTargetPosition;
         addRequirements(elevatorSubsystem);
     }
     
@@ -26,6 +28,11 @@ public class ElevatorCommand extends Command {
         } else {
             elevatorSubsystem.move(speed);
         }
+    }
+
+    @Override
+    public void executePositions() {
+        if 
     }
 
     @Override

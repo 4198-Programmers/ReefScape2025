@@ -22,6 +22,8 @@ public final class Constants {
 
         public static final int ELEVATOR_UP_BUTTON = 6;
         public static final int ELEVATOR_DOWN_BUTTON = 4;
+
+        public static final double ELEVATOR_DEADBAND = .1;
     }
 
     public static class ClimbConstants {

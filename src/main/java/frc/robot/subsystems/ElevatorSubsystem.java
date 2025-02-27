@@ -11,6 +11,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
@@ -75,4 +76,19 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double getSteadyEncoderPosition() {
     return steadyValue;
   }
+
+  public void elevatorTargetPosition(double speed, int elevatorTargetPosition){
+    double currentPosition = elevatorEncoder.getPosition();
+
+    while(currentPosition < elevatorTargetPosition-ElevatorConstants.ELEVATOR_DEADBAND || currentPosition > elevatorTargetPosition + ElevatorConstants.ELEVATOR_DEADBAND){
+      if (currentPosition < elevatorTargetPosition-ElevatorConstants.ELEVATOR_DEADBAND){
+        elevatorMotor.set(speed); //moves the elevator up if it is below the deadband range
+      } else if (currentPosition > elevatorTargetPosition + ElevatorConstants.ELEVATOR_DEADBAND){
+        elevatorMotor.set(-speed); //moves the elevator down if it is above the deadband range
+      } else { 
+        elevatorMotor.set(0);
+        break; //stops motor and breaks out of loop if the elevator is within the deadband range
+      }
+    }
+}
 }
