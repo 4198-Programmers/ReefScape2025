@@ -69,7 +69,7 @@ public class RobotContainer {
         climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
         climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
 
-        elevatorPositionOne.whileTrue(new ElevatorSetPositionsCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED, 0));
+        elevatorPositionOne.whileTrue(new ElevatorSetPositionsCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED, 0));
         elevatorPositionTwo.whileTrue(new ElevatorSetPositionsCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED, 1));
         elevatorPositionThree.whileTrue(new ElevatorSetPositionsCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED, 2));
         elevatorPositionFour.whileTrue(new ElevatorSetPositionsCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED, 3));
