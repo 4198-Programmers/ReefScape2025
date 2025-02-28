@@ -30,10 +30,7 @@ public class ElevatorCommand extends Command {
         }
     }
 
-    @Override
-    public void executePositions() {
-        if 
-    }
+
 
     @Override
     public void end(boolean interrupted) {

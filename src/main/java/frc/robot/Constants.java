@@ -20,10 +20,16 @@ public final class Constants {
         public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
         public static final double ELEVATOR_SPEED = .25;
 
-        public static final int ELEVATOR_UP_BUTTON = 6;
-        public static final int ELEVATOR_DOWN_BUTTON = 4;
+        public static final int ELEVATOR_BUTTON_POSITION_ONE = 9;
+        public static final int ELEVATOR_BUTTON_POSITION_TWO = 10;
+        public static final int ELEVATOR_BUTTON_POSITION_THREE = 11;
+        public static final int ELEVATOR_BUTTON_POSITION_FOUR = 12;
 
         public static final double ELEVATOR_DEADBAND = .1;
+        public static final double ELEVATOR_POSITION_0 = 0;
+        public static final double ELEVATOR_POSITION_1 = 0;
+        public static final double ELEVATOR_POSITION_2 = 0;
+        public static final double ELEVATOR_POSITION_3 = 0;
     }
 
     public static class ClimbConstants {

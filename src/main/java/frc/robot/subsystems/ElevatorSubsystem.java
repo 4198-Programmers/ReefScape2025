@@ -77,7 +77,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     return steadyValue;
   }
 
-  public void elevatorTargetPosition(double speed, int elevatorTargetPosition){
+  public void elevatorTargetPosition(double speed, double elevatorTargetPosition){
     double currentPosition = elevatorEncoder.getPosition();
 
     while(currentPosition < elevatorTargetPosition-ElevatorConstants.ELEVATOR_DEADBAND || currentPosition > elevatorTargetPosition + ElevatorConstants.ELEVATOR_DEADBAND){
