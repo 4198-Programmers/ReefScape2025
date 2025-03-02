@@ -34,7 +34,6 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Swerve.AutoContainer;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
@@ -70,14 +69,9 @@ public class RobotContainer {
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
-    private SendableChooser autoChooser = new SendableChooser();
-    private AutoContainer autoContainer = new AutoContainer();
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
-
-    Shuffleboard.getTab("Autos").add(autoChooser);
     // Configure the trigger bindings
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
