@@ -3,6 +3,7 @@ package frc.robot.subsystems.Swerve;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -62,18 +63,27 @@ public class SwerveSubsystem extends SubsystemBase{
 
         odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d().times(-1), getSwerveModulePositions());
         modules = new SwerveModule[]{frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule};
+        resetGyro();
     }   
 
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
-        // System.out.println(gyro.getRotation2d());
+        System.out.println(gyro.getRotation2d());
         // System.out.println("Ran?");
         
     }
 
     public void resetGyro(){
         gyro.reset();
+    }
+
+    public Pose2d getPose(){
+        return odometry.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose){
+        odometry.resetPosition(gyro.getRotation2d().times(-1), getSwerveModulePositions(), pose);
     }
     
     //Returns all the swerve module states

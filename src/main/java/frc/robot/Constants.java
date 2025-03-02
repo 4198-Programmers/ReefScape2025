@@ -35,7 +35,7 @@ public final class Constants {
 
     public static class ClimbConstants {
         public static final int CLIMB_MOTOR_ID = 13;
-        public static final double CLIMB_SPEED = 0.5;
+        public static final double CLIMB_SPEED = 1;
         public static final int CLIMB_FORWARD_BUTTON = 8;
         public static final int CLIMB_REVERSE_BUTTON = 7;
 
@@ -132,7 +132,7 @@ public final class Constants {
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
     public static final double DRIVE_POSITION_CONVERSION_FACTOR  = (WHEEL_DIAMETER * Math.PI) / DRIVE_GEAR_RATIO;
     public static final double DRIVE_VELOCITY_CONVERSION_FACOTR = DRIVE_POSITION_CONVERSION_FACTOR / 60;
-    public static final double MAX_DRIVE_SPEED_MPS = Units.feetToMeters(15);
+    public static final double MAX_DRIVE_SPEED_MPS = Units.feetToMeters(15.1);
 
 //Joysticks
 public static final double DEADBAND = 0.1;

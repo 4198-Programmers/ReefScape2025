@@ -195,8 +195,8 @@ public class SwerveModule {
         // angleMotor.set(angleOutput);
         driveMotor.set(desiredStates.speedMetersPerSecond);
 
-        System.out.println("Module Number: " + moduleNumber + " Relative Position Post: " + relative.getDegrees());
-        System.out.println("Module Number: "+ moduleNumber + " Absolute Position: " + absolute.getDegrees());
+        // System.out.println("Module Number: " + moduleNumber + " Relative Position Post: " + relative.getDegrees());
+        // System.out.println("Module Number: "+ moduleNumber + " Absolute Position: " + absolute.getDegrees());
 
         // System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (moduleAngle.getDegrees()));
         // System.out.println("Relative: " + relative.getDegrees() + " Absolute: " + absolute.getDegrees());

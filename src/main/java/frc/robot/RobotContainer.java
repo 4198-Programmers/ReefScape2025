@@ -6,6 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.simulation.SendableChooserSim;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
@@ -20,6 +23,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ElevatorSteadyCommand;
@@ -30,6 +34,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Swerve.AutoContainer;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
@@ -65,16 +70,21 @@ public class RobotContainer {
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
+    private SendableChooser autoChooser = new SendableChooser();
+    private AutoContainer autoContainer = new AutoContainer();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
+
+    Shuffleboard.getTab("Autos").add(autoChooser);
     // Configure the trigger bindings
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
       () -> leftJoystick.getX(), 
       () -> leftJoystick.getY(), 
       () -> middleJoystick.getX(), 
-      () -> false));
+      () -> true));
       manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
     configureBindings();
 
@@ -91,7 +101,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     
-      climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
+        climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
         climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
 
         elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
