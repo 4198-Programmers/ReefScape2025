@@ -32,7 +32,7 @@ public class SwerveTeleopDrive extends Command {
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);
 
         //swerveSubsystem.getModuleAngles();
-        swerveSubsystem.drive(-xSpeed, -ySpeed, zSpeed, fieldOrientedSupplier.get());
+        swerveSubsystem.drive(-xSpeed / 2, -ySpeed / 2, -zSpeed / 2, fieldOrientedSupplier.get());
         int index = 0;
 
         // for (SwerveModuleState sModuleState : swerveSubsystem.getSwerveModuleStates()) {

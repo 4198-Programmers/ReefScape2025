@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
@@ -12,6 +13,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
 import frc.robot.commands.ManipulatorPositionOne;
 import frc.robot.commands.ManipulatorRotateCommand;
+import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -26,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveTeleopDrive;
+import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
@@ -59,9 +62,12 @@ public class RobotContainer {
     private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick, ManipulatorConstants.MANIPULATOR_ROTATE_BUTTON);
     private JoystickButton intakeButton = new JoystickButton(rightJoystick, Constants.INTAKE_BUTTON);
     private JoystickButton outtakeButton = new JoystickButton(rightJoystick, Constants.OUTTAKE_BUTTON);
+    private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
+    private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
@@ -92,13 +98,16 @@ public class RobotContainer {
         elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
         elevatorUpButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
         elevatorDownButton.whileFalse(new ElevatorSteadyCommand(m_elevatorSubsystem));
+        
+        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem));
+        resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
 
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
-        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED));
+        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
   }
 
     /**

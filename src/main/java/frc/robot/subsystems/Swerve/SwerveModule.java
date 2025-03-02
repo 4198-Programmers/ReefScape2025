@@ -43,6 +43,7 @@ public class SwerveModule {
     private SparkMaxConfig driveConfig;
     private RelativeEncoder turningRelativeEncoder;
     private boolean withinDeadzone;
+    private Rotation2d startupPosition;
     
 
     //Constructor that allows for all of the modules to be created in the subsytem by feeding in the ids and offsets
@@ -71,13 +72,13 @@ public class SwerveModule {
         turningConfig = new SparkMaxConfig();
         turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(1, 0, 0)
+            .pid(5, 0, 0)
             //  .pid(0.07, 0.000005, 1) //0.15 0.0 2.6, 0.02 0.00003 0
             .outputRange(-1, 1)
-            .positionWrappingInputRange(-Math.PI, Math.PI)
+            .positionWrappingInputRange(0, 1)
             .positionWrappingEnabled(true);
         turningConfig.encoder
-            .positionConversionFactor(1/12.8);
+            .positionConversionFactor(Constants.ANGLE_CONVERSION_FACTOR);
         turningConfig
             // .inverted(invertAngleMotor)
             .idleMode(IdleMode.kBrake)
@@ -93,15 +94,18 @@ public class SwerveModule {
         angleEncoderConfiguration.MagnetSensor.MagnetOffset = angleEncoderOffset;
         angleEncoderConfiguration.MagnetSensor.withSensorDirection(Constants.ABSOLUTE_ENCODER_SENSOR_DIRECTION);
 
+
         //applies the changes that were made to the CANCoder
         angleEncoder.getConfigurator().apply(angleEncoderConfiguration);    
-        
+
         // angleController = new PIDController(0.05, 0.004, 0.0000);
         // angleController.enableContinuousInput(-Math.PI, Math.PI);
         
         this.moduleNumber = moduleNumber; 
         // turningRelativeEncoder.setPosition(0);
-        // resetToAbsolute();
+        resetToAbsolute();
+        // angleEncoder.setPosition(angleEncoder.getPosition().getValueAsDouble() - angleEncoderOffset);
+        System.out.println("Module position!!! : " + angleEncoder.getAbsolutePosition().getValueAsDouble() + "\n\n");
         withinDeadzone = false;  
     }
 
@@ -109,17 +113,19 @@ public class SwerveModule {
         this.withinDeadzone = withinDeadzone;
     }
 
+    
+
+    // public void absoluteResets(){
+    //     double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
+    // }
+
     public void resetToAbsolute() {
-        Rotation2d absolutePosition = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble() * 2);
-        double rotations = absolutePosition.getRotations();
-        System.out.println("Module Number: " + moduleNumber + " Absoulte Position: " + rotations);
-        // System.out.println("Relative Position: " + turningRelativeEncoder.getPosition() + "Absoulte Position: " + absolutePosition);
-        System.out.println("Relative Position: " + turningRelativeEncoder.getPosition());
-        var error = turningRelativeEncoder.setPosition(rotations);
-        if (error == REVLibError.kOk) {
-            System.out.println("Sucess Module Number: " + moduleNumber);
-        }
-        System.out.println("Relative Position: " + turningRelativeEncoder.getPosition());
+        Rotation2d absolutePosition = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
+        // double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
+        // System.out.println("Module Number: " + moduleNumber + " Absolute Position: " + absolutePosition.getRotations());
+        // System.out.println("Relative Position Pre: " + turningRelativeEncoder.getPosition());
+        turningRelativeEncoder.setPosition(absolutePosition.getRotations());
+        // System.out.println("Relative Position Post: " + turningRelativeEncoder.getPosition());
     }
 
     //Returns the module angle in degrees;
@@ -173,7 +179,10 @@ public class SwerveModule {
         Rotation2d moduleAngle = getAngle();
         // System.out.println("Angle: " + moduleAngle + " Module Number: " + moduleNumber);
         desiredStates.optimize(moduleAngle);
+        // System.out.println("Relative Position: " + turningRelativeEncoder.getPosition());
 
+        Rotation2d absolute = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
+        Rotation2d relative = Rotation2d.fromRotations(turningRelativeEncoder.getPosition());
 
         
         if (!withinDeadzone) {
@@ -185,8 +194,14 @@ public class SwerveModule {
         // double angleOutput = angleController.calculate(getState().angle.getRadians(), desiredStates.angle.getRadians());
         // angleMotor.set(angleOutput);
         driveMotor.set(desiredStates.speedMetersPerSecond);
+
+        System.out.println("Module Number: " + moduleNumber + " Relative Position Post: " + relative.getDegrees());
+        System.out.println("Module Number: "+ moduleNumber + " Absolute Position: " + absolute.getDegrees());
+
         // System.out.println("Module Number: " + moduleNumber + " Desired Angle: " + desiredStates.angle.getDegrees() + "Current Angle: " + (moduleAngle.getDegrees()));
-        // System.out.println("Relative: " + turningRelativeEncoder.getPosition() + " Absolute: " + angleEncoder.getPosition());
+        // System.out.println("Relative: " + relative.getDegrees() + " Absolute: " + absolute.getDegrees());
+        // System.out.println("Module: " + moduleNumber + " Absolute: " + absolute.getRotations());
+
         // System.out.println("Module Number: " + moduleNumber + "Current Angle: " + (moduleAngle.getDegrees()) + " Absolute Angle: " + Rotation2d.fromRotations(angleAsDouble));
 
 

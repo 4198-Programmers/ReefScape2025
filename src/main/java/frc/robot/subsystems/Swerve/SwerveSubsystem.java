@@ -60,14 +60,22 @@ public class SwerveSubsystem extends SubsystemBase{
             Constants.BACK_RIGHT_DRIVE_INVERT,
             Constants.BACK_RIGHT_ANGLE_INVERT);
 
-        odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d(), getSwerveModulePositions());
+        odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d().times(-1), getSwerveModulePositions());
         modules = new SwerveModule[]{frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule};
     }   
 
     @Override
     public void periodic() {
-        odometry.update(gyro.getRotation2d(), getSwerveModulePositions());
+        odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
+        // System.out.println(gyro.getRotation2d());
+        // System.out.println("Ran?");
+        
     }
+
+    public void resetGyro(){
+        gyro.reset();
+    }
+    
     //Returns all the swerve module states
     public SwerveModuleState[] getSwerveModuleStates(){
         return new SwerveModuleState[]{
@@ -76,6 +84,13 @@ public class SwerveSubsystem extends SubsystemBase{
             backLeftSwerveModule.getState(),
             backRightSwerveModule.getState()
         };
+    }
+
+    public void resetToAbsolutes(){
+        frontLeftSwerveModule.resetToAbsolute();
+        frontRightSwerveModule.resetToAbsolute();
+        backLeftSwerveModule.resetToAbsolute();
+        backRightSwerveModule.resetToAbsolute();
     }
 
     public void getModuleAngles(){
@@ -128,10 +143,10 @@ public class SwerveSubsystem extends SubsystemBase{
     public void drive(double xSpeed, double ySpeed, double zSpeed, boolean fieldOriented){
         SwerveModuleState[] states;
         if (fieldOriented){
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(ySpeed, xSpeed, zSpeed, gyro.getRotation2d()));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(-ySpeed, -xSpeed, zSpeed * 0.05, gyro.getRotation2d()));
         }
         else {
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.2-5));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.1));
         }
         setSwerveModuleStates(states);
     }
