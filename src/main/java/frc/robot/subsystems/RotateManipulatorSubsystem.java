@@ -32,11 +32,13 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
      */
     public void toggleRotateIntake() { // Toggles the end between 0 and 90 degrees
         double currentPosition = rotatingMotor.getEncoder().getPosition(); // Gets the current position of the rotating motor
-        if (rotateSensor.get() && hasBeenZeroed == false) {
+        if (rotateSensor.get() && !hasBeenZeroed) {
             System.out.println("Passed the sensor!!");
             zero = currentPosition;
+            // rotatingMotor.getEnncoder().
             hasBeenZeroed = true;
         }
+
         double targetPosition = isRotated ? zero : -6.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
         
         // if (hasBeenMotorZeroed == false) {
