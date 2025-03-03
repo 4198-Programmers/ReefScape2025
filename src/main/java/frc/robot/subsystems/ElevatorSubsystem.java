@@ -3,21 +3,29 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
   // Create a SparkMax object for the elevator motor
   SparkMax elevatorMotor = new SparkMax(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
+  // Create an Encoder object for the elevator motor
+  private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
-  private SparkMaxConfig sparkConfig;
+  private SparkMaxConfig elevatorConfig;
+  private SparkClosedLoopController elevatorPID;
+
   
 
   
@@ -25,21 +33,25 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double steadyValue;
 
   public ElevatorSubsystem() {
-    sparkConfig = new SparkMaxConfig();
-    sparkConfig
-      .idleMode(IdleMode.kBrake);
-    elevatorMotor.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    elevatorPID = elevatorMotor.getClosedLoopController();
+    elevatorEncoder.setPosition(0);
+    elevatorConfig = new SparkMaxConfig();
+    elevatorConfig.closedLoop
+          .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+          .pid(0.5,0,0.1)
+          .outputRange(-1, 1);
+
+    elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
-  // Create an Encoder object for the elevator motor
-  private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
 
   /**
    *  Sets the elevator motor to a given speed
    *  Negative is up and positive is down 
    */
-  public void move(double speed) {
-    elevatorMotor.set(speed);
+  public void moveToPosition(double position) {
+    elevatorPID.setReference(position, ControlType.kPosition);
+    System.out.println("Moving to position: " + position);
   }
 
   /**
@@ -65,6 +77,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public void setSteadyEncoderPosition() {
     steadyValue = elevatorEncoder.getPosition();
+    System.out.println(steadyValue);
   }
 
   /**
@@ -74,5 +87,33 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public double getSteadyEncoderPosition() {
     return steadyValue;
+  }
+
+  public void elevatorTargetPosition(double speed, double elevatorTargetPosition){
+    System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
+    while(Math.abs(elevatorTargetPosition - elevatorEncoder.getPosition()) > ElevatorConstants.ELEVATOR_DEADBAND){
+      if (elevatorEncoder.getPosition() < elevatorTargetPosition-ElevatorConstants.ELEVATOR_DEADBAND){
+        elevatorMotor.set(speed); //moves the elevator up if it is below the deadband range
+        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
+
+      } else if (elevatorEncoder.getPosition() > (elevatorTargetPosition + ElevatorConstants.ELEVATOR_DEADBAND)){
+        elevatorMotor.set(-speed); //moves the elevator down if it is above the deadband range
+        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
+
+      } else { 
+        elevatorMotor.set(0);
+        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
+
+        break; //stops motor and breaks out of loop if the elevator is within the deadband range
+      }
+    }
+  elevatorMotor.set(0);
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+
+    // System.out.println(elevatorEncoder.getPosition());
   }
 }
