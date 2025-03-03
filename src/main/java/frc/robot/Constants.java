@@ -27,7 +27,7 @@ public final class Constants {
 
         public static final double ELEVATOR_DEADBAND = 5;
         public static final double ELEVATOR_POSITION_0 = 0;
-        public static final double ELEVATOR_POSITION_1 = -40;
+        public static final double ELEVATOR_POSITION_1 = -20;
         public static final double ELEVATOR_POSITION_2 = -60;
         public static final double ELEVATOR_POSITION_3 = -90;
         public static final int ELEVATOR_UP_BUTTON = 6;

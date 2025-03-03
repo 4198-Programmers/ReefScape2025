@@ -49,8 +49,9 @@ public class ElevatorSubsystem extends SubsystemBase {
    *  Sets the elevator motor to a given speed
    *  Negative is up and positive is down 
    */
-  public void moveToPosition(int position) {
+  public void moveToPosition(double position) {
     elevatorPID.setReference(position, ControlType.kPosition);
+    System.out.println("Moving to position: " + position);
   }
 
   /**
@@ -107,5 +108,12 @@ public class ElevatorSubsystem extends SubsystemBase {
       }
     }
   elevatorMotor.set(0);
-}
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+
+    // System.out.println(elevatorEncoder.getPosition());
+  }
 }
