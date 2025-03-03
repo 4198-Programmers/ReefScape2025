@@ -38,7 +38,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig = new SparkMaxConfig();
     elevatorConfig.closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-          .pid(0.5,0,0.1)
+          .pid(0.02,0.0,0.03)
           .outputRange(-1, 1);
 
     elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -87,27 +87,6 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public double getSteadyEncoderPosition() {
     return steadyValue;
-  }
-
-  public void elevatorTargetPosition(double speed, double elevatorTargetPosition){
-    System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
-    while(Math.abs(elevatorTargetPosition - elevatorEncoder.getPosition()) > ElevatorConstants.ELEVATOR_DEADBAND){
-      if (elevatorEncoder.getPosition() < elevatorTargetPosition-ElevatorConstants.ELEVATOR_DEADBAND){
-        elevatorMotor.set(speed); //moves the elevator up if it is below the deadband range
-        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
-
-      } else if (elevatorEncoder.getPosition() > (elevatorTargetPosition + ElevatorConstants.ELEVATOR_DEADBAND)){
-        elevatorMotor.set(-speed); //moves the elevator down if it is above the deadband range
-        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
-
-      } else { 
-        elevatorMotor.set(0);
-        System.out.println("Elevator Encoder: " + elevatorEncoder.getPosition());
-
-        break; //stops motor and breaks out of loop if the elevator is within the deadband range
-      }
-    }
-  elevatorMotor.set(0);
   }
 
   @Override

@@ -14,7 +14,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-        System.out.println("ran intake");
+        // System.out.println("ran intake");
         intakeSubsystem.runIntake(speed);
     }
 

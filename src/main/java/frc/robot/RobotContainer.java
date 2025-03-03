@@ -75,7 +75,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    CameraServer.startAutomaticCapture();
+    // CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
