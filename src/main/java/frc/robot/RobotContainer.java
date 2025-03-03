@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -33,8 +35,12 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+  // Auto Chooser list
+  private final SendableChooser<Command> autoChooser;
+
+  // The robot's subsystems and commands are defined here...
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   //Subsytems
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -123,6 +129,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        return autoChooser.getSelected();
     }
 }
