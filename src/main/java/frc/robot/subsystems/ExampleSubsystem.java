@@ -4,12 +4,26 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import java.io.Console;
+
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
+  private SparkMax driveMotor;
+ 
+  
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public ExampleSubsystem() {
+
+            //Defines the motor in the constructor to tell the rest of the clas it exists
+        // driveMotor = new SparkMax(1, MotorType.kBrushless);
+
+  }
 
   /**
    * Example command factory method.
@@ -22,6 +36,8 @@ public class ExampleSubsystem extends SubsystemBase {
     return runOnce(
         () -> {
           /* one-time action goes here */
+          // driveMotor.set(0.1);
+          // System.out.println("called");
         });
   }
 
