@@ -3,43 +3,47 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-
   // Create a SparkMax object for the elevator motor
   SparkMax elevatorMotor = new SparkMax(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
-
-  private SparkMaxConfig sparkConfig;
-  
-
-  
-  public DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.LIMIT_SWITCH_ELEVATOR_TOP);
-  public double steadyValue;
-
-  public ElevatorSubsystem() {
-    sparkConfig = new SparkMaxConfig();
-    sparkConfig
-      .idleMode(IdleMode.kBrake);
-    elevatorMotor.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-  }
-
   // Create an Encoder object for the elevator motor
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
+  private SparkMaxConfig elevatorConfig;
+  private SparkClosedLoopController elevatorPID;
+  
+  public DigitalInput limitSwitchTop = new DigitalInput(ElevatorConstants.LIMIT_SWITCH_ELEVATOR_TOP);
+
+  public ElevatorSubsystem() {
+    elevatorPID = elevatorMotor.getClosedLoopController();
+    elevatorEncoder.setPosition(0);
+    elevatorConfig = new SparkMaxConfig();
+    elevatorConfig.closedLoop
+          .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+          .pid(0.02,0.0,0.03)
+          .outputRange(-1, 1);
+
+    elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
 
   /**
    *  Sets the elevator motor to a given speed
    *  Negative is up and positive is down 
    */
-  public void move(double speed) {
-    elevatorMotor.set(speed);
+  public void moveToPosition(double position) {
+    elevatorPID.setReference(position, ControlType.kPosition);
+    System.out.println("Moving to position: " + position);
   }
 
   /**
@@ -59,20 +63,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     return elevatorEncoder.getPosition();
   }
 
-  /**
-   * Sets the steady encoder position to the current encoder value
-   * used in commands to keep the elevator steady to keep track of where to keep it
-   */
-  public void setSteadyEncoderPosition() {
-    steadyValue = elevatorEncoder.getPosition();
-  }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
 
-  /**
-   * Gets Encoder value for the steady command
-   *
-   * @return Steady encoder Value
-   */
-  public double getSteadyEncoderPosition() {
-    return steadyValue;
+    // System.out.println(elevatorEncoder.getPosition());
   }
 }

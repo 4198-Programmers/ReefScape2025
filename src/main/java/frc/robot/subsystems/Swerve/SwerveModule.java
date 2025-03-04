@@ -105,7 +105,7 @@ public class SwerveModule {
         // turningRelativeEncoder.setPosition(0);
         resetToAbsolute();
         // angleEncoder.setPosition(angleEncoder.getPosition().getValueAsDouble() - angleEncoderOffset);
-        System.out.println("Module position!!! : " + angleEncoder.getAbsolutePosition().getValueAsDouble() + "\n\n");
+        // System.out.println("Module position!!! : " + angleEncoder.getAbsolutePosition().getValueAsDouble() + "\n\n");
         withinDeadzone = false;  
     }
 

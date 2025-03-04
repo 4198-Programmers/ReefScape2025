@@ -27,9 +27,19 @@ public final class Constants {
     public static class ElevatorConstants {
         public static final int ELEVATOR_MOTOR_ID = 9;
         public static final int LIMIT_SWITCH_ELEVATOR_TOP = 1;
-        public static final double ELEVATOR_SPEED = .25;
 
-        public static final int ELEVATOR_UP_BUTTON = 6;
+        public static final int ELEVATOR_BUTTON_POSITION_ONE = 9;
+        public static final int ELEVATOR_BUTTON_POSITION_TWO = 10;
+        public static final int ELEVATOR_BUTTON_POSITION_THREE = 11;
+        public static final int ELEVATOR_BUTTON_POSITION_FOUR = 12;
+
+        // Elevator positions in rotations
+        public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
+        public static final double ELEVATOR_POSITION_1 = -20; // First reef section
+        public static final double ELEVATOR_POSITION_2 = -50; // Second reef section
+        public static final double ELEVATOR_POSITION_3 = -90; // Third reef section
+
+        public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
         public static final int ELEVATOR_DOWN_BUTTON = 4;
     }
 
@@ -45,15 +55,15 @@ public final class Constants {
     public static final int JOYSTICK_LEFT_ID = 0;
 
   public static class ManipulatorConstants {
-    public static final int INTAKE_MOTOR_ID = 12;
+    public static final int INTAKE_MOTOR_ID = 12; 
     public static final int PRIMARY_JOINT_MOTOR_ID = 10; // The joint closest to elevator
     public static final double MANIPULATOR_MOTOR_DEADBAND = 0.15;
     public static final int ROTATING_MOTOR_ID = 11;
     public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
     public static final double INTAKE_MOTOR_SPEED = 1.0;
-    public static final int INTAKE_SENSOR_ID = 0;
+    public static final int INTAKE_SENSOR_ID = 11;
 
-    public static final int MANIPULATOR_ROTATE_BUTTON = 12;
+    public static final int MANIPULATOR_ROTATE_BUTTON = 5;
   }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
@@ -134,11 +144,11 @@ public final class Constants {
     public static final double DRIVE_VELOCITY_CONVERSION_FACOTR = DRIVE_POSITION_CONVERSION_FACTOR / 60;
     public static final double MAX_DRIVE_SPEED_MPS = Units.feetToMeters(15.1);
 
-//Joysticks
-public static final double DEADBAND = 0.1;
-public static final int RIGHT_JOYSTICK_PORT = 2;
-public static final int MIDDLE_JOYSTICK_PORT = 1;
-public static final int LEFT_JOYSTICK_PORT = 0;
+    //Joysticks
+    public static final double DEADBAND = 0.1;
+    public static final int RIGHT_JOYSTICK_PORT = 2;
+    public static final int MIDDLE_JOYSTICK_PORT = 1;
+    public static final int LEFT_JOYSTICK_PORT = 0;
 
 
     public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;

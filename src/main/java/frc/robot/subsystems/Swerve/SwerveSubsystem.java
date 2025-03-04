@@ -69,7 +69,7 @@ public class SwerveSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
-        System.out.println(gyro.getRotation2d());
+        // System.out.println(gyro.getRotation2d());
         // System.out.println("Ran?");
         
     }
@@ -104,10 +104,10 @@ public class SwerveSubsystem extends SubsystemBase{
     }
 
     public void getModuleAngles(){
-        System.out.println("Front Left Module Angle: " + frontLeftSwerveModule.getAngleOffset() +
-         " Front Right Module Angle: " + frontRightSwerveModule.getAngleOffset()         + 
-         " Back Left Module Angle: " + backLeftSwerveModule.getAngleOffset() + 
-         " Back Right Module Angle: " + backRightSwerveModule.getAngle().getDegrees());
+        // System.out.println("Front Left Module Angle: " + frontLeftSwerveModule.getAngleOffset() +
+        //  " Front Right Module Angle: " + frontRightSwerveModule.getAngleOffset()         + 
+        //  " Back Left Module Angle: " + backLeftSwerveModule.getAngleOffset() + 
+        //  " Back Right Module Angle: " + backRightSwerveModule.getAngle().getDegrees());
     }
 
 
