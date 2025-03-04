@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.simulation.SendableChooserSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimbMotorCommand;
+import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
-import frc.robot.commands.ManipulatorPositionOne;
-import frc.robot.commands.ManipulatorRotateCommand;
+import frc.robot.commands.ManipulatorPositionOne;  
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -46,6 +46,7 @@ public class RobotContainer {
     private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, m_elevatorSubsystem);
 
     // Subsystems
     private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
@@ -79,6 +80,8 @@ public class RobotContainer {
   public RobotContainer() {
     // CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
+    this.autoContainer.SetupAutoOptions(autoChooser);
+    Shuffleboard.getTab("Autos").add(autoChooser);
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
       () -> leftJoystick.getX(), 
@@ -128,7 +131,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        
+        return autoChooser.getSelected();
     }
 }
