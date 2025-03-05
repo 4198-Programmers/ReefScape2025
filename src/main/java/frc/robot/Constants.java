@@ -64,6 +64,7 @@ public final class Constants {
     public static final int INTAKE_SENSOR_ID = 11;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
+    public static final int INTAKE_MOTOR_TWO_ID = 14;
   }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
