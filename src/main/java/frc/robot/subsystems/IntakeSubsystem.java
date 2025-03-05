@@ -9,6 +9,7 @@ import frc.robot.Constants.ManipulatorConstants;
 public class IntakeSubsystem extends SubsystemBase {
     
     private SparkMax intakeMotor = new SparkMax(ManipulatorConstants.INTAKE_MOTOR_ID, MotorType.kBrushless); // Motor for the wheels to suck in algae and coral
+    private SparkMax intakeMotorTwo = new SparkMax(ManipulatorConstants.INTAKE_MOTOR_TWO_ID, MotorType.kBrushless);
 
     /**
      * Runs the intake motor at a given speed.
@@ -16,5 +17,6 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void runIntake(double speed) { //Both to intake and outtake
         intakeMotor.set(speed);
+        intakeMotorTwo.set(speed);
     }
 }
