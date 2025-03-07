@@ -6,12 +6,15 @@ package frc.robot;
 
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.math.geometry.Rotation3d;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -157,4 +160,6 @@ public final class Constants {
     public static final int OUTTAKE_BUTTON = 3;
     public static final int RESET_GYRO_BUTTON = 11;
 	  public static final int REsET_ABSOLUTE_BUTTON = 12;
+
+    public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
 }

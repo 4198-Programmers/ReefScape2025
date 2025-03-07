@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.SendableChooserSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ClimbMotorCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
@@ -125,7 +126,7 @@ public class RobotContainer {
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
 
-        photonTestButton.whileTrue(new PhotonVisionCommand(photonSubsystem, swerveSubsystem));
+        photonTestButton.whileTrue(new ChaseTagCommand(camera, swerveSubsystem, () -> swerveSubsystem.getPose()));
   }
 
     /**
