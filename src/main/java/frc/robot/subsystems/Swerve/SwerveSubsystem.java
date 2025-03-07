@@ -78,15 +78,26 @@ public class SwerveSubsystem extends SubsystemBase{
         gyro.reset();
     }
 
+    /**
+     * Returns the current pose of the robot
+     * @return
+     */
     public Pose2d getPose(){
         return odometry.getPoseMeters();
     }
 
+    /**
+     * Resets the odometry of the robot to a pose
+     * @param pose
+     */
     public void resetOdometry(Pose2d pose){
         odometry.resetPosition(gyro.getRotation2d().times(-1), getSwerveModulePositions(), pose);
     }
     
-    //Returns all the swerve module states
+    /**
+     * Returns all the swerve module states
+     * @return SwerveModuleState[] of all swerve modules
+     */
     public SwerveModuleState[] getSwerveModuleStates(){
         return new SwerveModuleState[]{
             frontLeftSwerveModule.getState(),
@@ -112,7 +123,10 @@ public class SwerveSubsystem extends SubsystemBase{
 
 
 
-    //Returns the positions of all swerve modules
+    /**
+     * Returns the positions of all swerve modules
+     * @return SwerveModulePosition[] of all swerve modules
+     */
     public SwerveModulePosition[] getSwerveModulePositions(){
         return new SwerveModulePosition[]{
             frontLeftSwerveModule.getPosition(),
@@ -150,6 +164,13 @@ public class SwerveSubsystem extends SubsystemBase{
         }
     }
 
+    /**
+     * Drives the robot using set speeds
+     * @param xSpeed Forward and backwards speed
+     * @param ySpeed Side to Side "Strafing" speed
+     * @param zSpeed Turning speed
+     * @param fieldOriented Whether or not the robot is field oriented
+     */
     public void drive(double xSpeed, double ySpeed, double zSpeed, boolean fieldOriented){
         SwerveModuleState[] states;
         if (fieldOriented){

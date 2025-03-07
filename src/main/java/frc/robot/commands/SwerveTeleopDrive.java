@@ -46,6 +46,12 @@ public class SwerveTeleopDrive extends Command {
         
     }
 
+    /**
+     * This method is used to apply a deadband to the joystick values
+     * @param value
+     * @param threshold
+     * @return the value after applying the deadband
+     */
     private double deadband(double value,  double threshold){
         
         if(Math.abs(value) < threshold){

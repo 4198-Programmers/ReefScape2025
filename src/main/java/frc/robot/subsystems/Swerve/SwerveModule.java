@@ -119,6 +119,10 @@ public class SwerveModule {
     //     double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
     // }
 
+
+    /**
+     * Resets the module to the absolute position
+     */
     public void resetToAbsolute() {
         Rotation2d absolutePosition = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
         // double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
@@ -128,7 +132,10 @@ public class SwerveModule {
         // System.out.println("Relative Position Post: " + turningRelativeEncoder.getPosition());
     }
 
-    //Returns the module angle in degrees;
+    /**
+     * Returns the module angle in degrees;
+     * @return Rotation2d
+     */
     public Rotation2d getAngle(){
         //Gets the CTRE value from -0.5 to 0.5
 
@@ -163,17 +170,26 @@ public class SwerveModule {
         return angleAsDouble;
     }
 
-    //Gets the state of this module by giving you the wheel veloicty and the value of the wheel angle
+    /**
+     * Gets the state of this module by giving you the wheel veloicty and the value of the wheel angle
+     * @return SwerveModuleState
+     */
     public SwerveModuleState getState(){
         return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
     }
 
-    //Gets the current position of the robot or where it is
+    /**
+     * Gets the current position of the robot or where it is
+     * @return SwerveModulePosition
+     */
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
     }
 
-    //Sets the desired wheel state of this module for the robot   
+    /**
+     * Sets the desired wheel state of this module for the robot  
+     * @param desiredStates
+     */ 
     public void setDesiredState(SwerveModuleState desiredStates){
         //used to prevent the robot wheels from spinning further that 90 degrees
         Rotation2d moduleAngle = getAngle();
