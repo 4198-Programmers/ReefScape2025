@@ -43,7 +43,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public void moveToPosition(double position) {
     elevatorPID.setReference(position, ControlType.kPosition);
-    System.out.println("Moving to position: " + position);
+    // System.out.println("Moving to position: " + position);
   }
 
   /**

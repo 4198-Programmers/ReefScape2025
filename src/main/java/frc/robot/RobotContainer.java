@@ -14,6 +14,7 @@ import frc.robot.commands.ClimbMotorCommand;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
+import frc.robot.commands.ManipulatorToPoint;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -69,6 +70,12 @@ public class RobotContainer {
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
+    private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
+    private JoystickButton getManipulator = new JoystickButton(middleJoystick, 4);
+
+    private JoystickButton setManipulatorToPoint = new JoystickButton(leftJoystick, 6);
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // CameraServer.startAutomaticCapture();
@@ -114,6 +121,9 @@ public class RobotContainer {
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
+        zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
+        getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
+        setManipulatorToPoint.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem));
   }
 
     /**
