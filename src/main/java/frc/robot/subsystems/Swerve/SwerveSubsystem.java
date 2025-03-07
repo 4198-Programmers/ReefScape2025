@@ -63,7 +63,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
         odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d().times(-1), getSwerveModulePositions());
         modules = new SwerveModule[]{frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule};
-        resetGyro();
+        // resetGyro();
     }   
 
     @Override
