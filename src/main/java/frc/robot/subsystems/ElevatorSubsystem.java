@@ -9,7 +9,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,20 +16,14 @@ import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-
   // Create a SparkMax object for the elevator motor
   SparkMax elevatorMotor = new SparkMax(Constants.ElevatorConstants.ELEVATOR_MOTOR_ID, MotorType.kBrushless);
   // Create an Encoder object for the elevator motor
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
-
   private SparkMaxConfig elevatorConfig;
   private SparkClosedLoopController elevatorPID;
-
   
-
-  
-  public DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.LIMIT_SWITCH_ELEVATOR_TOP);
-  public double steadyValue;
+  public DigitalInput limitSwitchTop = new DigitalInput(ElevatorConstants.LIMIT_SWITCH_ELEVATOR_TOP);
 
   public ElevatorSubsystem() {
     elevatorPID = elevatorMotor.getClosedLoopController();
@@ -43,7 +36,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
-
 
   /**
    *  Sets the elevator motor to a given speed
@@ -69,24 +61,6 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public double checkEncoder() {
     return elevatorEncoder.getPosition();
-  }
-
-  /**
-   * Sets the steady encoder position to the current encoder value
-   * used in commands to keep the elevator steady to keep track of where to keep it
-   */
-  public void setSteadyEncoderPosition() {
-    steadyValue = elevatorEncoder.getPosition();
-    System.out.println(steadyValue);
-  }
-
-  /**
-   * Gets Encoder value for the steady command
-   *
-   * @return Steady encoder Value
-   */
-  public double getSteadyEncoderPosition() {
-    return steadyValue;
   }
 
   @Override

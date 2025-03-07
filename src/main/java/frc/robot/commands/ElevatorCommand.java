@@ -19,27 +19,22 @@ public class ElevatorCommand extends Command {
     
     @Override 
     public void execute() {
-        // switch (elevatorPosition) {
-        //     case 0:
-        //         elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
-        //     case 1:
-        //         elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
-        //     case 2:
-        //         elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
-        //     case 3:
-        //         elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
-        //     default:
-        //         break;
-        // }
-        if (elevatorPosition == 0) {
-            elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
-        } else if (elevatorPosition == 1) {
-            elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
-        } else if (elevatorPosition == 2) {
-            elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
-        } else if (elevatorPosition == 3) {
-            elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
-        };
+        switch (elevatorPosition) {
+            case 0:
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
+                break;
+            case 1:
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
+                break;
+            case 2:
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
+                break;
+            case 3:
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
+                break;
+            default:
+                break;
+        }
     }
 
 

@@ -15,10 +15,9 @@ import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
-import frc.robot.commands.ManipulatorPositionOne;  
+import frc.robot.commands.ManipulatorRotateCommand;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
@@ -29,7 +28,6 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -119,7 +117,7 @@ public class RobotContainer {
 
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
-        // manipulatorRotateButton.toggleOnTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem)); THIS WAS COMMENTED OUT BUT NEEDS TO BE HERE
+        manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));

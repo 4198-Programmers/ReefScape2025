@@ -34,8 +34,6 @@ public class ClimbMotorSubsystem extends SubsystemBase{
 
     }
 
-
-
     /**
      * Sets the climber motor to a given speed, positive is clockwise (the way we want to go to climb)
      */
