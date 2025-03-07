@@ -15,7 +15,6 @@ import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
-import frc.robot.commands.ManipulatorRotateCommand;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
