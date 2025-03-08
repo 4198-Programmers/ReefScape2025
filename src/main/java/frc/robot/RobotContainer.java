@@ -23,6 +23,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PhotonSubsystem;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -37,18 +38,17 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
-public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-    public PhotonCamera camera = new PhotonCamera("cam0");
-    
-  //Subsytems
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+public class RobotContainer {    
+        // The robot's subsystems and commands are defined here...
+        private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+            
+      //Subsytems
+      private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
     private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final PoseEstimatorSubsystem poseEstimatorSubsystem = new PoseEstimatorSubsystem(swerveSubsystem, Constants.PHOTON_CAMERA);
 
     private final PhotonSubsystem photonSubsystem = new PhotonSubsystem();
 
@@ -79,6 +79,7 @@ public class RobotContainer {
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
     private JoystickButton photonTestButton = new JoystickButton(leftJoystick, 5);
+    private JoystickButton photonVisionButton = new JoystickButton(leftJoystick, 6);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -116,7 +117,7 @@ public class RobotContainer {
         elevatorPositionThree.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 2));
         elevatorPositionFour.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 3));
         
-        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem));
+        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
 
         // manipulatorRotateButton.whileTrue(new
@@ -126,7 +127,8 @@ public class RobotContainer {
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
 
-        photonTestButton.whileTrue(new ChaseTagCommand(camera, swerveSubsystem, () -> swerveSubsystem.getPose()));
+        photonTestButton.whileTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose()));
+        // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
   }
 
     /**

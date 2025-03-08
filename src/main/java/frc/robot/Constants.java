@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Transform3d;
@@ -67,6 +69,7 @@ public final class Constants {
     public static final int INTAKE_SENSOR_ID = 11;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
+    public static final int INTAKE_MOTOR_TWO_ID = 13;
   }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
@@ -162,4 +165,6 @@ public final class Constants {
 	  public static final int REsET_ABSOLUTE_BUTTON = 12;
 
     public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+
+    public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");
 }

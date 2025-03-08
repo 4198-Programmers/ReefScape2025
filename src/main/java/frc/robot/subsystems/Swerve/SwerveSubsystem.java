@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 
 public class SwerveSubsystem extends SubsystemBase{
 
@@ -76,6 +77,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void resetGyro(){
         gyro.reset();
+        resetOdometry(new Pose2d(0, 0, new Rotation2d(Math.PI)));
     }
 
     /**

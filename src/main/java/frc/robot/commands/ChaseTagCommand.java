@@ -20,22 +20,22 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class ChaseTagCommand extends Command {
 
     private static final TrapezoidProfile.Constraints X_CONSTRAINTS =
-        new TrapezoidProfile.Constraints(3, 2);
+        new TrapezoidProfile.Constraints(0.5, 1);
     private static final TrapezoidProfile.Constraints Y_CONSTRAINTS =
-        new TrapezoidProfile.Constraints(3, 2);
+        new TrapezoidProfile.Constraints(0.5, 1);
     private static final TrapezoidProfile.Constraints THETA_CONSTRAINTS =
-        new TrapezoidProfile.Constraints(8, 8);
+        new TrapezoidProfile.Constraints(2, 8);
 
     private static final int TAG_TO_CHASE = 6;
-    private static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(1.5, 0.0, 0.0), new Rotation3d(0, 0, Math.PI)); // IMPORTANT BECAUSE IN REFERENCE TO TAG
+    private static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(0.6, 0.27, 0.0), new Rotation3d(0, 0, Math.PI-0.1)); // IMPORTANT BECAUSE IN REFERENCE TO TAG
 
     private final PhotonCamera photonCamera;
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Pose2d> poseProvider;
 
-    private final ProfiledPIDController xController = new ProfiledPIDController(0.5, 0, 0, X_CONSTRAINTS);
-    private final ProfiledPIDController yController = new ProfiledPIDController(0.5, 0, 0, Y_CONSTRAINTS);
-    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.5, 0, 0, THETA_CONSTRAINTS);
+    private final ProfiledPIDController xController = new ProfiledPIDController(0.5, 0.0, 0.1, X_CONSTRAINTS);
+    private final ProfiledPIDController yController = new ProfiledPIDController(0.5, 0.0, 0.1, Y_CONSTRAINTS);
+    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.5, 0, 0.2, THETA_CONSTRAINTS);
 
     private PhotonTrackedTarget target;
 
@@ -44,9 +44,9 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.2);
-        yController.setTolerance(0.2);
-        thetaController.setTolerance(Units.degreesToRadians(3));
+        xController.setTolerance(0.01);
+        yController.setTolerance(0.01);
+        thetaController.setTolerance(Units.degreesToRadians(5));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         addRequirements(swerveSubsystem);
@@ -89,26 +89,30 @@ public class ChaseTagCommand extends Command {
                 xController.setGoal(goalPose.getX());
                 yController.setGoal(goalPose.getY());
                 thetaController.setGoal(goalPose.getRotation().getRadians());
+                System.out.println("Goal: " + goalPose);
             }
         }
         if (target == null) {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal()) {
+            if (xController.atGoal() || Math.abs(xSpeed) < 0.01) {
                 xSpeed = 0;
             }
             var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal()) {
+            if (yController.atGoal() || Math.abs(ySpeed) < 0.01) {
                 ySpeed = 0;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
             if (thetaController.atGoal()) {
                 thetaSpeed = 0;
             }
-
-            swerveSubsystem.drive(xSpeed, ySpeed, thetaSpeed, false);
+            System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
+            System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());
+            swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.04, false);
+            return;
         }
+        swerveSubsystem.drive(0, 0, 0, false);
     }
 
     // Called once the command ends or is interrupted.

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.photonvision.PhotonCamera;
 
+import com.revrobotics.spark.SparkBase.ControlType;
+
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.numbers.N7;
@@ -17,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
@@ -37,12 +40,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     private static final Vector<N3> visionMeasurementStdDevs = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));
 
-    private final SwerveDrivePoseEstimator poseEstimator;
+    private SwerveDrivePoseEstimator poseEstimator;
 
     private final Field2d field2d = new Field2d();
     private double previousPipelineTimestamp = 0;
 
-    PoseEstimatorSubsystem(SwerveSubsystem swerveSubsystem, PhotonCamera photonCamera) {
+    public PoseEstimatorSubsystem(SwerveSubsystem swerveSubsystem, PhotonCamera photonCamera) {
         this.swerveSubsystem = swerveSubsystem;
         this.photonCamera = photonCamera;
         poseEstimator = new SwerveDrivePoseEstimator(Constants.SWERVE_DRIVE_KINEMATICS, swerveSubsystem.gyro.getRotation2d(), swerveSubsystem.getSwerveModulePositions(), swerveSubsystem.getPose());
@@ -64,7 +67,24 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         //     }
         // }, true); 
 
-    
+    public void resetPoseEstimator() {
+        poseEstimator = new SwerveDrivePoseEstimator(Constants.SWERVE_DRIVE_KINEMATICS, swerveSubsystem.gyro.getRotation2d(), swerveSubsystem.getSwerveModulePositions(), swerveSubsystem.getPose());
+    }
+
+    /**
+     * Inline command to rotate the manipulator.
+     * I did it this way so we could use the runOnce feature to toggle it
+     */
+    public Command ResetPoseEstimator() {
+        // Inline construction of command goes here.
+        // Subsystem::RunOnce implicitly requires `this` subsystem.
+        return runOnce(
+            () -> {
+                resetPoseEstimator();
+            }
+        );
+    }
+
     public void periodic() {
         var pipelineResult = photonCamera.getLatestResult();
         var resultTimestamp = pipelineResult.getTimestampSeconds();
