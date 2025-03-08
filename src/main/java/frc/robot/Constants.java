@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -69,7 +70,7 @@ public final class Constants {
     public static final int INTAKE_SENSOR_ID = 11;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
-    public static final int INTAKE_MOTOR_TWO_ID = 13;
+    public static final int INTAKE_MOTOR_TWO_ID = 14;
   }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
@@ -167,4 +168,11 @@ public final class Constants {
     public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
 
     public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");
+
+    public static class AprilTagConstants {
+        public static final int TAG_TO_CHASE = 6;
+        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.51, 0.02, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-175)));
+        public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.51, 0.2, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(175)));;
+
+    }
 }

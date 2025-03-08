@@ -80,6 +80,9 @@ public class RobotContainer {
 
     private JoystickButton photonTestButton = new JoystickButton(leftJoystick, 5);
     private JoystickButton photonVisionButton = new JoystickButton(leftJoystick, 6);
+    private JoystickButton photonAlignLeftButton = new JoystickButton(middleJoystick, 3);
+    private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -127,7 +130,8 @@ public class RobotContainer {
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
 
-        photonTestButton.whileTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose()));
+        photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
+        photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_RIGHT));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
   }
 

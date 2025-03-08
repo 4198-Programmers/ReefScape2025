@@ -27,7 +27,7 @@ public class ChaseTagCommand extends Command {
         new TrapezoidProfile.Constraints(2, 8);
 
     private static final int TAG_TO_CHASE = 6;
-    private static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(0.6, 0.27, 0.0), new Rotation3d(0, 0, Math.PI-0.1)); // IMPORTANT BECAUSE IN REFERENCE TO TAG
+    private final Transform3d tagToGoal; // IMPORTANT BECAUSE IN REFERENCE TO TAG
 
     private final PhotonCamera photonCamera;
     private final SwerveSubsystem swerveSubsystem;
@@ -39,14 +39,15 @@ public class ChaseTagCommand extends Command {
 
     private PhotonTrackedTarget target;
 
-    public ChaseTagCommand(PhotonCamera photonCamera, SwerveSubsystem swerveSubsystem, Supplier<Pose2d> poseProvider) {
+    public ChaseTagCommand(PhotonCamera photonCamera, SwerveSubsystem swerveSubsystem, Supplier<Pose2d> poseProvider, Transform3d tagToGoal) {
+        this.tagToGoal = tagToGoal;
         this.photonCamera = photonCamera;
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.01);
-        yController.setTolerance(0.01);
-        thetaController.setTolerance(Units.degreesToRadians(5));
+        xController.setTolerance(0.005);
+        yController.setTolerance(0.005);
+        thetaController.setTolerance(Units.degreesToRadians(3));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         addRequirements(swerveSubsystem);
@@ -84,31 +85,31 @@ public class ChaseTagCommand extends Command {
                 var camToTarget = target.getBestCameraToTarget();
                 var targetPose = cameraPose.transformBy(camToTarget);
 
-                var goalPose = targetPose.transformBy(TAG_TO_GOAL).toPose2d();
+                var goalPose = targetPose.transformBy(tagToGoal).toPose2d();
 
                 xController.setGoal(goalPose.getX());
                 yController.setGoal(goalPose.getY());
                 thetaController.setGoal(goalPose.getRotation().getRadians());
-                System.out.println("Goal: " + goalPose);
+                // System.out.println("Goal: " + goalPose);
             }
         }
         if (target == null) {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal() || Math.abs(xSpeed) < 0.01) {
+            if (xController.atGoal() || Math.abs(xSpeed) < 0.001) {
                 xSpeed = 0;
             }
             var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal() || Math.abs(ySpeed) < 0.01) {
+            if (yController.atGoal() || Math.abs(ySpeed) < 0.001) {
                 ySpeed = 0;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
             if (thetaController.atGoal()) {
                 thetaSpeed = 0;
             }
-            System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
-            System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());
+            // System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
+            // System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());
             swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.04, false);
             return;
         }
