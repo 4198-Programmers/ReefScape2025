@@ -41,8 +41,8 @@ public final class Constants {
 
         // Elevator positions in rotations
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
-        public static final double ELEVATOR_POSITION_1 = -20; // First reef section
-        public static final double ELEVATOR_POSITION_2 = -50; // Second reef section
+        public static final double ELEVATOR_POSITION_1 = -17; // First reef section
+        public static final double ELEVATOR_POSITION_2 = -45; // Second reef section
         public static final double ELEVATOR_POSITION_3 = -90; // Third reef section
 
         public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick

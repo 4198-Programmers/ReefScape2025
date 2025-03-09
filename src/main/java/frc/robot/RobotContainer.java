@@ -18,6 +18,7 @@ import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
 import frc.robot.commands.PhotonVisionCommand;
+import frc.robot.commands.ManipulatorToPoint;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -82,6 +83,10 @@ public class RobotContainer {
     private JoystickButton photonVisionButton = new JoystickButton(leftJoystick, 6);
     private JoystickButton photonAlignLeftButton = new JoystickButton(middleJoystick, 3);
     private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
+    private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
+    private JoystickButton getManipulator = new JoystickButton(middleJoystick, 4);
+
+    private JoystickButton setManipulatorToPoint = new JoystickButton(leftJoystick, 6);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -129,11 +134,12 @@ public class RobotContainer {
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
-
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
         photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_RIGHT));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
-  }
+        zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
+        getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
+        setManipulatorToPoint.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem));  }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
