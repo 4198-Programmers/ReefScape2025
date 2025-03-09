@@ -41,12 +41,12 @@ public final class Constants {
 
         // Elevator positions in rotations
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
-        public static final double ELEVATOR_POSITION_1 = -17; // First reef section
-        public static final double ELEVATOR_POSITION_2 = -45; // Second reef section
-        public static final double ELEVATOR_POSITION_3 = -90; // Third reef section
+        public static final double ELEVATOR_POSITION_1 = -40; // First reef section
+        public static final double ELEVATOR_POSITION_2 = -67; // Second reef section
+        public static final double ELEVATOR_POSITION_3 = -80; // Third reef section
 
-        public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
-        public static final int ELEVATOR_DOWN_BUTTON = 4;
+        // public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
+        // public static final int ELEVATOR_DOWN_BUTTON = 4;
     }
 
     public static class ClimbConstants {
@@ -157,9 +157,6 @@ public final class Constants {
     public static final int MIDDLE_JOYSTICK_PORT = 1;
     public static final int LEFT_JOYSTICK_PORT = 0;
 
-
-    public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
-    public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
     public static final int INTAKE_BUTTON = 1;
     public static final int OUTTAKE_BUTTON = 3;
     public static final int RESET_GYRO_BUTTON = 11;

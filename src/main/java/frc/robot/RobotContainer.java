@@ -65,8 +65,8 @@ public class RobotContainer {
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    // private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    // private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
     private final JoystickButton elevatorPositionOne = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_ONE);
     private final JoystickButton elevatorPositionTwo = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_TWO);
@@ -79,14 +79,13 @@ public class RobotContainer {
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
-    private JoystickButton photonTestButton = new JoystickButton(leftJoystick, 5);
-    private JoystickButton photonVisionButton = new JoystickButton(leftJoystick, 6);
     private JoystickButton photonAlignLeftButton = new JoystickButton(middleJoystick, 3);
     private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
     private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
     private JoystickButton getManipulator = new JoystickButton(middleJoystick, 4);
 
-    private JoystickButton setManipulatorToPoint = new JoystickButton(leftJoystick, 6);
+    private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
+    private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -139,7 +138,9 @@ public class RobotContainer {
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
-        setManipulatorToPoint.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem));  }
+        setManipulatorToPointOne.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 0));
+        setManipulatorToPointTwo.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 1));
+  }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -5,11 +5,12 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 
 public class ManipulatorToPoint extends Command {
     private final ManipulatorSubsystem manipulatorSubsystem;
+    private int manipulatorPosition;
 
 
-    public ManipulatorToPoint(ManipulatorSubsystem subsystem) {
+    public ManipulatorToPoint(ManipulatorSubsystem subsystem, int manipulatorPosition) {
         manipulatorSubsystem = subsystem;
-    
+        this.manipulatorPosition = manipulatorPosition;
         addRequirements(subsystem);
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -22,7 +23,15 @@ public class ManipulatorToPoint extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        manipulatorSubsystem.turnPrimaryJointToPosition(47);
+        // manipulatorSubsystem.turnPrimaryJointToPosition(47);
+        switch (manipulatorPosition) {
+            case 0:
+                manipulatorSubsystem.turnPrimaryJointToPosition(47);
+                break;
+            case 1:
+                manipulatorSubsystem.turnPrimaryJointToPosition(0);
+                break;
+        }
     }
 
     // Called once the command ends or is interrupted.
