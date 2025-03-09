@@ -43,7 +43,7 @@ public final class Constants {
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
         public static final double ELEVATOR_POSITION_1 = -40; // First reef section
         public static final double ELEVATOR_POSITION_2 = -67; // Second reef section
-        public static final double ELEVATOR_POSITION_3 = -80; // Third reef section
+        public static final double ELEVATOR_POSITION_3 = -78; // Third reef section
 
         // public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
         // public static final int ELEVATOR_DOWN_BUTTON = 4;
@@ -157,14 +157,16 @@ public final class Constants {
     public static final int MIDDLE_JOYSTICK_PORT = 1;
     public static final int LEFT_JOYSTICK_PORT = 0;
 
+    public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
+    public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
     public static final int INTAKE_BUTTON = 1;
     public static final int OUTTAKE_BUTTON = 3;
     public static final int RESET_GYRO_BUTTON = 11;
-	  public static final int REsET_ABSOLUTE_BUTTON = 12;
-
-    public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+    public static final int REsET_ABSOLUTE_BUTTON = 12;
 
     public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");
+
+    public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
 
     public static class AprilTagConstants {
         public static final int TAG_TO_CHASE = 6;
