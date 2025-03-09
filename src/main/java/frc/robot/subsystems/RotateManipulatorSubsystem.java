@@ -51,7 +51,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
             () -> {
-                double targetPosition = isRotated ? zero : 6.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
+                double targetPosition = isRotated ? -0.5 : 7.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
                 rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
                 System.out.println("Set reference to: " + targetPosition);
                 System.out.println("Actual position: " + rotatingEncoder.getPosition());

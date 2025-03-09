@@ -56,8 +56,8 @@ public class RobotContainer {
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    // private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    // private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
     private final JoystickButton elevatorPositionOne = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_ONE);
     private final JoystickButton elevatorPositionTwo = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_TWO);
@@ -73,7 +73,8 @@ public class RobotContainer {
     private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
     private JoystickButton getManipulator = new JoystickButton(middleJoystick, 4);
 
-    private JoystickButton setManipulatorToPoint = new JoystickButton(leftJoystick, 6);
+    private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
+    private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -123,7 +124,8 @@ public class RobotContainer {
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
-        setManipulatorToPoint.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem));
+        setManipulatorToPointOne.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 0));
+        setManipulatorToPointTwo.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 1));
   }
 
     /**
