@@ -102,7 +102,7 @@ public class RobotContainer {
     autoContainer.SetupAutoOptions(autoChooser);
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
-      () -> leftJoystick.getX(), 
+      () -> leftJoystick.getX(),
       () -> leftJoystick.getY(), 
       () -> middleJoystick.getX(), 
       () -> true));
@@ -166,4 +166,5 @@ public class RobotContainer {
         
         return autoChooser.getSelected();
     }
+
 }
