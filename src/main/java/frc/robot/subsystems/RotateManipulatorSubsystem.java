@@ -112,6 +112,6 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
             rotatingEncoder.setPosition(0);
             hasBeenZeroed = true;
         }
-        System.out.println(rotatingEncoder.getPosition());
+        // System.out.println(rotatingEncoder.getPosition());
     }
 }

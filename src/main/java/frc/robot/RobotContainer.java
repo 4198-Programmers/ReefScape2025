@@ -51,11 +51,11 @@ public class RobotContainer {
   private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
     private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     private final PoseEstimatorSubsystem poseEstimatorSubsystem = new PoseEstimatorSubsystem(swerveSubsystem, Constants.PHOTON_CAMERA);
 
     private final PhotonSubsystem photonSubsystem = new PhotonSubsystem();
-    private final AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, m_elevatorSubsystem);
+    private final AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, elevatorSubsystem);
 
     // Subsystems
     private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
@@ -88,8 +88,8 @@ public class RobotContainer {
     private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
     private JoystickButton getManipulator = new JoystickButton(middleJoystick, 4);
 
-    private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
-    private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
+    // private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
+    // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
     private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -111,7 +111,7 @@ public class RobotContainer {
     System.out.println(autoChooser.toString());
     System.out.println(autoChooser.getSelected());
     SmartDashboard.putData(autoChooser);
-    Shuffleboard.getTab("Autos").add(autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
+    // Shuffleboard.getTab("Autos").add(autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
     // .withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
 
   }
@@ -128,13 +128,13 @@ public class RobotContainer {
     
         climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
         climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
-        // elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
-        // elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
+        // elevatorUpButton.whileTrue(new ElevatorCommand(elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
+        // elevatorDownButton.whileTrue(new ElevatorCommand(elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
 
-        elevatorPositionOne.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 0));
-        elevatorPositionTwo.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 1));
-        elevatorPositionThree.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 2));
-        elevatorPositionFour.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 3));
+        elevatorPositionOne.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0)); //Human Player Height
+        elevatorPositionTwo.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3)); //Level 2
+        elevatorPositionThree.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2)); //Level 3
+        elevatorPositionFour.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1)); //Level 4
         
         resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
@@ -151,10 +151,9 @@ public class RobotContainer {
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
-        setManipulatorToPointOne.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 0));
-        setManipulatorToPointTwo.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 1));
 
-        zeroManipulatorRotate.onTrue(rotateManipulatorSubsystem.ZeroManipulatorRotate());
+
+        zeroManipulatorRotate.whileTrue(rotateManipulatorSubsystem.ZeroManipulatorRotate());
   }
 
     /**

@@ -73,7 +73,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
     public void getEncoder() {
-        System.out.println(manipulatorEncoder.getPosition());
+        // System.out.println(manipulatorEncoder.getPosition());
     }
 
     public Command ZeroManipulatorCommand() {
@@ -99,7 +99,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        // System.out.println(manipulatorEncoder.getPosition());
+         System.out.println(manipulatorEncoder.getPosition());
     }
 
     @Override

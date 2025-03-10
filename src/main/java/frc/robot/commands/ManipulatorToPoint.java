@@ -1,17 +1,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.RotateManipulatorSubsystem;
 
 public class ManipulatorToPoint extends Command {
     private final ManipulatorSubsystem manipulatorSubsystem;
-    private int manipulatorPosition;
+    private int switchCaseValue;
+    private final ElevatorSubsystem elevatorSubsystem;
+    private final RotateManipulatorSubsystem rotateManipulatorSubsystem;
 
 
-    public ManipulatorToPoint(ManipulatorSubsystem subsystem, int manipulatorPosition) {
-        manipulatorSubsystem = subsystem;
-        this.manipulatorPosition = manipulatorPosition;
-        addRequirements(subsystem);
+    public ManipulatorToPoint(ManipulatorSubsystem manipulatorSubsystem, ElevatorSubsystem elevatorSubsystem, RotateManipulatorSubsystem rotateManipulatorSubsystem, int switchCaseValue) {
+        this.manipulatorSubsystem = manipulatorSubsystem;
+        this.elevatorSubsystem = elevatorSubsystem;
+        this.switchCaseValue = switchCaseValue;
+        this.rotateManipulatorSubsystem = rotateManipulatorSubsystem;
+        addRequirements(manipulatorSubsystem, elevatorSubsystem);
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -24,12 +31,31 @@ public class ManipulatorToPoint extends Command {
     @Override
     public void execute() {
         // manipulatorSubsystem.turnPrimaryJointToPosition(47);
-        switch (manipulatorPosition) {
-            case 0:
-                manipulatorSubsystem.turnPrimaryJointToPosition(47);
+        switch (switchCaseValue) {
+            case 0://human player height
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
+                rotateManipulatorSubsystem.setIntakePosition(-0.5);
+                manipulatorSubsystem.turnPrimaryJointToPosition(42.118);
+
                 break;
-            case 1:
-                manipulatorSubsystem.turnPrimaryJointToPosition(0);
+            case 1: //Level 4
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
+                rotateManipulatorSubsystem.setIntakePosition(9);
+                manipulatorSubsystem.turnPrimaryJointToPosition(61.667);
+
+                break;
+            case 2: //Level 3
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
+                rotateManipulatorSubsystem.setIntakePosition(9);
+                manipulatorSubsystem.turnPrimaryJointToPosition(53.381);
+
+                break;
+            case 3: //Level 2
+                elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
+                rotateManipulatorSubsystem.setIntakePosition(9);
+                manipulatorSubsystem.turnPrimaryJointToPosition(33.761);
+                break;
+            default:
                 break;
         }
     }

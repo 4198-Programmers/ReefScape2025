@@ -88,8 +88,8 @@ public class SwerveSubsystem extends SubsystemBase{
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(0.2, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.2, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(5, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -105,16 +105,19 @@ public class SwerveSubsystem extends SubsystemBase{
             },
             this // Reference to this subsystem to set requirements
     );
+
+
     }   
 
-    
 
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
-        // System.out.println(gyro.getRotation2d());
-        // System.out.println("Ran?");
-        
+        // Debugging: Print the current pose and module states
+       // System.out.println("Current Pose: " + getPose());
+      //  for (SwerveModule module : modules) {
+            //System.out.println("Module " + module.getNumber() + " State: " + module.getState());
+      //  }
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds(){
@@ -228,7 +231,8 @@ public class SwerveSubsystem extends SubsystemBase{
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
         SwerveModuleState[] states;
         states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vyMetersPerSecond, chassisSpeeds.vxMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond));
-        System.out.println(chassisSpeeds);
+        // Debugging: Print the desired chassis speeds
+       // System.out.println("Desired Chassis Speeds: " + chassisSpeeds);
         setSwerveModuleStates(states);
     }
 
@@ -240,6 +244,10 @@ public class SwerveSubsystem extends SubsystemBase{
         else {
         states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.1));
         }
+        // Debugging: Print the desired states
+        // for (SwerveModuleState state : states) {
+        //     System.out.println("Desired State: " + state);
+        // }
         setSwerveModuleStates(states);
     }
 }
