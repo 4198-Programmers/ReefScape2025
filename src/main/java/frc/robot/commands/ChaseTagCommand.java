@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
@@ -26,7 +28,7 @@ public class ChaseTagCommand extends Command {
     private static final TrapezoidProfile.Constraints THETA_CONSTRAINTS =
         new TrapezoidProfile.Constraints(2, 8);
 
-    private static final int TAG_TO_CHASE = 6;
+    private List<Integer> TAG_TO_CHASE = new ArrayList<>(List.of(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22));
     private final Transform3d tagToGoal; // IMPORTANT BECAUSE IN REFERENCE TO TAG
 
     private final PhotonCamera photonCamera;
@@ -74,7 +76,7 @@ public class ChaseTagCommand extends Command {
         var photonRes = photonCamera.getLatestResult();
         if (photonRes.hasTargets()) {
             var targetOption = photonRes.getTargets().stream()
-                .filter(t -> t.getFiducialId() == TAG_TO_CHASE)
+                .filter(t -> TAG_TO_CHASE.contains(t.getFiducialId()))
                 .filter(t -> !t.equals(target) && t.getPoseAmbiguity() <= 0.2)
                 .findFirst();
             if (targetOption.isPresent()) {
