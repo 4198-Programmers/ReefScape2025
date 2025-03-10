@@ -67,7 +67,7 @@ public final class Constants {
     public static final int ROTATING_MOTOR_ID = 11;
     public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
     public static final double INTAKE_MOTOR_SPEED = 1.0;
-    public static final int INTAKE_SENSOR_ID = 11;
+    public static final int INTAKE_SENSOR_ID = 0;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
     public static final int INTAKE_MOTOR_TWO_ID = 14;

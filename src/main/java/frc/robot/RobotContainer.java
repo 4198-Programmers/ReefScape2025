@@ -90,6 +90,7 @@ public class RobotContainer {
 
     private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
     private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
+    private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -130,10 +131,10 @@ public class RobotContainer {
         // elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
         // elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
 
-        elevatorPositionOne.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 0));
-        elevatorPositionTwo.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 1));
-        elevatorPositionThree.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 2));
-        elevatorPositionFour.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 3));
+        elevatorPositionOne.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 0));
+        elevatorPositionTwo.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 1));
+        elevatorPositionThree.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 2));
+        elevatorPositionFour.whileTrue(new ElevatorCommand(m_elevatorSubsystem, rotateManipulatorSubsystem, 3));
         
         resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
@@ -141,6 +142,7 @@ public class RobotContainer {
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
+        
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
@@ -151,6 +153,8 @@ public class RobotContainer {
         getManipulator.whileTrue(manipulatorSubsystem.GetManipulatorEncoder());
         setManipulatorToPointOne.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 0));
         setManipulatorToPointTwo.toggleOnTrue(new ManipulatorToPoint(manipulatorSubsystem, 1));
+
+        zeroManipulatorRotate.onTrue(rotateManipulatorSubsystem.ZeroManipulatorRotate());
   }
 
     /**

@@ -29,8 +29,10 @@ public class AutoContainer extends SubsystemBase{
     }
 
     public void SetupAutoOptions(SendableChooser<Command> sendableChooser){
-        sendableChooser.addOption("PullForwardAuto", this.swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
-        sendableChooser.addOption("ReadyToPlaceAuto", this.swerveSubsystem.getAutonomousCommand("ReadyToPlaceAuto"));
+        sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
+        sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
+        sendableChooser.addOption("ReadyToPlaceAuto", swerveSubsystem.getAutonomousCommand("ReadyToPlaceAuto"));
+
     }
     
     

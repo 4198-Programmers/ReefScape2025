@@ -26,7 +26,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
     private SparkClosedLoopController rotatingPID;
     private SparkMaxConfig rotatingConfig;
     public boolean isRotated = false;
-    double zero = 0;
+    double zero = -0.5;
     boolean hasBeenZeroed = false;
 
     public DigitalInput rotateSensor = new DigitalInput(Constants.ManipulatorConstants.INTAKE_SENSOR_ID);
@@ -37,7 +37,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         rotatingConfig = new SparkMaxConfig();
         rotatingConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(0.075, 0.0, 1.0)
+            .pid(0.075, 0.0, 1.5)
             .outputRange(-1, 1);
         rotatingMotor.configure(rotatingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
@@ -51,7 +51,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
             () -> {
-                double targetPosition = isRotated ? -0.5 : 7.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
+                double targetPosition = isRotated ? 0 : 8.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
                 rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
                 System.out.println("Set reference to: " + targetPosition);
                 System.out.println("Actual position: " + rotatingEncoder.getPosition());
@@ -64,14 +64,54 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
      * Rotates the intake to the toggled target position.
      */
     public void toggleRotateIntake() { // Toggles the end between 0 and 90 degrees
-        double targetPosition = isRotated ? zero : 5.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
+        double targetPosition = isRotated ? 0 : 8.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
         rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
         isRotated = !isRotated; // Toggles the rotation state
     }
 
+    /**
+     * Sets the intake to a given position.
+     * @param position The position to set the intake to.
+     */
+    public void setIntakePosition(double position) {
+        rotatingPID.setReference(position, ControlType.kPosition);
+    }
+
     public void zeroMotor() {
-        // Will have to be fixed in a bit
-        // Maybe have it run in a periodic that if it passes the sensor it sets that point to zero?
-        rotatingEncoder.setPosition(0);
+        rotatingMotor.set(0.1);
+        try {
+            Thread.sleep(300); // Wait for 0.5 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        hasBeenZeroed = false;
+        rotatingMotor.set(-0.1);
+        try {
+            Thread.sleep(600); // Wait for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        rotatingPID.setReference(0, ControlType.kPosition); // Stop the motor
+    }
+
+    public Command ZeroManipulatorRotate() {
+        // Inline construction of command goes here.
+        // Subsystem::RunOnce implicitly requires `this` subsystem.
+        return runOnce(
+            () -> {
+
+                // System.out.println("Zeroing manipulator");
+                zeroMotor();
+            }
+        );
+    }
+
+    public void periodic() {
+        if (!rotateSensor.get() && !hasBeenZeroed) {
+            System.out.println("Zeroing manipulator");
+            rotatingEncoder.setPosition(0);
+            hasBeenZeroed = true;
+        }
+        System.out.println(rotatingEncoder.getPosition());
     }
 }

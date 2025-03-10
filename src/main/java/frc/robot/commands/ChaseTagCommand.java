@@ -37,7 +37,7 @@ public class ChaseTagCommand extends Command {
 
     private final ProfiledPIDController xController = new ProfiledPIDController(0.5, 0.0, 0.1, X_CONSTRAINTS);
     private final ProfiledPIDController yController = new ProfiledPIDController(0.5, 0.0, 0.1, Y_CONSTRAINTS);
-    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.5, 0, 0.2, THETA_CONSTRAINTS);
+    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.6, 0, 0.2, THETA_CONSTRAINTS);
 
     private PhotonTrackedTarget target;
 
@@ -47,9 +47,9 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.005);
-        yController.setTolerance(0.005);
-        thetaController.setTolerance(Units.degreesToRadians(3));
+        xController.setTolerance(0.003);
+        yController.setTolerance(0.003);
+        thetaController.setTolerance(Units.degreesToRadians(1));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         addRequirements(swerveSubsystem);
