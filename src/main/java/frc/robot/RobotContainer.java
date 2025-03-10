@@ -132,9 +132,9 @@ public class RobotContainer {
         // elevatorDownButton.whileTrue(new ElevatorCommand(elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
 
         elevatorPositionOne.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0)); //Human Player Height
-        elevatorPositionTwo.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3)); //Level 2
+        elevatorPositionTwo.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1)); //Level 2
         elevatorPositionThree.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2)); //Level 3
-        elevatorPositionFour.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1)); //Level 4
+        elevatorPositionFour.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3)); //Level 4
         
         resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
