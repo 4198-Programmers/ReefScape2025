@@ -8,12 +8,15 @@ import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.SendableChooserSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ClimbMotorCommand;
+import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
@@ -52,6 +55,7 @@ public class RobotContainer {
     private final PoseEstimatorSubsystem poseEstimatorSubsystem = new PoseEstimatorSubsystem(swerveSubsystem, Constants.PHOTON_CAMERA);
 
     private final PhotonSubsystem photonSubsystem = new PhotonSubsystem();
+    private final AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, m_elevatorSubsystem);
 
     // Subsystems
     private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
@@ -87,11 +91,14 @@ public class RobotContainer {
     private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
     private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
 
+    // SendableChooser<Command> autoChooser = new SendableChooser<>();
+    SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
+    autoContainer.SetupAutoOptions(autoChooser);
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
       () -> leftJoystick.getX(), 
@@ -100,7 +107,11 @@ public class RobotContainer {
       () -> true));
       manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
     configureBindings();
-
+    System.out.println(autoChooser.toString());
+    System.out.println(autoChooser.getSelected());
+    SmartDashboard.putData(autoChooser);
+    Shuffleboard.getTab("Autos").add(autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
+    // .withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
 
   }
   /**
@@ -144,11 +155,12 @@ public class RobotContainer {
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
+
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        
+        return autoChooser.getSelected();
     }
 }
