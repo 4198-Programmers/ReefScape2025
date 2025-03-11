@@ -37,8 +37,8 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         rotatingConfig = new SparkMaxConfig();
         rotatingConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(0.075, 0.0, 1.5)
-            .outputRange(-1, 1);
+            .pid(0.11, 0.0, 1.5)
+            .outputRange(-0.4, 0.4);
         rotatingMotor.configure(rotatingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
@@ -51,7 +51,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         // Subsystem::RunOnce implicitly requires `this` subsystem.
         return runOnce(
             () -> {
-                double targetPosition = isRotated ? 0 : 8.1; // Target position is 90 degrees if not rotated, otherwise 0 degrees
+                double targetPosition = isRotated ? 0 : 7.7; // Target position is 90 degrees if not rotated, otherwise 0 degrees
                 rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
                 System.out.println("Set reference to: " + targetPosition);
                 System.out.println("Actual position: " + rotatingEncoder.getPosition());
@@ -67,6 +67,10 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         double targetPosition = isRotated ? 0 : 8.5; // Target position is 90 degrees if not rotated, otherwise 0 degrees
         rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
         isRotated = !isRotated; // Toggles the rotation state
+    }
+
+    public void RotateManipulator(double speed){
+        rotatingMotor.set(speed);
     }
 
     /**

@@ -20,6 +20,11 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void runIntake(double speed) { //Both to intake and outtake
         intakeMotor.set(speed);
+        // intakeMotorTwo.set(speed);
+    }
+
+    public void runOutake(double speed) {
+        intakeMotor.set(speed);
         intakeMotorTwo.set(speed);
     }
 }

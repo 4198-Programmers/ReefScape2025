@@ -38,7 +38,7 @@ public class ManipulatorToPoint extends Command {
                 manipulatorSubsystem.turnPrimaryJointToPosition(42.118);
 
                 break;
-            case 1: //Level 4
+            case 1: //Level 2
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
                 rotateManipulatorSubsystem.setIntakePosition(9);
                 manipulatorSubsystem.turnPrimaryJointToPosition(61.667);
@@ -50,7 +50,7 @@ public class ManipulatorToPoint extends Command {
                 manipulatorSubsystem.turnPrimaryJointToPosition(53.381);
 
                 break;
-            case 3: //Level 2
+            case 3: //Level 4
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
                 rotateManipulatorSubsystem.setIntakePosition(9);
                 manipulatorSubsystem.turnPrimaryJointToPosition(33.761);
