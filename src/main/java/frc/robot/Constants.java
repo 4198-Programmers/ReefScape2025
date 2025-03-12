@@ -4,14 +4,20 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.math.geometry.Rotation3d;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -35,12 +41,12 @@ public final class Constants {
 
         // Elevator positions in rotations
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
-        public static final double ELEVATOR_POSITION_1 = -20; // First reef section
-        public static final double ELEVATOR_POSITION_2 = -50; // Second reef section
-        public static final double ELEVATOR_POSITION_3 = -80; // Third reef section
+        public static final double ELEVATOR_POSITION_1 = -5; // First reef section
+        public static final double ELEVATOR_POSITION_2 = -40; // Second reef section
+        public static final double ELEVATOR_POSITION_3 = -78; // Third reef section
 
-        public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
-        public static final int ELEVATOR_DOWN_BUTTON = 4;
+        // public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
+        // public static final int ELEVATOR_DOWN_BUTTON = 4;
     }
 
     public static class ClimbConstants {
@@ -61,7 +67,7 @@ public final class Constants {
     public static final int ROTATING_MOTOR_ID = 11;
     public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
     public static final double INTAKE_MOTOR_SPEED = 1.0;
-    public static final int INTAKE_SENSOR_ID = 11;
+    public static final int INTAKE_SENSOR_ID = 0;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
     public static final int INTAKE_MOTOR_TWO_ID = 14;
@@ -74,7 +80,7 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = -0.192138671875;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = -0.265625;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
   public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
@@ -151,11 +157,21 @@ public final class Constants {
     public static final int MIDDLE_JOYSTICK_PORT = 1;
     public static final int LEFT_JOYSTICK_PORT = 0;
 
-
     public static final int RIGHT_JOYSTICK_BUTTON_TWELVE = 12;
     public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
     public static final int INTAKE_BUTTON = 1;
     public static final int OUTTAKE_BUTTON = 3;
     public static final int RESET_GYRO_BUTTON = 11;
-	  public static final int REsET_ABSOLUTE_BUTTON = 12;
+    public static final int REsET_ABSOLUTE_BUTTON = 12;
+
+    public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");
+
+    public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+
+    public static class AprilTagConstants {
+        public static final int TAG_TO_CHASE = 6;
+        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.51, 0.02, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-175)));
+        public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.51, 0.2, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(175)));;
+
+    }
 }

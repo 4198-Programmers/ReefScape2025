@@ -4,20 +4,32 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.SendableChooserSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ChaseTagCommand;
 import frc.robot.commands.ClimbMotorCommand;
+import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
+import frc.robot.commands.ManipulatorRotateCommand;
+import frc.robot.commands.PhotonVisionCommand;
+import frc.robot.commands.ManipulatorToPoint;
+import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.PhotonSubsystem;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -32,16 +44,20 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
-public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  //Subsytems
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+public class RobotContainer {    
+        // The robot's subsystems and commands are defined here...
+        private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+            
+      //Subsytems
+      private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
     private final RotateManipulatorSubsystem rotateManipulatorSubsystem = new RotateManipulatorSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+    private final PoseEstimatorSubsystem poseEstimatorSubsystem = new PoseEstimatorSubsystem(swerveSubsystem, Constants.PHOTON_CAMERA);
+
+    private final PhotonSubsystem photonSubsystem = new PhotonSubsystem();
+    private final AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, elevatorSubsystem);
 
     // Subsystems
     private final ClimbMotorSubsystem climbMotorSubsystem = new ClimbMotorSubsystem();
@@ -55,8 +71,8 @@ public class RobotContainer {
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
+    // private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
+    // private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
 
     private final JoystickButton elevatorPositionOne = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_ONE);
     private final JoystickButton elevatorPositionTwo = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_TWO);
@@ -69,19 +85,38 @@ public class RobotContainer {
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
+    private JoystickButton photonAlignLeftButton = new JoystickButton(middleJoystick, 3);
+    private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
+    private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
+
+    private JoystickButton moveManipulatorClockwise = new JoystickButton(rightJoystick, 6);
+    private JoystickButton moveManipulatorCounterClockwise = new JoystickButton(rightJoystick, 4);
+
+    // private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
+    // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
+    // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
+
+    // SendableChooser<Command> autoChooser = new SendableChooser<>();
+    SendableChooser<Command> autoChooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
+    autoContainer.SetupAutoOptions(autoChooser);
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
       swerveSubsystem, 
-      () -> leftJoystick.getX(), 
+      () -> leftJoystick.getX(),
       () -> leftJoystick.getY(), 
       () -> middleJoystick.getX(), 
       () -> true));
       manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
     configureBindings();
-
+    System.out.println(autoChooser.toString());
+    System.out.println(autoChooser.getSelected());
+    SmartDashboard.putData(autoChooser);
+    // Shuffleboard.getTab("Autos").add(autoChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
+    // .withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0,0).withSize(3, 1);
 
   }
   /**
@@ -97,32 +132,43 @@ public class RobotContainer {
     
         climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
         climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
-        // elevatorUpButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
-        // elevatorDownButton.whileTrue(new ElevatorCommand(m_elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
+        // elevatorUpButton.whileTrue(new ElevatorCommand(elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
+        // elevatorDownButton.whileTrue(new ElevatorCommand(elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
 
-        elevatorPositionOne.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 0));
-        elevatorPositionTwo.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 1));
-        elevatorPositionThree.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 2));
-        elevatorPositionFour.whileTrue(new ElevatorCommand(m_elevatorSubsystem, 3));
+        elevatorPositionOne.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0)); //Human Player Height
+        elevatorPositionTwo.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1)); //Level 2
+        elevatorPositionThree.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2)); //Level 3
+        elevatorPositionFour.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3)); //Level 4
         
-        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem));
+        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
 
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
+
+        zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
+        
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
-        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
+        outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
+        photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
+        photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_RIGHT));
+        // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
+        moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
+        moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
+
   }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
+
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(m_exampleSubsystem);
+        
+        return autoChooser.getSelected();
     }
+
 }
