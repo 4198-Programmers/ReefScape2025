@@ -23,6 +23,7 @@ import frc.robot.commands.ManipulatorCommand;
 import frc.robot.commands.ManipulatorRotateCommand;
 import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.commands.ManipulatorToPoint;
+import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ResetToAbsolutes;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -86,12 +87,14 @@ public class RobotContainer {
 
     private JoystickButton photonAlignLeftButton = new JoystickButton(middleJoystick, 3);
     private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
-    private JoystickButton moveManipulatorClockwise = new JoystickButton(middleJoystick, 6);
-    private JoystickButton moveManipulatorCounterClockwise = new JoystickButton(middleJoystick, 4);
+    private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
+
+    private JoystickButton moveManipulatorClockwise = new JoystickButton(rightJoystick, 6);
+    private JoystickButton moveManipulatorCounterClockwise = new JoystickButton(rightJoystick, 4);
 
     // private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
     // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
-    private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
+    // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -143,18 +146,18 @@ public class RobotContainer {
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
+
+        zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
-        outtakeButton.whileTrue(new IntakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
+        outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
         photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_RIGHT));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
         moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
 
-
-        zeroManipulatorRotate.whileTrue(rotateManipulatorSubsystem.ZeroManipulatorRotate());
   }
 
     /**

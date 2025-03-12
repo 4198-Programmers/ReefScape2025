@@ -34,25 +34,25 @@ public class ManipulatorToPoint extends Command {
         switch (switchCaseValue) {
             case 0://human player height
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
-                rotateManipulatorSubsystem.setIntakePosition(-0.5);
+                rotateManipulatorSubsystem.setIntakePosition(0);
                 manipulatorSubsystem.turnPrimaryJointToPosition(42.118);
 
                 break;
             case 1: //Level 2
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(7.5);
                 manipulatorSubsystem.turnPrimaryJointToPosition(61.667);
 
                 break;
             case 2: //Level 3
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(7.5);
                 manipulatorSubsystem.turnPrimaryJointToPosition(53.381);
 
                 break;
             case 3: //Level 4
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(7.5);
                 manipulatorSubsystem.turnPrimaryJointToPosition(33.761);
                 break;
             default:
