@@ -5,21 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ZeroGyro"
+            "pathName": "EnemyThreeToReef"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "TaxiTarmac"
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ReefPlace"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "EnemyThree",
   "choreoAuto": false
 }

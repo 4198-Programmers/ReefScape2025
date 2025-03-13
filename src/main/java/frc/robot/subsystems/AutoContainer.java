@@ -31,7 +31,16 @@ public class AutoContainer extends SubsystemBase{
         sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
         sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
         sendableChooser.addOption("ReadyToPlaceAuto", swerveSubsystem.getAutonomousCommand("ReadyToPlaceAuto"));
-        sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> 0.2, () -> 0.0, () -> false));
+        sendableChooser.addOption("TestAuto", swerveSubsystem.getAutonomousCommand("TestAuto"));
+        sendableChooser.addOption("EnemyOneToReefL4", swerveSubsystem.getAutonomousCommand("EnemyOneToReefL4"));
+        sendableChooser.addOption("EnemyTwoToReefL4", swerveSubsystem.getAutonomousCommand("EnemyTwoToReefL4"));
+        sendableChooser.addOption("EnemyThreeToReefL4", swerveSubsystem.getAutonomousCommand("EnemyThreeToReefL4"));
+        sendableChooser.addOption("TeammateOneToReefL4", swerveSubsystem.getAutonomousCommand("TeammateOneToReefL4"));
+        sendableChooser.addOption("TeammateTwoToReefL4", swerveSubsystem.getAutonomousCommand("TeammateTwoToReefL4"));
+        sendableChooser.addOption("TeammateThreeToReefL4", swerveSubsystem.getAutonomousCommand("TeammateThreeToReefL4"));
+        sendableChooser.addOption("EnemyTwoL3Human", swerveSubsystem.getAutonomousCommand("EnemyTwoL3Human"));
+   
+        sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false));
     }
     
     

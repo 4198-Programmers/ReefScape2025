@@ -5,21 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ZeroGyro"
+            "pathName": "TeammateOneToReef"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "TaxiTarmac"
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ReefPlace"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "TeammateOne",
   "choreoAuto": false
 }
