@@ -12,8 +12,10 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -174,4 +176,10 @@ public final class Constants {
         public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.51, 0.2, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(175)));;
 
     }
+    public static double kMaxSpeedMetersPerSecond = 1;
+    public static double kMaxAccelerationMetersPerSecondSquared = 2;
+    // Constraint for the motion profiled robot angle controller
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        new TrapezoidProfile.Constraints(
+            Math.PI, Math.PI);
 }
