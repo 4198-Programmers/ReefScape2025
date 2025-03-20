@@ -37,7 +37,7 @@ public class ChaseTagCommand extends Command {
 
     private final ProfiledPIDController xController = new ProfiledPIDController(0.5, 0.0, 0.1, X_CONSTRAINTS);
     private final ProfiledPIDController yController = new ProfiledPIDController(0.5, 0.0, 0.1, Y_CONSTRAINTS);
-    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.6, 0, 0.2, THETA_CONSTRAINTS);
+    private final ProfiledPIDController thetaController = new ProfiledPIDController(0.8, 0, 0.2, THETA_CONSTRAINTS);
 
     private PhotonTrackedTarget target;
 

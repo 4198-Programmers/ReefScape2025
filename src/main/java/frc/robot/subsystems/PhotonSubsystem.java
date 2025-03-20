@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
-
 import com.revrobotics.spark.SparkBase.ControlType;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,7 +11,7 @@ public class PhotonSubsystem extends SubsystemBase {
     public PhotonCamera camera = new PhotonCamera("frontcam");
 
     public PhotonSubsystem() { }
-    
+
     public void takeSnapshot() {
         var results = camera.getLatestResult();
 

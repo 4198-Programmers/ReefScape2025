@@ -20,7 +20,7 @@ public class ZeroGyro extends Command{
     @Override
     public void execute() {
         swerveSubsystem.resetGyro();
-        swerveSubsystem.resetOdometry(new Pose2d(0, 0, new Rotation2d(Math.PI)));
+        swerveSubsystem.resetOdometryPose();
         poseEstimatorSubsystem.resetPoseEstimator();
     }
     
