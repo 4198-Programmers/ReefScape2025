@@ -126,10 +126,10 @@ public class SwerveModule {
     public void resetToAbsolute() {
         Rotation2d absolutePosition = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
         // double absolutePosition = angleEncoder.getAbsolutePosition().getValueAsDouble();
-        // System.out.println("Module Number: " + moduleNumber + " Absolute Position: " + absolutePosition.getRotations());
+        // System.out.println("Module Number: " + moduleNumber + " Absolute Position: " + absolutePosition);
         // System.out.println("Relative Position Pre: " + turningRelativeEncoder.getPosition());
         turningRelativeEncoder.setPosition(absolutePosition.getRotations());
-        // System.out.println("Relative Position Post: " + turningRelativeEncoder.getPosition());
+        // System.out.println("Relative Position: " + Rotation2d.fromRotations(turningRelativeEncoder.getPosition()));
     }
 
     /**

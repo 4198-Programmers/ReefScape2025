@@ -29,7 +29,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
     double zero = -0.5;
     boolean hasBeenZeroed = false;
 
-    public DigitalInput rotateSensor = new DigitalInput(Constants.ManipulatorConstants.INTAKE_SENSOR_ID);
+    // public DigitalInput rotateSensor = new DigitalInput(Constants.ManipulatorConstants.INTAKE_SENSOR_ID);
 
     public RotateManipulatorSubsystem() {
         rotatingPID = rotatingMotor.getClosedLoopController();
@@ -110,12 +110,12 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         );
     }
 
-    public void periodic() {
-        if (!rotateSensor.get() && !hasBeenZeroed) {
-            System.out.println("Zeroing manipulator");
-            // rotatingEncoder.setPosition(0);
-            hasBeenZeroed = true;
-        }
-        //System.out.println(rotatingEncoder.getPosition());
-    }
+    // public void periodic() {
+    //     if (!rotateSensor.get() && !hasBeenZeroed) {
+    //         System.out.println("Zeroing manipulator");
+    //         // rotatingEncoder.setPosition(0);
+    //         hasBeenZeroed = true;
+    //     }
+    //     //System.out.println(rotatingEncoder.getPosition());
+    // }
 }

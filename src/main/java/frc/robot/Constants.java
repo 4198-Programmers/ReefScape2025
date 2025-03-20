@@ -80,7 +80,7 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = -0.286865234375;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = -0.336669921875;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
   public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
@@ -172,6 +172,8 @@ public final class Constants {
         public static final int TAG_TO_CHASE = 6;
         public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.51, 0.02, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-175)));
         public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.56, 0.31, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-178)));;
+        public static final Transform3d APRILTAG_MIDDLE = new Transform3d(new Translation3d(0.5, 0.08, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(180)));;
+
 
     }
 }

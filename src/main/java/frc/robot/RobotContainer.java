@@ -111,9 +111,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("L4ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3));
     NamedCommands.registerCommand("L3ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2));
     NamedCommands.registerCommand("L2ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1));
-    NamedCommands.registerCommand("L1ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0));
-    NamedCommands.registerCommand("OuttakeCommand", new OuttakeCommand(intakeSubsystem, 0.25));
+    NamedCommands.registerCommand("HumanPlayer", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0));
+    NamedCommands.registerCommand("OuttakeCommand", new OuttakeCommand(intakeSubsystem, -0.25).withTimeout(1));
     NamedCommands.registerCommand("ZeroGyro", new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem).withTimeout(0.1));
+    NamedCommands.registerCommand("L1Reef", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 4).withTimeout(1));
+    NamedCommands.registerCommand("AlignCenterAprilTag", new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE).withTimeout(5));
 
     autoContainer.SetupAutoOptions(autoChooser);
     swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
@@ -166,7 +168,7 @@ public class RobotContainer {
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
-        photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_RIGHT));
+        photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
         moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));

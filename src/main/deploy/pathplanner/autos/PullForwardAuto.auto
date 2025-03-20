@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "ZeroGyro"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "TaxiTarmac"

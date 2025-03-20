@@ -39,6 +39,8 @@ public class AutoContainer extends SubsystemBase{
         sendableChooser.addOption("TeammateTwoToReefL4", swerveSubsystem.getAutonomousCommand("TeammateTwoToReefL4"));
         sendableChooser.addOption("TeammateThreeToReefL4", swerveSubsystem.getAutonomousCommand("TeammateThreeToReefL4"));
         sendableChooser.addOption("EnemyTwoL3Human", swerveSubsystem.getAutonomousCommand("EnemyTwoL3Human"));
+        sendableChooser.addOption("SideDump", swerveSubsystem.getAutonomousCommand("SideDump"));
+        sendableChooser.addOption("CenterDump", swerveSubsystem.getAutonomousCommand("CenterDump"));
    
         sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false));
     }

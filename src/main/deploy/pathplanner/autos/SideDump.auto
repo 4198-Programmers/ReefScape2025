@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "EnemyTwoToReef"
+            "pathName": "SideDump"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 2.0
+            "name": "L1Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OuttakeCommand"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "EnemyTwo",
+  "folder": null,
   "choreoAuto": false
 }
