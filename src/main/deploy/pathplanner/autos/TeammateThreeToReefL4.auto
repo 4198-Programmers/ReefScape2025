@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TeammateThreeToReef"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ReefPlace"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "TeammateThree",
+  "choreoAuto": false
+}

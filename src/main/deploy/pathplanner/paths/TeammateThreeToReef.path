@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.940881147540983,
-        "y": 6.896055327868852
+        "x": 7.1,
+        "y": 7.2425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.125596055857836,
-        "y": 7.064520168846121
+        "x": 7.82593873458347,
+        "y": 7.656329400826624
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.976749999999999,
-        "y": 4.1419999999999995
+        "x": 3.9097500000000003,
+        "y": 5.36075
       },
       "prevControl": {
-        "x": 6.0830266466887,
-        "y": 4.557652282755318
+        "x": 3.5239696726397725,
+        "y": 5.160891629828401
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -59.381394591090576
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TeammateThree",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.8716224648317
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

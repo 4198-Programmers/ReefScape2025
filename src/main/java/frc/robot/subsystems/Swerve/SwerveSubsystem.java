@@ -36,6 +36,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public SwerveSubsystem(){
         //Added the parameters to define all of the 4 modules
+        gyro.reset();
         frontLeftSwerveModule = new SwerveModule(
             Constants.FRONT_LEFT_DRIVE_MOTOR_ID, 
             Constants.FRONT_LEFT_ANGLE_MOTOR_ID, 
@@ -88,8 +89,8 @@ public class SwerveSubsystem extends SubsystemBase{
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(0.001, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.001, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -109,10 +110,16 @@ public class SwerveSubsystem extends SubsystemBase{
 
     }   
 
+    public void setGyroAngle(double angle){
+        gyro.setAngleAdjustment(angle);
+    }
+
 
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
+        // System.out.println(gyro.getRotation2d());
+        // System.out.println(getPose());
         // Debugging: Print the current pose and module states
        // System.out.println("Current Pose: " + getPose());
       //  for (SwerveModule module : modules) {
@@ -133,7 +140,13 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void resetGyro(){
         gyro.reset();
-        resetOdometry(new Pose2d(0, 0, new Rotation2d(Math.PI)));
+        // resetPose(new Pose2d(0, 0, new Rotation2d(Math.PI)));
+    }
+
+
+
+    public void resetOdometryPose() {
+        resetPose(new Pose2d(0, 0, new Rotation2d(Math.PI)));
     }
 
     /**
@@ -144,13 +157,6 @@ public class SwerveSubsystem extends SubsystemBase{
         return odometry.getPoseMeters();
     }
 
-    /**
-     * Resets the odometry of the robot to a pose
-     * @param pose
-     */
-    public void resetOdometry(Pose2d pose){
-        odometry.resetPosition(gyro.getRotation2d().times(-1), getSwerveModulePositions(), pose);
-    }
     
     /**
      * Returns all the swerve module states
@@ -230,9 +236,11 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
         SwerveModuleState[] states;
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vyMetersPerSecond, chassisSpeeds.vxMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond));
         // Debugging: Print the desired chassis speeds
-       // System.out.println("Desired Chassis Speeds: " + chassisSpeeds);
+       System.out.println("Desired Chassis Speeds: " + chassisSpeeds);
+       System.err.println(getRobotRelativeSpeeds());
+    // System.err.println("Jackson is AWESOME");
         setSwerveModuleStates(states);
     }
 
@@ -248,6 +256,7 @@ public class SwerveSubsystem extends SubsystemBase{
         // for (SwerveModuleState state : states) {
         //     System.out.println("Desired State: " + state);
         // }
+        // System.out.println(states);
         setSwerveModuleStates(states);
     }
 }

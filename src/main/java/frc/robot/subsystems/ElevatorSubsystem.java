@@ -68,6 +68,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // System.out.println(elevatorEncoder.getPosition());
-    System.out.println("Current: " + elevatorMotor.getOutputCurrent());
+    //System.out.println("Current: " + elevatorMotor.getOutputCurrent());
   }
 }
