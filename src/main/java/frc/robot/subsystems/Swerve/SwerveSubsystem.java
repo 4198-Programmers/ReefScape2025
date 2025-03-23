@@ -171,7 +171,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void logRecordedInputs(){
         // Save recorded data to a file when the robot is disabled
-        try (FileWriter writer = new FileWriter("../joystick_recording.csv")) {
+        try (FileWriter writer = new FileWriter("joystickData.csv")) {
             for (String row : recordedInputs) {
                 writer.write(row + "\n");
             }
@@ -234,7 +234,7 @@ public class SwerveSubsystem extends SubsystemBase{
     }
     public double deadband = 0;
     public void setSwerveModuleStates(SwerveModuleState[] desiredStates){
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_DRIVE_SPEED_MPS);
+        // SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_DRIVE_SPEED_MPS);
         for(SwerveModule module : modules){
             /* if 180 - abs desired + 180 - abs current < deadband
              * 
@@ -269,11 +269,21 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
         SwerveModuleState[] states;
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond));
+
+
+        // SwerveModuleState[] otherStates;
+        // ChassisSpeeds testSpeeds = new ChassisSpeeds(0, 0, 0.1);
+        // otherStates = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(testSpeeds);
+        // System.out.println(otherStates[0]);
+
+
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond / 132.5)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
+        System.out.println("Module 1: " + states[0] + " Module 2: " + states[1] + " Module 3: " + states[2] + " Module 4: " + states[3]);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired chassis speeds
-       System.out.println("Desired Chassis Speeds: " + chassisSpeeds);
-       System.err.println(getRobotRelativeSpeeds());
-    // System.err.println("Jackson is AWESOME");
+    //    System.out.println("X Speed: " + chassisSpeeds.vxMetersPerSecond / 4.69 + " Y Speed: " + chassisSpeeds.vyMetersPerSecond / 4.69 + " Z Speed: " + chassisSpeeds.omegaRadiansPerSecond);
+        //
+    //    System.out.println("Current Speeds: " + getRobotRelativeSpeeds());
         setSwerveModuleStates(states);
     }
 
@@ -285,11 +295,18 @@ public class SwerveSubsystem extends SubsystemBase{
         else {
         states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.1));
         }
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired states
         // for (SwerveModuleState state : states) {
         //     System.out.println("Desired State: " + state);
         // }
         // System.out.println(states);
         setSwerveModuleStates(states);
+
+
+
+
+
+        //4.602
     }
 }
