@@ -102,7 +102,7 @@ public class RobotContainer {
     // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     private JoystickButton recordInputs = new JoystickButton(middleJoystick, 1);
-    private JoystickButton logInputs = new JoystickButton(middleJoystick, 5);
+    // private JoystickButton logInputs = new JoystickButton(middleJoystick, 5);
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -166,7 +166,7 @@ public class RobotContainer {
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
 
-        logInputs.onTrue(swerveSubsystem.logInputsCommand());
+        // logInputs.onTrue(swerveSubsystem.logInputsCommand());
 
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         
@@ -190,6 +190,13 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         
         return autoChooser.getSelected();
+    }
+
+    /**
+     * Save the recorded joystick inputs to a file
+     */
+    public void saveRecording() {
+        swerveSubsystem.logRecordedInputs();
     }
 
 }
