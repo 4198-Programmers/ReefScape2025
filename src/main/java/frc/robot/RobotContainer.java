@@ -101,6 +101,9 @@ public class RobotContainer {
     // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
     // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
+    private JoystickButton recordInputs = new JoystickButton(middleJoystick, 1);
+    private JoystickButton logInputs = new JoystickButton(middleJoystick, 5);
+
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -123,7 +126,8 @@ public class RobotContainer {
       () -> leftJoystick.getX(),
       () -> leftJoystick.getY(), 
       () -> middleJoystick.getX(), 
-      () -> true));
+      () -> true,
+      () -> recordInputs.getAsBoolean()));
       manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
     configureBindings();
     System.out.println(autoChooser.toString());
@@ -161,6 +165,8 @@ public class RobotContainer {
         // manipulatorRotateButton.whileTrue(new
         // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
+
+        logInputs.onTrue(swerveSubsystem.logInputsCommand());
 
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         

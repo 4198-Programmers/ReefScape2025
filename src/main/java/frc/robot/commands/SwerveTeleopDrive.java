@@ -13,13 +13,19 @@ public class SwerveTeleopDrive extends Command {
     private Supplier<Double> xSupplier, ySupplier, zSupplier;
     private Supplier<Boolean> fieldOrientedSupplier;
 
+    private Supplier<Boolean> recordInputSupplier;
+
+
+
     public SwerveTeleopDrive(SwerveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double> ySupplier,
-            Supplier<Double> zSupplier, Supplier<Boolean> fieldOrientedSupplier) {
+            Supplier<Double> zSupplier, Supplier<Boolean> fieldOrientedSupplier, Supplier<Boolean> recordInputSupplier) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSupplier = xSupplier;
         this.ySupplier = ySupplier;
         this.zSupplier = zSupplier;
         this.fieldOrientedSupplier = fieldOrientedSupplier;
+        this.recordInputSupplier = recordInputSupplier;
+
         addRequirements(swerveSubsystem);
     }
 
@@ -28,6 +34,11 @@ public class SwerveTeleopDrive extends Command {
         double xSpeed = deadband(xSupplier.get(), Constants.DEADBAND);
         double ySpeed = deadband(ySupplier.get(), Constants.DEADBAND);
         double zSpeed = deadband(zSupplier.get(), Constants.DEADBAND);
+
+        if (recordInputSupplier.get()) {
+            // System.out.println("Recording");
+            swerveSubsystem.recordInput(xSpeed, ySpeed, zSpeed);
+        }
 
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);
 

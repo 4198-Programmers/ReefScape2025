@@ -1,10 +1,16 @@
 package frc.robot.subsystems.Swerve;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -31,6 +37,7 @@ public class SwerveSubsystem extends SubsystemBase{
     private SwerveDriveOdometry odometry;
 
     private SwerveModule frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule;
+    private List<String> recordedInputs = new ArrayList<>();
 
     private final SwerveModule[] modules;
 
@@ -155,6 +162,32 @@ public class SwerveSubsystem extends SubsystemBase{
      */
     public Pose2d getPose(){
         return odometry.getPoseMeters();
+    }
+
+    public void recordInput(double xSpeed, double ySpeed, double zSpeed){
+        System.out.println("Recording");
+        recordedInputs.add(String.format("%.2f,%.2f,%.2f,%b,%b,%d", xSpeed, ySpeed, zSpeed));
+    }
+
+    public void logRecordedInputs(){
+        // Save recorded data to a file when the robot is disabled
+        try (FileWriter writer = new FileWriter("../joystick_recording.csv")) {
+            for (String row : recordedInputs) {
+                writer.write(row + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Command logInputsCommand() {
+        // Inline construction of command goes here.
+        // Subsystem::RunOnce implicitly requires `this` subsystem.
+        return runOnce(
+            () -> {
+                logRecordedInputs();
+            }
+        );
     }
 
     
