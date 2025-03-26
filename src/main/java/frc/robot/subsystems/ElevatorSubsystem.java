@@ -31,7 +31,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig = new SparkMaxConfig();
     elevatorConfig.closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-          .pid(0.04,0.0,0.02)
+          .pid(0.08,0.0,0.02)
           .outputRange(-1.0, 0.7);
 
     elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

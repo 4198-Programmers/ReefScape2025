@@ -10,14 +10,20 @@ public class ManipulatorCommand extends Command {
   private Double yValue;
   private Joystick joystick;
 
+  // variable to run during auto, null means we don't run off of it
+  private double AutoSpeedOverride;
+
   /**
    * Creates a new ExampleCommand.
+   * Set AutoSpeedOverride to 0 if you don't want to use it
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ManipulatorCommand(ManipulatorSubsystem subsystem, Joystick joystick) {
+  public ManipulatorCommand(ManipulatorSubsystem subsystem, Joystick joystick, double AutoSpeedOverride) {
     manipulatorSubsystem = subsystem;
     this.joystick = joystick;
+
+    this.AutoSpeedOverride = AutoSpeedOverride;
     
     addRequirements(subsystem);
   }
@@ -33,8 +39,12 @@ public class ManipulatorCommand extends Command {
   public void execute() {
     // System.out.println("Ran Manipulator Command");
     yValue = joystick.getY();
+    if(AutoSpeedOverride != 0) {
+      yValue = AutoSpeedOverride;
+    }
+
     // System.out.println(yValue);
-    if(yValue > 0.3 || yValue < -0.1) {
+    if(yValue > 0.1 || yValue < -0.1) {
       manipulatorSubsystem.turnPrimaryJoint(-yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
     } else {
       manipulatorSubsystem.turnPrimaryJoint(0);

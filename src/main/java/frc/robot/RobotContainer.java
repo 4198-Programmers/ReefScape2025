@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -45,6 +46,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.commands.ZeroGyro;
+import frc.robot.commands.AutoCommands.RecordingDrive;
+import frc.robot.commands.AutoCommands.ReplayJoystick;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
@@ -102,7 +105,7 @@ public class RobotContainer {
     // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     private JoystickButton recordInputs = new JoystickButton(middleJoystick, 1);
-    // private JoystickButton logInputs = new JoystickButton(middleJoystick, 5);
+    private JoystickButton replayInputs = new JoystickButton(middleJoystick, 5);
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -121,14 +124,31 @@ public class RobotContainer {
     NamedCommands.registerCommand("AlignCenterAprilTag", new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE).withTimeout(5));
 
     autoContainer.SetupAutoOptions(autoChooser);
-    swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
-      swerveSubsystem, 
-      () -> leftJoystick.getX(),
-      () -> leftJoystick.getY(), 
-      () -> middleJoystick.getX(), 
-      () -> true,
-      () -> recordInputs.getAsBoolean()));
-      manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick));
+
+    if (DriverStation.isTest()) {
+      swerveSubsystem.setDefaultCommand(new RecordingDrive(
+        swerveSubsystem, 
+        () -> leftJoystick.getX(),
+        () -> leftJoystick.getY(), 
+        () -> middleJoystick.getX(), 
+        () -> true,
+        () -> recordInputs.getAsBoolean(),
+        () -> elevatorPositionOne, 
+        () -> elevatorPositionTwo, 
+        () -> elevatorPositionThree, 
+        () -> elevatorPositionFour, 
+        () -> rightJoystick));
+    } else {
+      swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
+        swerveSubsystem, 
+        () -> leftJoystick.getX(),
+        () -> leftJoystick.getY(), 
+        () -> middleJoystick.getX(), 
+        () -> true,
+        () -> recordInputs.getAsBoolean()));
+    }
+
+      manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));
     configureBindings();
     System.out.println(autoChooser.toString());
     System.out.println(autoChooser.getSelected());
@@ -178,6 +198,8 @@ public class RobotContainer {
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
         moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
+
+        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem));
 
   }
 

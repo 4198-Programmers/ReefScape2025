@@ -1,5 +1,6 @@
 package frc.robot.subsystems.Swerve;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
+import edu.wpi.first.wpilibj.Filesystem;
 
 public class SwerveSubsystem extends SubsystemBase{
 
@@ -166,18 +168,35 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void recordInput(double xSpeed, double ySpeed, double zSpeed){
         System.out.println("Recording");
-        recordedInputs.add(String.format("%.2f,%.2f,%.2f,%b,%b,%d", xSpeed, ySpeed, zSpeed));
+        recordedInputs.add(String.format("%s, %s, %s", xSpeed, ySpeed, zSpeed));
     }
 
     public void logRecordedInputs(){
         // Save recorded data to a file when the robot is disabled
-        try (FileWriter writer = new FileWriter("joystickData.csv")) {
+        String time = java.time.LocalTime.now().toString();
+        String directory = Filesystem.getOperatingDirectory().toString();
+        if (recordedInputs.isEmpty()) {
+            return;
+        }
+        
+        File file = new File(String.format("%s/%s.csv", directory, time));
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try (FileWriter writer = new FileWriter(String.format("%s/%s.csv", directory, time))) {
             for (String row : recordedInputs) {
                 writer.write(row + "\n");
             }
+            writer.close();
+            System.out.println("Saved recorded inputs to file");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 
     public Command logInputsCommand() {

@@ -35,8 +35,8 @@ public class ChaseTagCommand extends Command {
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Pose2d> poseProvider;
 
-    private final ProfiledPIDController xController = new ProfiledPIDController(0.5, 0.0, 0.1, X_CONSTRAINTS);
-    private final ProfiledPIDController yController = new ProfiledPIDController(0.5, 0.0, 0.1, Y_CONSTRAINTS);
+    private final ProfiledPIDController xController = new ProfiledPIDController(0.3, 0.0, 0.1, X_CONSTRAINTS);
+    private final ProfiledPIDController yController = new ProfiledPIDController(0.3, 0.0, 0.1, Y_CONSTRAINTS);
     private final ProfiledPIDController thetaController = new ProfiledPIDController(0.8, 0, 0.2, THETA_CONSTRAINTS);
 
     private PhotonTrackedTarget target;
@@ -47,8 +47,8 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.003);
-        yController.setTolerance(0.003);
+        xController.setTolerance(0.03);
+        yController.setTolerance(0.03);
         thetaController.setTolerance(Units.degreesToRadians(1));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -73,6 +73,7 @@ public class ChaseTagCommand extends Command {
         var robotPose2d = poseProvider.get();
         var robotPose = new Pose3d(robotPose2d.getX(), robotPose2d.getY(), 0, new Rotation3d(0, 0, robotPose2d.getRotation().getRadians()));
 
+        System.out.println(thetaController.getGoal());
         var photonRes = photonCamera.getLatestResult();
         if (photonRes.hasTargets()) {
             var targetOption = photonRes.getTargets().stream()
@@ -95,7 +96,10 @@ public class ChaseTagCommand extends Command {
                 // System.out.println("Goal: " + goalPose);
             }
         }
-        if (target == null) {
+        else {
+            target = null;
+        }
+        if (target == null || xController.atGoal() && yController.atGoal() && thetaController.atGoal()) {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());

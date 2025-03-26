@@ -1,32 +1,56 @@
-package frc.robot.commands;
+package frc.robot.commands.AutoCommands;
 
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
-public class SwerveTeleopDrive extends Command {
+public class RecordingDrive extends Command {
     private final SwerveSubsystem swerveSubsystem;
     private Supplier<Double> xSupplier, ySupplier, zSupplier;
     private Supplier<Boolean> fieldOrientedSupplier;
 
     private Supplier<Boolean> recordInputSupplier;
+    private Supplier<Joystick> buttonJoystick;
+    private Supplier<JoystickButton> elevatorPositionOne;
+    private Supplier<JoystickButton> elevatorPositionTwo;
+    private Supplier<JoystickButton> elevatorPositionThree;
+    private Supplier<JoystickButton> elevatorPositionFour;
 
 
 
-    public SwerveTeleopDrive(SwerveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double> ySupplier,
-            Supplier<Double> zSupplier, Supplier<Boolean> fieldOrientedSupplier, Supplier<Boolean> recordInputSupplier) {
+
+    public RecordingDrive(SwerveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double> ySupplier,
+            Supplier<Double> zSupplier, 
+            Supplier<Boolean> fieldOrientedSupplier, 
+            Supplier<Boolean> recordInputSupplier, 
+            Supplier<JoystickButton> elevatorPositionOne,
+            Supplier<JoystickButton> elevatorPositionTwo,
+            Supplier<JoystickButton> elevatorPositionThree,
+            Supplier<JoystickButton> elevatorPositionFour,
+            Supplier<Joystick> buttonJoystick) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSupplier = xSupplier;
         this.ySupplier = ySupplier;
         this.zSupplier = zSupplier;
         this.fieldOrientedSupplier = fieldOrientedSupplier;
         this.recordInputSupplier = recordInputSupplier;
+        this.buttonJoystick = buttonJoystick;
+        this.elevatorPositionOne = elevatorPositionOne;
+        this.elevatorPositionTwo = elevatorPositionTwo;
+        this.elevatorPositionThree = elevatorPositionThree;
+        this.elevatorPositionFour = elevatorPositionFour;
 
         addRequirements(swerveSubsystem);
+    }
+
+    @Override
+    public void initialize() {
+
     }
 
     @Override

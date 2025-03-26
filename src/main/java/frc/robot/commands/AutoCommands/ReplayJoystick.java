@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
@@ -25,7 +26,9 @@ public class ReplayJoystick extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("joystickData.csv"))) {
+        String directory = Filesystem.getDeployDirectory().toString();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(String.format("%s/recordedAutos/rotateandturn.csv", directory)))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 recordedInputs.add(line.split(","));
@@ -42,6 +45,8 @@ public class ReplayJoystick extends Command {
             data = recordedInputs.get(index);
             swerveSubsystem.drive(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), true);
             index++;
+        } else {
+            swerveSubsystem.drive(0, 0, 0, false);
         }
     }
 

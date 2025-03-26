@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.commands.AutoCommands.*;
 
 public class AutoContainer extends SubsystemBase{
 
@@ -29,6 +30,7 @@ public class AutoContainer extends SubsystemBase{
 
     public void SetupAutoOptions(SendableChooser<Command> sendableChooser){
         sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
+        sendableChooser.addOption("ScaryTest", swerveSubsystem.getAutonomousCommand("ScaryTest"));
         sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
         sendableChooser.addOption("ReadyToPlaceAuto", swerveSubsystem.getAutonomousCommand("ReadyToPlaceAuto"));
         sendableChooser.addOption("TestAuto", swerveSubsystem.getAutonomousCommand("TestAuto"));
@@ -43,6 +45,7 @@ public class AutoContainer extends SubsystemBase{
         sendableChooser.addOption("CenterDump", swerveSubsystem.getAutonomousCommand("CenterDump"));
    
         sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false, () -> false));
+        sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem));
     }
     
     
