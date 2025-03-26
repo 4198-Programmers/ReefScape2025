@@ -144,11 +144,10 @@ public class RobotContainer {
         () -> leftJoystick.getX(),
         () -> leftJoystick.getY(), 
         () -> middleJoystick.getX(), 
-        () -> true,
-        () -> recordInputs.getAsBoolean()));
+        () -> true));
     }
 
-      manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));
+      // manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));
     configureBindings();
     System.out.println(autoChooser.toString());
     System.out.println(autoChooser.getSelected());
@@ -199,7 +198,7 @@ public class RobotContainer {
         moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
         moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
 
-        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem));
+        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem));
 
   }
 

@@ -166,9 +166,29 @@ public class SwerveSubsystem extends SubsystemBase{
         return odometry.getPoseMeters();
     }
 
-    public void recordInput(double xSpeed, double ySpeed, double zSpeed){
-        System.out.println("Recording");
-        recordedInputs.add(String.format("%s, %s, %s", xSpeed, ySpeed, zSpeed));
+    /**
+     * Records the input of the driver
+     * Records to inputs as a string in the csv format "xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour"
+     * @param xSpeed
+     * @param ySpeed
+     * @param zSpeed
+     * @param manipulatorYPosition
+     * @param elevatorPositionOne
+     * @param elevatorPositionTwo
+     * @param elevatorPositionThree
+     * @param elevatorPositionFour
+     */
+    public void recordInput(
+    double xSpeed, 
+    double ySpeed, 
+    double zSpeed, 
+    double manipulatorYPosition, 
+    boolean elevatorPositionOne, 
+    boolean elevatorPositionTwo, 
+    boolean elevatorPositionThree, 
+    boolean elevatorPositionFour){
+        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour));
+        recordedInputs.add(String.format("%s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour));
     }
 
     public void logRecordedInputs(){
@@ -178,7 +198,7 @@ public class SwerveSubsystem extends SubsystemBase{
         if (recordedInputs.isEmpty()) {
             return;
         }
-        
+
         File file = new File(String.format("%s/%s.csv", directory, time));
         try {
             file.createNewFile();

@@ -60,8 +60,8 @@ public class RecordingDrive extends Command {
         double zSpeed = deadband(zSupplier.get(), Constants.DEADBAND);
 
         if (recordInputSupplier.get()) {
-            // System.out.println("Recording");
-            swerveSubsystem.recordInput(-xSpeed / 2, -ySpeed / 2, -zSpeed / 2);
+            System.out.println("Recording");
+            swerveSubsystem.recordInput(-xSpeed / 2, -ySpeed / 2, -zSpeed / 2, buttonJoystick.get().getY(), elevatorPositionOne.get().getAsBoolean(), elevatorPositionTwo.get().getAsBoolean(), elevatorPositionThree.get().getAsBoolean(), elevatorPositionFour.get().getAsBoolean());
         }
 
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);

@@ -38,13 +38,16 @@ public class ManipulatorCommand extends Command {
   @Override
   public void execute() {
     // System.out.println("Ran Manipulator Command");
-    yValue = joystick.getY();
+    
     if(AutoSpeedOverride != 0) {
       yValue = AutoSpeedOverride;
+    } else {
+      yValue = joystick.getY();
     }
-
     // System.out.println(yValue);
     if(yValue > 0.1 || yValue < -0.1) {
+      // System.out.println(yValue);
+
       manipulatorSubsystem.turnPrimaryJoint(-yValue * Constants.ManipulatorConstants.MANIPULATOR_MOTOR_SPEED);
     } else {
       manipulatorSubsystem.turnPrimaryJoint(0);
@@ -54,7 +57,7 @@ public class ManipulatorCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    manipulatorSubsystem.turnPrimaryJoint(0);
+    // manipulatorSubsystem.turnPrimaryJoint(0);
   }
 
   // Returns true when the command should end.
