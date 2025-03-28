@@ -80,7 +80,7 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.078857421875;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.078857421875 - 0.5;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
   public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
