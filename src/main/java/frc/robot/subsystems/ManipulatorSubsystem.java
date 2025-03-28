@@ -44,7 +44,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
      * @param speed The speed at which to turn the joint. Positive values turn it up, negative values turn it down.
      */
     public void turnPrimaryJoint(double speed) { // More Manual Turning
-        System.out.println(speed);
+        // System.out.println(speed);
         manipulatorMotor.set(speed);
         // System.out.println(manipulatorEncoder.getPosition());
     }

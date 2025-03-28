@@ -137,7 +137,9 @@ public class RobotContainer {
         () -> elevatorPositionTwo, 
         () -> elevatorPositionThree, 
         () -> elevatorPositionFour, 
-        () -> rightJoystick));
+        () -> rightJoystick,
+        () -> intakeButton,
+        () -> outtakeButton));
     } else {
       swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
         swerveSubsystem, 
@@ -147,7 +149,6 @@ public class RobotContainer {
         () -> true));
     }
 
-      // manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));
     configureBindings();
     System.out.println(autoChooser.toString());
     System.out.println(autoChooser.getSelected());
@@ -198,7 +199,7 @@ public class RobotContainer {
         moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
         moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
 
-        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem));
+        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
 
   }
 
@@ -218,6 +219,10 @@ public class RobotContainer {
      */
     public void saveRecording() {
         swerveSubsystem.logRecordedInputs();
+    }
+
+    public void assignManipulatorToStick() {
+      manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));
     }
 
 }

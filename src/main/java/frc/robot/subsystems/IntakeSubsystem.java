@@ -35,6 +35,11 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotorTwo.set(speed);
     }
 
+    public void stop() {
+        intakeMotor.set(0);
+        intakeMotorTwo.set(0);
+    }
+
     public void periodic() {
         // System.out.println(intakeSensor.get());
 

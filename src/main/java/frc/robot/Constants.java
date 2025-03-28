@@ -43,7 +43,7 @@ public final class Constants {
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
         public static final double ELEVATOR_POSITION_1 = -5; // First reef section
         public static final double ELEVATOR_POSITION_2 = -40; // Second reef section
-        public static final double ELEVATOR_POSITION_3 = -72; // Third reef section
+        public static final double ELEVATOR_POSITION_3 = -72.5; // Third reef section
 
         // public static final int ELEVATOR_UP_BUTTON = 6; // Buttons on right side of buttons joystick
         // public static final int ELEVATOR_DOWN_BUTTON = 4;
@@ -80,7 +80,7 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = -0.3759765625;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.078857421875;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
   public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
@@ -170,7 +170,7 @@ public final class Constants {
 
     public static class AprilTagConstants {
         public static final int TAG_TO_CHASE = 6;
-        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.36, -0.09, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-175)));
+        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.38, -0.14, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-173)));
         public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.56, 0.31, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-178)));;
         public static final Transform3d APRILTAG_MIDDLE = new Transform3d(new Translation3d(1.0, 0.0, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(180)));;
 

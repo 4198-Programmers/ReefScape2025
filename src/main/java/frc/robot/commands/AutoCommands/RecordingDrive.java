@@ -21,6 +21,9 @@ public class RecordingDrive extends Command {
     private Supplier<JoystickButton> elevatorPositionThree;
     private Supplier<JoystickButton> elevatorPositionFour;
 
+    private Supplier<JoystickButton> intakeButton;
+    private Supplier<JoystickButton> outtakeButton;
+
 
 
 
@@ -32,7 +35,9 @@ public class RecordingDrive extends Command {
             Supplier<JoystickButton> elevatorPositionTwo,
             Supplier<JoystickButton> elevatorPositionThree,
             Supplier<JoystickButton> elevatorPositionFour,
-            Supplier<Joystick> buttonJoystick) {
+            Supplier<Joystick> buttonJoystick,
+            Supplier<JoystickButton> intakeButton,
+            Supplier<JoystickButton> outtakeButton) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSupplier = xSupplier;
         this.ySupplier = ySupplier;
@@ -44,6 +49,8 @@ public class RecordingDrive extends Command {
         this.elevatorPositionTwo = elevatorPositionTwo;
         this.elevatorPositionThree = elevatorPositionThree;
         this.elevatorPositionFour = elevatorPositionFour;
+        this.intakeButton = intakeButton;
+        this.outtakeButton = outtakeButton;
 
         addRequirements(swerveSubsystem);
     }
@@ -61,7 +68,7 @@ public class RecordingDrive extends Command {
 
         if (recordInputSupplier.get()) {
             System.out.println("Recording");
-            swerveSubsystem.recordInput(-xSpeed / 2, -ySpeed / 2, -zSpeed / 2, buttonJoystick.get().getY(), elevatorPositionOne.get().getAsBoolean(), elevatorPositionTwo.get().getAsBoolean(), elevatorPositionThree.get().getAsBoolean(), elevatorPositionFour.get().getAsBoolean());
+            swerveSubsystem.recordInput(-xSpeed / 2, -ySpeed / 2, -zSpeed / 2, buttonJoystick.get().getY(), elevatorPositionOne.get().getAsBoolean(), elevatorPositionTwo.get().getAsBoolean(), elevatorPositionThree.get().getAsBoolean(), elevatorPositionFour.get().getAsBoolean(), intakeButton.get().getAsBoolean(), outtakeButton.get().getAsBoolean());
         }
 
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);

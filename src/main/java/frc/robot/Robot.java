@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,8 +50,10 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    System.out.println("Saved Recording");
-    m_robotContainer.saveRecording();
+    if (DriverStation.isTest()) {
+      System.out.println("Saving Recording");
+      m_robotContainer.saveRecording();
+    }
   }
 
   @Override
@@ -80,6 +83,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.assignManipulatorToStick();
   }
 
   /** This function is called periodically during operator control. */
@@ -90,6 +94,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.assignManipulatorToStick();
   }
 
   /** This function is called periodically during test mode. */

@@ -35,8 +35,8 @@ public class ChaseTagCommand extends Command {
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Pose2d> poseProvider;
 
-    private final ProfiledPIDController xController = new ProfiledPIDController(0.3, 0.0, 0.1, X_CONSTRAINTS);
-    private final ProfiledPIDController yController = new ProfiledPIDController(0.3, 0.0, 0.1, Y_CONSTRAINTS);
+    private final ProfiledPIDController xController = new ProfiledPIDController(0.3, 0.001, 0.1, X_CONSTRAINTS);
+    private final ProfiledPIDController yController = new ProfiledPIDController(0.3, 0.001, 0.1, Y_CONSTRAINTS);
     private final ProfiledPIDController thetaController = new ProfiledPIDController(0.8, 0, 0.2, THETA_CONSTRAINTS);
 
     private PhotonTrackedTarget target;
@@ -47,8 +47,8 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.03);
-        yController.setTolerance(0.03);
+        xController.setTolerance(0.04);
+        yController.setTolerance(0.02);
         thetaController.setTolerance(Units.degreesToRadians(1));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -103,15 +103,15 @@ public class ChaseTagCommand extends Command {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal() || Math.abs(xSpeed) < 0.001) {
+            if (xController.atGoal() || Math.abs(xSpeed) < 0.01 || Math.abs(xController.getGoal().position - robotPose.getX()) < 0.04 ) {
                 xSpeed = 0;
             }
             var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal() || Math.abs(ySpeed) < 0.001) {
+            if (yController.atGoal() || Math.abs(ySpeed) < 0.01 || Math.abs(yController.getGoal().position - robotPose.getY()) < 0.02) {
                 ySpeed = 0;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
-            if (thetaController.atGoal()) {
+            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(2)) {
                 thetaSpeed = 0;
             }
             // System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);

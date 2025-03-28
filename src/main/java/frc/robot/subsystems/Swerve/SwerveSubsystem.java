@@ -186,13 +186,16 @@ public class SwerveSubsystem extends SubsystemBase{
     boolean elevatorPositionOne, 
     boolean elevatorPositionTwo, 
     boolean elevatorPositionThree, 
-    boolean elevatorPositionFour){
-        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour));
-        recordedInputs.add(String.format("%s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour));
+    boolean elevatorPositionFour,
+    boolean intakeButton,
+    boolean outtakeButton){
+        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
+        recordedInputs.add(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
     }
 
     public void logRecordedInputs(){
         // Save recorded data to a file when the robot is disabled
+        System.out.println("Saving recorded inputs to file");
         String time = java.time.LocalTime.now().toString();
         String directory = Filesystem.getOperatingDirectory().toString();
         if (recordedInputs.isEmpty()) {
