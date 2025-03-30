@@ -170,7 +170,7 @@ public final class Constants {
 
     public static class AprilTagConstants {
         public static final int TAG_TO_CHASE = 6;
-        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.38, -0.14, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-173)));
+        public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.35, -0.10, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-170)));
         public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.56, 0.31, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-178)));;
         public static final Transform3d APRILTAG_MIDDLE = new Transform3d(new Translation3d(1.0, 0.0, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(180)));;
 

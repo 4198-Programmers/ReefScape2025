@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -68,12 +70,17 @@ public class ReplayJoystick extends Command {
     public void execute() {
         if (index < recordedInputs.size()) {
             data = recordedInputs.get(index);
-            new ScheduleCommand(new ManipulatorCommand(manipulatorSubsystem, new Joystick(2), Double.parseDouble(data[3]))).schedule();
-            
-            intake(data[8].replaceAll("\\s+", "").equals("true"), data[9].replaceAll("\\s+", "").equals("true"), intakeSubsystem);
+            new ScheduleCommand(new ManipulatorCommand(manipulatorSubsystem, new Joystick(2), Double.parseDouble(data[8]))).schedule();
+            swerveSubsystem.setSwerveModuleStates(new SwerveModuleState[] {
+                new SwerveModuleState(Double.parseDouble(data[0]), new Rotation2d(Double.parseDouble(data[1]))),
+                new SwerveModuleState(Double.parseDouble(data[2]), new Rotation2d(Double.parseDouble(data[3]))),
+                new SwerveModuleState(Double.parseDouble(data[4]), new Rotation2d(Double.parseDouble(data[5]))),
+                new SwerveModuleState(Double.parseDouble(data[6]), new Rotation2d(Double.parseDouble(data[7]))),
+            });
+            intake(data[13].equals("true"), data[14].equals("true"), intakeSubsystem);
             // manipulatorMove(Double.parseDouble(data[3]), manipulatorSubsystem);
-            moveElevator(Boolean.parseBoolean(data[4].replaceAll("\\s+", "")), Boolean.parseBoolean(data[5].replaceAll("\\s+", "")), Boolean.parseBoolean(data[6].replaceAll("\\s+", "")), Boolean.parseBoolean(data[7].replaceAll("\\s+", "")), elevatorSubsystem, rotateManipulatorSubsystem);
-            swerveSubsystem.drive(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), true);
+            moveElevator(data[9].equals("true"), data[10].equals("true"), data[11].equals("true"), data[12].equals("true"), elevatorSubsystem, rotateManipulatorSubsystem);
+            // swerveSubsystem.drive(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), true);
 
             // if (data[4] == "true") {
 

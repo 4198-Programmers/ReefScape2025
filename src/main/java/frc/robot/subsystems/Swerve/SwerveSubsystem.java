@@ -127,6 +127,8 @@ public class SwerveSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
+        // System.out.println(frontLeftSwerveModule.getState());
+        // SwerveModuleState customState = new SwerveModuleState(1, new Rotation2d(2));
         // System.out.println(gyro.getRotation2d());
         // System.out.println(getPose());
         // Debugging: Print the current pose and module states
@@ -179,18 +181,22 @@ public class SwerveSubsystem extends SubsystemBase{
      * @param elevatorPositionFour
      */
     public void recordInput(
-    double xSpeed, 
-    double ySpeed, 
-    double zSpeed, 
+    double xSpeed,
+    double ySpeed,
+    double zSpeed,
     double manipulatorYPosition, 
     boolean elevatorPositionOne, 
     boolean elevatorPositionTwo, 
     boolean elevatorPositionThree, 
     boolean elevatorPositionFour,
     boolean intakeButton,
-    boolean outtakeButton){
-        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
-        recordedInputs.add(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s", xSpeed, ySpeed, zSpeed, manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
+    boolean outtakeButton) {
+        SwerveModuleState[] states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(-ySpeed, -xSpeed, zSpeed * 0.05, gyro.getRotation2d()));
+        
+        var angles = new double[]{states[0].angle.getRadians(), states[1].angle.getRadians(), states[2].angle.getRadians(), states[3].angle.getRadians()};
+        var speeds = new double[]{states[0].speedMetersPerSecond, states[1].speedMetersPerSecond, states[2].speedMetersPerSecond, states[3].speedMetersPerSecond};
+        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",speeds[0], angles[0], speeds[1], angles[1], speeds[2], angles[2], speeds[3], angles[3], manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
+        recordedInputs.add(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", speeds[0], angles[0], speeds[1], angles[1], speeds[2], angles[2], speeds[3], angles[3], manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
     }
 
     public void logRecordedInputs(){

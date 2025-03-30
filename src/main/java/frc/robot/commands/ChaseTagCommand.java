@@ -73,7 +73,7 @@ public class ChaseTagCommand extends Command {
         var robotPose2d = poseProvider.get();
         var robotPose = new Pose3d(robotPose2d.getX(), robotPose2d.getY(), 0, new Rotation3d(0, 0, robotPose2d.getRotation().getRadians()));
 
-        System.out.println(thetaController.getGoal());
+        // System.out.println(thetaController.getGoal());
         var photonRes = photonCamera.getLatestResult();
         if (photonRes.hasTargets()) {
             var targetOption = photonRes.getTargets().stream()
@@ -84,8 +84,9 @@ public class ChaseTagCommand extends Command {
                 target = targetOption.get();
 
                 var cameraPose = robotPose.transformBy(Constants.CAMERA_TO_ROBOT); //Maybe robot to camera?
-
                 var camToTarget = target.getBestCameraToTarget();
+                System.out.println("Camera Pose: " + camToTarget);
+
                 var targetPose = cameraPose.transformBy(camToTarget);
 
                 var goalPose = targetPose.transformBy(tagToGoal).toPose2d();
@@ -116,7 +117,7 @@ public class ChaseTagCommand extends Command {
             }
             // System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
             // System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());
-            swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.04, false);
+            swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.1, false);
             return;
         }
         swerveSubsystem.drive(0, 0, 0, false);

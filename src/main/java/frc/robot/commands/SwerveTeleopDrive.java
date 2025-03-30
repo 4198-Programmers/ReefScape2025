@@ -11,15 +11,16 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class SwerveTeleopDrive extends Command {
     private final SwerveSubsystem swerveSubsystem;
     private Supplier<Double> xSupplier, ySupplier, zSupplier;
-    private Supplier<Boolean> fieldOrientedSupplier;
+    private Supplier<Boolean> fieldOrientedSupplier, slowButton;
 
 
     public SwerveTeleopDrive(SwerveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double> ySupplier,
-            Supplier<Double> zSupplier, Supplier<Boolean> fieldOrientedSupplier) {
+            Supplier<Double> zSupplier, Supplier<Boolean> slowButton, Supplier<Boolean> fieldOrientedSupplier) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSupplier = xSupplier;
         this.ySupplier = ySupplier;
         this.zSupplier = zSupplier;
+        this.slowButton = slowButton;
         this.fieldOrientedSupplier = fieldOrientedSupplier;
 
         addRequirements(swerveSubsystem);
@@ -30,6 +31,12 @@ public class SwerveTeleopDrive extends Command {
         double xSpeed = deadband(xSupplier.get(), Constants.DEADBAND);
         double ySpeed = deadband(ySupplier.get(), Constants.DEADBAND);
         double zSpeed = deadband(zSupplier.get(), Constants.DEADBAND);
+
+        if (slowButton.get()) {
+            xSpeed = xSpeed / 2;
+            ySpeed = ySpeed / 2;
+            zSpeed = zSpeed / 2;
+        }
 
         // System.out.println("xSpeed:" + xSpeed + " ySpeed: " + ySpeed + " zSpeed: " + zSpeed);
 

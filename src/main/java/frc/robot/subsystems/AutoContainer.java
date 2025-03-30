@@ -44,7 +44,7 @@ public class AutoContainer extends SubsystemBase{
         sendableChooser.addOption("SideDump", swerveSubsystem.getAutonomousCommand("SideDump"));
         sendableChooser.addOption("CenterDump", swerveSubsystem.getAutonomousCommand("CenterDump"));
    
-        sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false));
+        sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false, () -> false));
         sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
     }
     

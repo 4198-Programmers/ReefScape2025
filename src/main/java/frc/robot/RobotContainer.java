@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.GeneralElevatorCommand;
 import frc.robot.commands.GyroSetAngle90;
 import frc.robot.commands.GyroSetAngleNeg90;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -63,6 +64,7 @@ public class RobotContainer {
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     private final PoseEstimatorSubsystem poseEstimatorSubsystem = new PoseEstimatorSubsystem(swerveSubsystem, Constants.PHOTON_CAMERA);
+   
 
     private final PhotonSubsystem photonSubsystem = new PhotonSubsystem();
     private final AutoContainer autoContainer = new AutoContainer(swerveSubsystem, manipulatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem, elevatorSubsystem);
@@ -75,6 +77,7 @@ public class RobotContainer {
     private final Joystick middleJoystick = new Joystick(Constants.JOYSTICK_MIDDLE_ID);
     private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
 
+    private final JoystickButton slowDriveButton = new JoystickButton(middleJoystick, 2);
     // Buttons
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
@@ -97,8 +100,8 @@ public class RobotContainer {
     private JoystickButton photonAlignRightButton = new JoystickButton(middleJoystick, 4);
     private JoystickButton zeroManipulator = new JoystickButton(middleJoystick, 6);
 
-    private JoystickButton moveManipulatorClockwise = new JoystickButton(rightJoystick, 6);
-    private JoystickButton moveManipulatorCounterClockwise = new JoystickButton(rightJoystick, 4);
+    private JoystickButton moveElevatorUpButton = new JoystickButton(rightJoystick, 6);
+    private JoystickButton moveElevatorDownButton = new JoystickButton(rightJoystick, 4);
 
     // private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
     // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
@@ -131,6 +134,7 @@ public class RobotContainer {
         () -> leftJoystick.getX(),
         () -> leftJoystick.getY(), 
         () -> middleJoystick.getX(), 
+        () -> slowDriveButton.getAsBoolean(),
         () -> true,
         () -> recordInputs.getAsBoolean(),
         () -> elevatorPositionOne, 
@@ -146,6 +150,7 @@ public class RobotContainer {
         () -> leftJoystick.getX(),
         () -> leftJoystick.getY(), 
         () -> middleJoystick.getX(), 
+        () -> slowDriveButton.getAsBoolean(),
         () -> true));
     }
 
@@ -196,9 +201,9 @@ public class RobotContainer {
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
         photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
-        moveManipulatorClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, -0.05));
-        moveManipulatorCounterClockwise.whileTrue(new ManipulatorRotateCommand(rotateManipulatorSubsystem, 0.05));
-
+        
+        moveElevatorUpButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, true));
+        moveElevatorDownButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, false));
         replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
 
   }

@@ -22,6 +22,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
   private SparkMaxConfig elevatorConfig;
   private SparkClosedLoopController elevatorPID;
+  private double current;
   
   public DigitalInput limitSwitchTop = new DigitalInput(ElevatorConstants.LIMIT_SWITCH_ELEVATOR_TOP);
 
@@ -43,7 +44,21 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public void moveToPosition(double position) {
     elevatorPID.setReference(position, ControlType.kPosition);
-    // System.out.println("Moving to position: " + position);
+    current = position;
+  }
+
+  public void changeMotorPosition(boolean up) {
+    if(up && current > -72.5) {
+      current -= 0.25;
+    } else if (current < -5) {
+      current += 0.25;
+    }
+    elevatorPID.setReference(current, ControlType.kPosition);
+    System.out.println(current);
+  }
+
+  public void moveGeneral(double speed) {
+    elevatorMotor.set(speed);
   }
 
   /**
