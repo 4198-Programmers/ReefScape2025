@@ -58,6 +58,9 @@ public class ManipulatorCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     // manipulatorSubsystem.turnPrimaryJoint(0);
+    if (interrupted) {
+      manipulatorSubsystem.turnPrimaryJoint(0);
+    }
   }
 
   // Returns true when the command should end.

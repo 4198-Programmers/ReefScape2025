@@ -53,8 +53,8 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
             () -> {
                 double targetPosition = isRotated ? 0 : 8; // Target position is 90 degrees if not rotated, otherwise 0 degrees
                 rotatingPID.setReference(targetPosition, ControlType.kPosition); // Sets the target position of the rotating motor
-                System.out.println("Set reference to: " + targetPosition);
-                System.out.println("Actual position: " + rotatingEncoder.getPosition());
+                // System.out.println("Set reference to: " + targetPosition);
+                // System.out.println("Actual position: " + rotatingEncoder.getPosition());
                 isRotated = !isRotated; // Toggles the rotation state
             }
         );

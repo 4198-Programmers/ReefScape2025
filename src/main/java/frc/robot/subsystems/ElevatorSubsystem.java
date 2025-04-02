@@ -32,7 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig = new SparkMaxConfig();
     elevatorConfig.closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-          .pid(0.08,0.0,0.02)
+          .pid(0.1,0.0,0.04)
           .outputRange(-1.0, 0.7);
 
     elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -54,7 +54,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       current += 0.25;
     }
     elevatorPID.setReference(current, ControlType.kPosition);
-    System.out.println(current);
+    // System.out.println(current);
   }
 
   public void moveGeneral(double speed) {
@@ -66,7 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * @return True if the limit switch is pressed (elevator is at the top)
   */
   public boolean checkSwitch() {
-    System.out.println("Used limit switch! " + limitSwitchTop.get());
+    // System.out.println("Used limit switch! " + limitSwitchTop.get());
     return !limitSwitchTop.get();
   }
 

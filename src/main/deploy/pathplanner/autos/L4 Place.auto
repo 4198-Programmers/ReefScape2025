@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterDump"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ReefPlace"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OuttakeCommand"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

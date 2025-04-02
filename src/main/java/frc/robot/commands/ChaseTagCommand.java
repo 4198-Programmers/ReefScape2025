@@ -34,6 +34,7 @@ public class ChaseTagCommand extends Command {
     private final PhotonCamera photonCamera;
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Pose2d> poseProvider;
+    private boolean atGoalX, atGoalY, atGoalTheta;
 
     private final ProfiledPIDController xController = new ProfiledPIDController(0.3, 0.001, 0.1, X_CONSTRAINTS);
     private final ProfiledPIDController yController = new ProfiledPIDController(0.3, 0.001, 0.1, Y_CONSTRAINTS);
@@ -47,9 +48,9 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.04);
-        yController.setTolerance(0.02);
-        thetaController.setTolerance(Units.degreesToRadians(1));
+        xController.setTolerance(0.01);
+        yController.setTolerance(0.01);
+        thetaController.setTolerance(Units.degreesToRadians(0.3));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         addRequirements(swerveSubsystem);
@@ -60,6 +61,9 @@ public class ChaseTagCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        atGoalX = false;
+        atGoalY = false;
+        atGoalTheta = false;
         target = null;
         var robotPose = poseProvider.get();
         thetaController.reset(robotPose.getRotation().getRadians());
@@ -85,7 +89,7 @@ public class ChaseTagCommand extends Command {
 
                 var cameraPose = robotPose.transformBy(Constants.CAMERA_TO_ROBOT); //Maybe robot to camera?
                 var camToTarget = target.getBestCameraToTarget();
-                System.out.println("Camera Pose: " + camToTarget);
+                // System.out.println("Camera Pose: " + camToTarget);
 
                 var targetPose = cameraPose.transformBy(camToTarget);
 
@@ -104,16 +108,19 @@ public class ChaseTagCommand extends Command {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal() || Math.abs(xSpeed) < 0.01 || Math.abs(xController.getGoal().position - robotPose.getX()) < 0.04 ) {
+            if (xController.atGoal() || Math.abs(xSpeed) < 0.01 || Math.abs(xController.getGoal().position - robotPose.getX()) < 0.01 ) {
                 xSpeed = 0;
+                atGoalX = true;
             }
             var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal() || Math.abs(ySpeed) < 0.01 || Math.abs(yController.getGoal().position - robotPose.getY()) < 0.02) {
+            if (yController.atGoal() || Math.abs(ySpeed) < 0.01 || Math.abs(yController.getGoal().position - robotPose.getY()) < 0.01) {
                 ySpeed = 0;
+                atGoalY = true;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
-            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(2)) {
+            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(1)) {
                 thetaSpeed = 0;
+                atGoalTheta = true;
             }
             // System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
             // System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());

@@ -11,6 +11,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
@@ -127,6 +128,9 @@ public class SwerveSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d().times(-1), getSwerveModulePositions());
+        // if (DriverStation.isEnabled()) {
+        //     System.out.println(getPose());
+        // }
         // System.out.println(frontLeftSwerveModule.getState());
         // SwerveModuleState customState = new SwerveModuleState(1, new Rotation2d(2));
         // System.out.println(gyro.getRotation2d());
@@ -195,7 +199,7 @@ public class SwerveSubsystem extends SubsystemBase{
         
         var angles = new double[]{states[0].angle.getRadians(), states[1].angle.getRadians(), states[2].angle.getRadians(), states[3].angle.getRadians()};
         var speeds = new double[]{states[0].speedMetersPerSecond, states[1].speedMetersPerSecond, states[2].speedMetersPerSecond, states[3].speedMetersPerSecond};
-        System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",speeds[0], angles[0], speeds[1], angles[1], speeds[2], angles[2], speeds[3], angles[3], manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
+        // System.out.println(String.format("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s",speeds[0], angles[0], speeds[1], angles[1], speeds[2], angles[2], speeds[3], angles[3], manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
         recordedInputs.add(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", speeds[0], angles[0], speeds[1], angles[1], speeds[2], angles[2], speeds[3], angles[3], manipulatorYPosition, elevatorPositionOne, elevatorPositionTwo, elevatorPositionThree, elevatorPositionFour, intakeButton, outtakeButton));
     }
 
@@ -326,7 +330,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
 
         states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond / 132.5)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
-        System.out.println("Module 1: " + states[0] + " Module 2: " + states[1] + " Module 3: " + states[2] + " Module 4: " + states[3]);
+        // System.out.println("Module 1: " + states[0] + " Module 2: " + states[1] + " Module 3: " + states[2] + " Module 4: " + states[3]);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired chassis speeds
     //    System.out.println("X Speed: " + chassisSpeeds.vxMetersPerSecond / 4.69 + " Y Speed: " + chassisSpeeds.vyMetersPerSecond / 4.69 + " Z Speed: " + chassisSpeeds.omegaRadiansPerSecond);

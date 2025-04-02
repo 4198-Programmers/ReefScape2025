@@ -23,7 +23,7 @@ public class PhotonVisionCommand extends Command {
         if (target != null) {
             // System.out.println("Target found: " + target);
             var yaw = target.getYaw();
-            System.out.println("Yaw: " + yaw);
+            // System.out.println("Yaw: " + yaw);
             if (Math.abs(yaw) < 2) {
                 swerveSubsystem.drive(0, 0, 0, false);
                 return;

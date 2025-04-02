@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AlignCenterAprilTag"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ResetTo1MeterAway"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ReefPlace"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftPlace"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ManipulatorDown"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "OuttakeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RobotBackDrive"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1Reef"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}
