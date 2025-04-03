@@ -129,6 +129,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AlignCenterAprilTag", new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE).withTimeout(5));
     NamedCommands.registerCommand("ResetTo1MeterAway", new AutoResetOdometry(swerveSubsystem, 6.8, 4.007, 180));
     NamedCommands.registerCommand("ManipulatorDown", new ManipulatorCommand(manipulatorSubsystem, leftJoystick, -0.2).withTimeout(1));
+    NamedCommands.registerCommand("RobotForwardDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.4, () -> 0.0, () -> false, () -> false).withTimeout(0.5));
     NamedCommands.registerCommand("RobotBackDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> 0.4, () -> 0.0, () -> false, () -> false).withTimeout(0.5));
     autoContainer.SetupAutoOptions(autoChooser);
 

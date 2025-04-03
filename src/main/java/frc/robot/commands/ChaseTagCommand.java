@@ -48,9 +48,9 @@ public class ChaseTagCommand extends Command {
         this.swerveSubsystem = swerveSubsystem;
         this.poseProvider = poseProvider;
 
-        xController.setTolerance(0.01);
-        yController.setTolerance(0.01);
-        thetaController.setTolerance(Units.degreesToRadians(0.3));
+        xController.setTolerance(0.001);
+        yController.setTolerance(0.001);
+        thetaController.setTolerance(Units.degreesToRadians(0.1));
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         addRequirements(swerveSubsystem);
@@ -108,23 +108,23 @@ public class ChaseTagCommand extends Command {
             swerveSubsystem.drive(0, 0, 0, false);
         } else {
             var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal() || Math.abs(xSpeed) < 0.01 || Math.abs(xController.getGoal().position - robotPose.getX()) < 0.01 ) {
+            if (xController.atGoal() || Math.abs(xSpeed) < 0.01 || Math.abs(xController.getGoal().position - robotPose.getX()) < 0.001 ) {
                 xSpeed = 0;
                 atGoalX = true;
             }
             var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal() || Math.abs(ySpeed) < 0.01 || Math.abs(yController.getGoal().position - robotPose.getY()) < 0.01) {
+            if (yController.atGoal() || Math.abs(ySpeed) < 0.01 || Math.abs(yController.getGoal().position - robotPose.getY()) < 0.001) {
                 ySpeed = 0;
                 atGoalY = true;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
-            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(1)) {
+            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(0.5)) {
                 thetaSpeed = 0;
                 atGoalTheta = true;
             }
             // System.out.println("X: " + xSpeed + " Y: " + ySpeed + " Theta: " + thetaSpeed);
             // System.out.println("X is at goal: " + xController.atGoal() + " Y is at goal: " + yController.atGoal() + " Theta is at goal: " + thetaController.atGoal());
-            swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.1, false);
+            swerveSubsystem.drive(ySpeed, xSpeed, thetaSpeed * 0.15, false);
             return;
         }
         swerveSubsystem.drive(0, 0, 0, false);
