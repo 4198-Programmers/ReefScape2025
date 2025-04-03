@@ -37,9 +37,9 @@ public class AutoContainer extends SubsystemBase{
     public void SetupAutoOptions(SendableChooser<Command> sendableChooser){
         sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
         // sendableChooser.addOption("ScaryTest", swerveSubsystem.getAutonomousCommand("ScaryTest"));
-        sendableChooser.addOption("L4Place", swerveSubsystem.getAutonomousCommand("L4Place"));
+        // sendableChooser.addOption("L4Place", swerveSubsystem.getAutonomousCommand("L4Place"));
 
-        sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
+        // sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
         sendableChooser.addOption("ReadyToPlaceAuto", swerveSubsystem.getAutonomousCommand("ReadyToPlaceAuto"));
         // sendableChooser.addOption("TestAuto", swerveSubsystem.getAutonomousCommand("TestAuto"));
         sendableChooser.addOption("EnemyOneToReefL4", swerveSubsystem.getAutonomousCommand("EnemyOneToReefL4"));
@@ -54,20 +54,12 @@ public class AutoContainer extends SubsystemBase{
         // sendableChooser.addOption("DiagTest", swerveSubsystem.getAutonomousCommand("DiagTest"));
         sendableChooser.addOption("RightPlace", swerveSubsystem.getAutonomousCommand("RightPlace"));
         sendableChooser.addOption("LeftPlace", swerveSubsystem.getAutonomousCommand("LeftPlace"));
+        sendableChooser.addOption("AdjustedLeftPlace", swerveSubsystem.getAutonomousCommand("AdjustedLeftPlace"));
         sendableChooser.addOption("DiagonalLeftPlace", swerveSubsystem.getAutonomousCommand("DiagonalLeftPlace"));
         sendableChooser.addOption("DiagonalRightPlace", swerveSubsystem.getAutonomousCommand("DiagonalRightPlace"));
    
         // sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false, () -> false));
         sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
-        sendableChooser.addOption("SequentialCommandGroup", SequentialCommandGroup());
         sendableChooser.addOption("L4Test", new AutoManipulatorCommand(manipulatorSubsystem));
     }
-
-    public Command SequentialCommandGroup(){
-        return new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 5).withTimeout(2000);
-            // .andThen(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 6)).withTimeout(2000)
-            // .andThen(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 7).withTimeout(2000));
-    }
-    
-    
 }

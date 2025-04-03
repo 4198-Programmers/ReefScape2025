@@ -328,8 +328,10 @@ public class SwerveSubsystem extends SubsystemBase{
         // otherStates = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(testSpeeds);
         // System.out.println(otherStates[0]);
 
+        // states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond / 132.5)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
 
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond / 132.5)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
+        //No Rotate
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, 0)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
         // System.out.println("Module 1: " + states[0] + " Module 2: " + states[1] + " Module 3: " + states[2] + " Module 4: " + states[3]);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired chassis speeds

@@ -87,7 +87,7 @@ public class ChaseTagCommand extends Command {
             if (targetOption.isPresent()) {
                 target = targetOption.get();
 
-                var cameraPose = robotPose.transformBy(Constants.CAMERA_TO_ROBOT); //Maybe robot to camera?
+                var cameraPose = robotPose.transformBy(Constants.CAMERA_TO_ROBOT); //adjusts so center of robot
                 var camToTarget = target.getBestCameraToTarget();
                 // System.out.println("Camera Pose: " + camToTarget);
 
@@ -118,7 +118,7 @@ public class ChaseTagCommand extends Command {
                 atGoalY = true;
             }
             var thetaSpeed = thetaController.calculate(robotPose2d.getRotation().getRadians());
-            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(0.5)) {
+            if (thetaController.atGoal() || Math.abs(thetaController.getGoal().position - robotPose2d.getRotation().getRadians()) < Units.degreesToRadians(1)) {
                 thetaSpeed = 0;
                 atGoalTheta = true;
             }
