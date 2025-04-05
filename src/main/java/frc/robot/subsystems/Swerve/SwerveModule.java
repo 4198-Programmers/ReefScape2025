@@ -72,7 +72,7 @@ public class SwerveModule {
         turningConfig = new SparkMaxConfig();
         turningConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(5, 0, 0)
+            .pid(5, 0, 0.1)
             //  .pid(0.07, 0.000005, 1) //0.15 0.0 2.6, 0.02 0.00003 0
             .outputRange(-1, 1)
             .positionWrappingInputRange(0, 1)
@@ -106,7 +106,8 @@ public class SwerveModule {
         resetToAbsolute();
         // angleEncoder.setPosition(angleEncoder.getPosition().getValueAsDouble() - angleEncoderOffset);
         // System.out.println("Module position!!! : " + angleEncoder.getAbsolutePosition().getValueAsDouble() + "\n\n");
-        withinDeadzone = false;  
+        withinDeadzone
+         = false;  
     }
 
     public void setWithinDeadzone(Boolean withinDeadzone) {

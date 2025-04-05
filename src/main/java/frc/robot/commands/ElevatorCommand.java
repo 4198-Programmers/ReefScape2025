@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
 
@@ -26,21 +27,21 @@ public class ElevatorCommand extends Command {
         switch (elevatorPosition) {
             case 0:
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);
-                rotateManipulatorSubsystem.setIntakePosition(-0.5);
+                rotateManipulatorSubsystem.setIntakePosition(ManipulatorConstants.INTAKE_ZERO);
                 break;
             case 1:
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_1);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(ManipulatorConstants.INTAKE_ROTATED);
 
                 break;
             case 2:
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_2);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(ManipulatorConstants.INTAKE_ROTATED);
 
                 break;
             case 3:
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_3);
-                rotateManipulatorSubsystem.setIntakePosition(9);
+                rotateManipulatorSubsystem.setIntakePosition(ManipulatorConstants.INTAKE_ROTATED);
                 break;
             default:
                 break;

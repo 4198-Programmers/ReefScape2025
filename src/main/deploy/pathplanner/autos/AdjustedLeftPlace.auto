@@ -23,9 +23,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "AdjustedLeftPlace"
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FollowLeftPath"
           }
         },
         {

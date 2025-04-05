@@ -24,9 +24,9 @@ public class TrajectoryFollowing extends Command {
     private Trajectory trajectory;
     private final SwerveSubsystem swerveSubsystem;
     HolonomicDriveController controller = new HolonomicDriveController(
-        new PIDController(1, 0, 0), new PIDController(1, 0, 0),
-        new ProfiledPIDController(1, 0, 0,
-        new TrapezoidProfile.Constraints(6.28, 3.14)));
+        new PIDController(0.5, 0, 0), new PIDController(0.5, 0, 0),
+        new ProfiledPIDController(0.0, 0, 0,
+        new TrapezoidProfile.Constraints(0.3, 0.1)));
 // Here, our rotation profile constraints were a max velocity
 // of 1 rotation per second and a max acceleration of 180 degrees
 // per second squared.
@@ -39,15 +39,24 @@ public class TrajectoryFollowing extends Command {
 
     @Override
     public void initialize() {
-        trajectory = generateTrajectory();
+        swerveSubsystem.resetGyro();
+        swerveSubsystem.resetOdometryPose();
+        swerveSubsystem.resetToAbsolutes();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        trajectory = generateTrajectory();
     }
 
     @Override
     public void execute() {
 
-        // Sample the trajectory at 3.4 seconds from the beginning.
-        Trajectory.State goal = trajectory.sample(3.4);
+        // Sample the trajectory at the end
+        Trajectory.State goal = trajectory.sample(trajectory.getTotalTimeSeconds());
         // Get the adjusted speeds. Here, we want the robot to be facing
         // 70 degrees (in the field-relative coordinate system).
         ChassisSpeeds adjustedSpeeds = controller.calculate(
@@ -60,12 +69,12 @@ public class TrajectoryFollowing extends Command {
         var currentPose = swerveSubsystem.getPose();
     var start = new Pose2d(currentPose.getX(), currentPose.getX(),
         currentPose.getRotation());
-    var end = new Pose2d(currentPose.getX() + 1, currentPose.getY() + 0.35,
+    var end = new Pose2d(currentPose.getX() - 0.9, currentPose.getY() - 0.297,
         currentPose.getRotation());
 
     var interiorWaypoints = new ArrayList<Translation2d>();
 
-    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(12), Units.feetToMeters(12));
+    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(1), Units.feetToMeters(1));
     config.setReversed(true);
 
     var trajectory = TrajectoryGenerator.generateTrajectory(

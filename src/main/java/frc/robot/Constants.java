@@ -41,7 +41,7 @@ public final class Constants {
 
         // Elevator positions in rotations
         public static final double ELEVATOR_POSITION_0 = -5; // Close enough to zero but enough that it doesn't crash down
-        public static final double ELEVATOR_POSITION_1 = -5; // First reef section
+        public static final double ELEVATOR_POSITION_1 = -15; // First reef section
         public static final double ELEVATOR_POSITION_2 = -40; // Second reef section
         public static final double ELEVATOR_POSITION_3 = -72.5; // Third reef section
 
@@ -71,6 +71,9 @@ public final class Constants {
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
     public static final int INTAKE_MOTOR_TWO_ID = 14;
+
+    public static final double INTAKE_ZERO = -0.25;
+    public static final double INTAKE_ROTATED = 8;
   }
   //CANCoder Constants
   public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
@@ -80,7 +83,7 @@ public final class Constants {
   public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
   public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
   public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.49072265625;
+  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.450439453125;
   public static final int FRONT_LEFT_MODULE_NUMBER = 0;
   public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
   public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
@@ -90,7 +93,7 @@ public final class Constants {
   public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
   public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
   public static final int FRONT_RIGHT_CANCODER_ID = 15;
-  public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.140380859375;
+  public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.141845703125;
   public static final int FRONT_RIGHT_MODULE_NUMBER = 1;
   public static final boolean FRONT_RIGHT_DRIVE_INVERT = true;
   public static final boolean FRONT_RIGHT_ANGLE_INVERT = false;
@@ -99,7 +102,7 @@ public final class Constants {
   public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
   public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
   public static final int BACK_LEFT_CANCODER_ID = 14;
-  public static final double BACK_LEFT_ANGLE_OFFSET = 0.04443359375;
+  public static final double BACK_LEFT_ANGLE_OFFSET = 0.04296875;
 
   public static final int BACK_LEFT_MODULE_NUMBER = 2;
   public static final boolean BACK_LEFT_DRIVE_INVERT = false;
@@ -110,7 +113,7 @@ public final class Constants {
   public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
   public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
   public static final int BACK_RIGHT_CANCODER_ID = 16;
-  public static final double BACK_RIGHT_ANGLE_OFFSET = 0.42333984375;
+  public static final double BACK_RIGHT_ANGLE_OFFSET = 0.421630859375;
   public static final int BACK_RIGHT_MODULE_NUMBER = 3;
   public static final boolean BACK_RIGHT_DRIVE_INVERT = false;
   public static final boolean BACK_RIGHT_ANGLE_INVERT = false;
@@ -167,6 +170,7 @@ public final class Constants {
     public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");
 
     public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0.3048, 0, 0, new Rotation3d(0, 0, 0));
+    public static final int FASTER_OUTTAKE_BUTTON = 2;
 
     public static class AprilTagConstants {
         public static final int TAG_TO_CHASE = 6;

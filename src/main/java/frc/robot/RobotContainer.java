@@ -47,6 +47,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.SwerveTeleopDrive;
+import frc.robot.commands.TrajectoryFollowing;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.AutoCommands.AutoResetOdometry;
 import frc.robot.commands.AutoCommands.RecordingDrive;
@@ -95,6 +96,7 @@ public class RobotContainer {
     private JoystickButton manipulatorRotateButton = new JoystickButton(rightJoystick, ManipulatorConstants.MANIPULATOR_ROTATE_BUTTON);
     private JoystickButton intakeButton = new JoystickButton(rightJoystick, Constants.INTAKE_BUTTON);
     private JoystickButton outtakeButton = new JoystickButton(rightJoystick, Constants.OUTTAKE_BUTTON);
+    private JoystickButton fasterOuttakeButton = new JoystickButton(rightJoystick, Constants.FASTER_OUTTAKE_BUTTON);
     private JoystickButton resetGyroButton = new JoystickButton(leftJoystick, Constants.RESET_GYRO_BUTTON);
     private JoystickButton resetAbsoluteButton = new JoystickButton(leftJoystick, Constants.REsET_ABSOLUTE_BUTTON);
 
@@ -111,6 +113,7 @@ public class RobotContainer {
 
     private JoystickButton recordInputs = new JoystickButton(middleJoystick, 1);
     private JoystickButton replayInputs = new JoystickButton(middleJoystick, 5);
+    private JoystickButton trajectoryJoystickButton = new JoystickButton(leftJoystick, 1); // trigger
 
     // SendableChooser<Command> autoChooser = new SendableChooser<>();
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -123,7 +126,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("L3ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2));
     NamedCommands.registerCommand("L2ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1));
     NamedCommands.registerCommand("HumanPlayer", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0));
-    NamedCommands.registerCommand("OuttakeCommand", new OuttakeCommand(intakeSubsystem, -0.25).withTimeout(2));
+    NamedCommands.registerCommand("OuttakeCommand", new OuttakeCommand(intakeSubsystem, -0.30).withTimeout(2));
     NamedCommands.registerCommand("ZeroGyro", new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem).withTimeout(0.1));
     NamedCommands.registerCommand("L1Reef", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 4).withTimeout(1));
     NamedCommands.registerCommand("AlignCenterAprilTag", new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE).withTimeout(5));
@@ -131,6 +134,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ManipulatorDown", new ManipulatorCommand(manipulatorSubsystem, leftJoystick, -0.2).withTimeout(1));
     NamedCommands.registerCommand("RobotForwardDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.4, () -> 0.0, () -> false, () -> false).withTimeout(1));
     NamedCommands.registerCommand("RobotBackDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> 0.4, () -> 0.0, () -> false, () -> false).withTimeout(0.5));
+    NamedCommands.registerCommand("FollowLeftPath", new TrajectoryFollowing(swerveSubsystem).withTimeout(3));
     autoContainer.SetupAutoOptions(autoChooser);
 
     if (DriverStation.isTest()) {
@@ -202,7 +206,8 @@ public class RobotContainer {
         
         // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
-        outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.2));
+        outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
+        fasterOuttakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.5));
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
         photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE));
         // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
