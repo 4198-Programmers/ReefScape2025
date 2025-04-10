@@ -41,9 +41,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void periodic() {
-        // System.out.println(intakeSensor.get());
 
-        // This method will be called once per scheduler run
     }
 
 

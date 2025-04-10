@@ -13,14 +13,19 @@ public class ManipulatorToPoint extends Command {
     private final ElevatorSubsystem elevatorSubsystem;
     private final RotateManipulatorSubsystem rotateManipulatorSubsystem;
 
-
+    /**
+     * Used for both elevator and manipulator movement at once
+     * @param manipulatorSubsystem
+     * @param elevatorSubsystem
+     * @param rotateManipulatorSubsystem
+     * @param switchCaseValue
+     */
     public ManipulatorToPoint(ManipulatorSubsystem manipulatorSubsystem, ElevatorSubsystem elevatorSubsystem, RotateManipulatorSubsystem rotateManipulatorSubsystem, int switchCaseValue) {
         this.manipulatorSubsystem = manipulatorSubsystem;
         this.elevatorSubsystem = elevatorSubsystem;
         this.switchCaseValue = switchCaseValue;
         this.rotateManipulatorSubsystem = rotateManipulatorSubsystem;
         addRequirements(manipulatorSubsystem, elevatorSubsystem);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
@@ -31,7 +36,6 @@ public class ManipulatorToPoint extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // manipulatorSubsystem.turnPrimaryJointToPosition(47);
         switch (switchCaseValue) {
             case 0://human player height
                 elevatorSubsystem.moveToPosition(ElevatorConstants.ELEVATOR_POSITION_0);

@@ -62,7 +62,7 @@ public final class Constants {
 
   public static class ManipulatorConstants {
     public static final int INTAKE_MOTOR_ID = 12; 
-    public static final int PRIMARY_JOINT_MOTOR_ID = 10; // The joint closest to elevator
+    public static final int PRIMARY_JOINT_MOTOR_ID = 10;
     public static final double MANIPULATOR_MOTOR_DEADBAND = 0.15;
     public static final int ROTATING_MOTOR_ID = 11;
     public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
@@ -177,7 +177,5 @@ public final class Constants {
         public static final Transform3d APRILTAG_LEFT = new Transform3d(new Translation3d(0.35, -0.10, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-170)));
         public static final Transform3d APRILTAG_RIGHT = new Transform3d(new Translation3d(0.56, 0.31, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(-178)));;
         public static final Transform3d APRILTAG_MIDDLE = new Transform3d(new Translation3d(1.5, 0.0, 0.0), new Rotation3d(0, 0, Units.degreesToRadians(180)));;
-
-
     }
 }

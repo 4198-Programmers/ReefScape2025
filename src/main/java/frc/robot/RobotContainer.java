@@ -25,8 +25,6 @@ import frc.robot.subsystems.AutoContainer;
 import frc.robot.subsystems.ClimbMotorSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
-import frc.robot.commands.ManipulatorRotateCommand;
-import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.commands.ManipulatorToPoint;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ResetToAbsolutes;
@@ -52,14 +50,10 @@ import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.AutoCommands.AutoResetOdometry;
 import frc.robot.commands.AutoCommands.RecordingDrive;
 import frc.robot.commands.AutoCommands.ReplayJoystick;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
 public class RobotContainer {    
-        // The robot's subsystems and commands are defined here...
-        private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-            
       //Subsytems
       private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final ManipulatorSubsystem manipulatorSubsystem = new ManipulatorSubsystem();
@@ -85,9 +79,6 @@ public class RobotContainer {
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);
 
-    // private final JoystickButton elevatorUpButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_UP_BUTTON);
-    // private final JoystickButton elevatorDownButton = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_DOWN_BUTTON);
-
     private final JoystickButton elevatorPositionOne = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_ONE);
     private final JoystickButton elevatorPositionTwo = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_TWO);
     private final JoystickButton elevatorPositionThree = new JoystickButton(rightJoystick, Constants.ElevatorConstants.ELEVATOR_BUTTON_POSITION_THREE);
@@ -106,10 +97,6 @@ public class RobotContainer {
 
     private JoystickButton moveElevatorUpButton = new JoystickButton(rightJoystick, 6);
     private JoystickButton moveElevatorDownButton = new JoystickButton(rightJoystick, 4);
-
-    // private JoystickButton setManipulatorToPointOne = new JoystickButton(leftJoystick, 6);
-    // private JoystickButton setManipulatorToPointTwo = new JoystickButton(leftJoystick, 4);
-    // private JoystickButton zeroManipulatorRotate = new JoystickButton(rightJoystick, 6);
 
     private JoystickButton recordInputs = new JoystickButton(middleJoystick, 1);
     private JoystickButton replayInputs = new JoystickButton(middleJoystick, 5);
@@ -137,7 +124,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("FollowLeftPath", new TrajectoryFollowing(swerveSubsystem).withTimeout(3));
     autoContainer.SetupAutoOptions(autoChooser);
 
-    if (DriverStation.isTest()) {
+    if (DriverStation.isTest()) { // if it's in test mode, it does a custom drive command to record
       swerveSubsystem.setDefaultCommand(new RecordingDrive(
         swerveSubsystem, 
         () -> leftJoystick.getX(),
@@ -185,8 +172,6 @@ public class RobotContainer {
     
         climbButton.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, Constants.ClimbConstants.CLIMB_SPEED));
         climbButtonReverse.whileTrue(new ClimbMotorCommand(climbMotorSubsystem, -Constants.ClimbConstants.CLIMB_SPEED));
-        // elevatorUpButton.whileTrue(new ElevatorCommand(elevatorSubsystem, -Constants.ElevatorConstants.ELEVATOR_SPEED));
-        // elevatorDownButton.whileTrue(new ElevatorCommand(elevatorSubsystem, Constants.ElevatorConstants.ELEVATOR_SPEED));
 
         elevatorPositionOne.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0)); //Human Player Height
         elevatorPositionTwo.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1)); //Level 2
@@ -196,26 +181,18 @@ public class RobotContainer {
         resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
         resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
 
-        // manipulatorRotateButton.whileTrue(new
-        // ManipulatorPositionOne(manipulatorSubsystem));
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
-
-        // logInputs.onTrue(swerveSubsystem.logInputsCommand());
-
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
         
-        // manipulatorRotateButton.toggleOnFalse(new ManipulatorRotateCommand(rotateManipulatorSubsystem));
         intakeButton.whileTrue(new IntakeCommand(intakeSubsystem, ManipulatorConstants.INTAKE_MOTOR_SPEED));
         outtakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.25));
         fasterOuttakeButton.whileTrue(new OuttakeCommand(intakeSubsystem, -ManipulatorConstants.INTAKE_MOTOR_SPEED * 0.5));
         photonAlignLeftButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_LEFT));
         photonAlignRightButton.toggleOnTrue(new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE));
-        // photonVisionButton.onTrue(poseEstimatorSubsystem.ResetPoseEstimator());
         
         moveElevatorUpButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, true));
         moveElevatorDownButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, false));
         replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
-
   }
 
     /**
