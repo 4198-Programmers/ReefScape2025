@@ -69,45 +69,12 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         isRotated = !isRotated; // Toggles the rotation state
     }
 
-    public void RotateManipulator(double speed){
-        rotatingMotor.set(speed);
-    }
-
     /**
      * Sets the intake to a given position.
      * @param position The position to set the intake to.
      */
     public void setIntakePosition(double position) {
         rotatingPID.setReference(position, ControlType.kPosition);
-    }
-
-    public void zeroMotor() {
-        rotatingMotor.set(0.1);
-        try {
-            Thread.sleep(300); // Wait for 0.5 seconds
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        hasBeenZeroed = false;
-        rotatingMotor.set(-0.1);
-        try {
-            Thread.sleep(600); // Wait for 1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        rotatingPID.setReference(0, ControlType.kPosition); // Stop the motor
-    }
-
-    public Command ZeroManipulatorRotate() {
-        // Inline construction of command goes here.
-        // Subsystem::RunOnce implicitly requires `this` subsystem.
-        return runOnce(
-            () -> {
-
-                // System.out.println("Zeroing manipulator");
-                zeroMotor();
-            }
-        );
     }
 
     // public void periodic() {
