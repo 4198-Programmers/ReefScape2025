@@ -99,8 +99,8 @@ public class SwerveSubsystem extends SubsystemBase{
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(0.001, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.001, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(0.1, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.1, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -331,11 +331,11 @@ public class SwerveSubsystem extends SubsystemBase{
         // states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond / 132.5)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
 
         //No Rotate
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, 0)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond / 4.69, chassisSpeeds.vyMetersPerSecond / 4.69, chassisSpeeds.omegaRadiansPerSecond)); //We have to divide speed by very big number otherwise robot spin veryfast and robot no happy
         // System.out.println("Module 1: " + states[0] + " Module 2: " + states[1] + " Module 3: " + states[2] + " Module 4: " + states[3]);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired chassis speeds
-    //    System.out.println("X Speed: " + chassisSpeeds.vxMetersPerSecond / 4.69 + " Y Speed: " + chassisSpeeds.vyMetersPerSecond / 4.69 + " Z Speed: " + chassisSpeeds.omegaRadiansPerSecond);
+       System.out.println("X Speed: " + chassisSpeeds.vxMetersPerSecond / 4.69 + " Y Speed: " + chassisSpeeds.vyMetersPerSecond / 4.69 + " Z Speed: " + chassisSpeeds.omegaRadiansPerSecond);
         //
     //    System.out.println("Current Speeds: " + getRobotRelativeSpeeds());
         setSwerveModuleStates(states);
@@ -344,10 +344,10 @@ public class SwerveSubsystem extends SubsystemBase{
     public void drive(double xSpeed, double ySpeed, double zSpeed, boolean fieldOriented){
         SwerveModuleState[] states;
         if (fieldOriented){
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(-ySpeed, -xSpeed, zSpeed * 0.05, gyro.getRotation2d()));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(-ySpeed, -xSpeed, zSpeed, gyro.getRotation2d()));
         }
         else {
-        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed * 0.1));
+        states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(ySpeed, xSpeed, zSpeed));
         }
         SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.MAX_DRIVE_SPEED_MPS);
         // Debugging: Print the desired states
