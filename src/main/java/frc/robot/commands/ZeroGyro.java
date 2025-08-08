@@ -1,27 +1,20 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.PoseEstimatorSubsystem;
-import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class ZeroGyro extends Command{
 
-    private SwerveSubsystem swerveSubsystem;
-    private PoseEstimatorSubsystem poseEstimatorSubsystem;
-    
-    public ZeroGyro(SwerveSubsystem swerveSubsystem, PoseEstimatorSubsystem poseEstimatorSubsystem) {
-        this.swerveSubsystem = swerveSubsystem;
-        this.poseEstimatorSubsystem = poseEstimatorSubsystem;
-        addRequirements(swerveSubsystem);
+    private final SwerveSubsystem swerveSubsytem;
+
+    public ZeroGyro(SwerveSubsystem swerveSubsytem) {
+        this.swerveSubsytem = swerveSubsytem;
+        addRequirements(swerveSubsytem);
     }
 
     @Override
     public void execute() {
-        swerveSubsystem.resetGyro();
-        swerveSubsystem.resetOdometryPose();
-        poseEstimatorSubsystem.resetPoseEstimator();
+        swerveSubsytem.gyro.reset();
     }
     
 }

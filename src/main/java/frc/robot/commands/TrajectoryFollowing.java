@@ -17,7 +17,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class TrajectoryFollowing extends Command {
 
@@ -40,8 +40,7 @@ public class TrajectoryFollowing extends Command {
     @Override
     public void initialize() {
         swerveSubsystem.resetGyro();
-        swerveSubsystem.resetOdometryPose();
-        swerveSubsystem.resetToAbsolutes();
+        // swerveSubsystem.resetOdometryPose();
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -61,7 +60,7 @@ public class TrajectoryFollowing extends Command {
         // 70 degrees (in the field-relative coordinate system).
         ChassisSpeeds adjustedSpeeds = controller.calculate(
         swerveSubsystem.getPose(), goal, Rotation2d.fromDegrees(70.0));
-        swerveSubsystem.setSwerveModuleStates(Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
+        swerveSubsystem.setModuleStates(Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
     }
 
     public Trajectory generateTrajectory() {

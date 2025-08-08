@@ -75,53 +75,52 @@ public final class Constants {
     public static final double INTAKE_ZERO = -0.25;
     public static final double INTAKE_ROTATED = 8;
   }
-  //CANCoder Constants
-  public static final double ABSOLUTE_ENCODER_DISCONTINUITY_POINT = 0.5; // :)
-  public static final SensorDirectionValue ABSOLUTE_ENCODER_SENSOR_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
-
-  //Front Left Swerve Module Constants
-  public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
-  public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
-  public static final int FRONT_LEFT_CANCODER_ID = 13;
-  public static final double FRONT_LEFT_ANGLE_OFFSET = 0.44482421875;
-  public static final int FRONT_LEFT_MODULE_NUMBER = 0;
-  public static final boolean FRONT_LEFT_DRIVE_INVERT = true;
-  public static final boolean FRONT_LEFT_ANGLE_INVERT = false;
   
+  public static final double WHEEL_DIAMETER = Units.inchesToMeters(4); // 4 inch diameter wheel
 
-  //Front Right Swerve Module Constants
-  public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
-  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
-  public static final int FRONT_RIGHT_CANCODER_ID = 15;
-  public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.141845703125;
-  public static final int FRONT_RIGHT_MODULE_NUMBER = 1;
-  public static final boolean FRONT_RIGHT_DRIVE_INVERT = true;
-  public static final boolean FRONT_RIGHT_ANGLE_INVERT = false;
+public static final double SWERVE_ANGLE_GEAR_RATIO = 1 / 12.8;
+public static final double SWERVE_DRIVE_GEAR_RATIO = 1 / 6.75;
 
-  //Back Left Swerve Module Constants
-  public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
-  public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
-  public static final int BACK_LEFT_CANCODER_ID = 14;
-  public static final double BACK_LEFT_ANGLE_OFFSET = 0.04296875;
+// public static final double SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR = (WHEEL_DIAMETER * Math.PI) / SWERVE_DRIVE_GEAR_RATIO;
+public static final double SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR = SWERVE_DRIVE_GEAR_RATIO / 60;
 
-  public static final int BACK_LEFT_MODULE_NUMBER = 2;
-  public static final boolean BACK_LEFT_DRIVE_INVERT = false;
-  public static final boolean BACK_LEFT_ANGLE_INVERT = false;
-  
+public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(29.75);  //Need to be distance between wheels
+public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(29.75);
 
-  //Back Right Swerve Module Constant
-  public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
-  public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
-  public static final int BACK_RIGHT_CANCODER_ID = 16;
-  public static final double BACK_RIGHT_ANGLE_OFFSET = 0.421630859375;
-  public static final int BACK_RIGHT_MODULE_NUMBER = 3;
-  public static final boolean BACK_RIGHT_DRIVE_INVERT = false;
-  public static final boolean BACK_RIGHT_ANGLE_INVERT = false;
-  
+public static final double MAX_VELOCITY_MPS = Units.feetToMeters(14.75);
 
-  //DriveBase Lenghts
-  public static final double ROBOT_BASE_LENGTH = Units.inchesToMeters(30);
-  public static final double ROBOT_BASE_WIDTH = Units.inchesToMeters(30);
+public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hypot(
+      SWERVE_ANGLE_GEAR_RATIO / 2, 
+      SWERVE_ANGLE_GEAR_RATIO / 2);
+
+//Swerve Front Left
+public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
+public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
+public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
+public static final double FRONT_LEFT_ANGLE_OFFSET = 0.372073125;
+
+//Swerve Front Right
+public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
+public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
+public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 15;
+public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.140380859375;
+
+//Swerve Back Left
+public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
+public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
+public static final int BACK_LEFT_ANGLE_ENCODER_ID = 14;
+public static final double BAKC_LEFT_ANGLE_OFFSET = 0.04443359375;
+
+//Swerve Back Right
+public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
+public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
+public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 16;
+public static final double BACK_RIGHT_ANGLE_OFFSET = 0.42333984375; 
+
+//Swerve General
+
+public static final double ROBOT_BASE_LENGTH = Units.inchesToMeters(29.75); 
+  public static final double ROBOT_BASE_WIDTH = Units.inchesToMeters(29.75);
 
   public static final double X_FROM_CENTER = ROBOT_BASE_LENGTH / 2;
   public static final double Y_FROM_CENTER = ROBOT_BASE_WIDTH / 2;
@@ -138,21 +137,13 @@ public final class Constants {
   public static final double BACK_RIGHT_X_LOCATION = -X_FROM_CENTER;
   public static final double BACK_RIGHT_Y_LOCATION = -Y_FROM_CENTER;
 
-  //Swerve Drive Kinematics
-  public static final SwerveDriveKinematics SWERVE_DRIVE_KINEMATICS = new SwerveDriveKinematics(
+public static final SwerveDriveKinematics SWERVE_DRIVE_KINEMATICS = new SwerveDriveKinematics(
     new Translation2d(FRONT_LEFT_X_LOCATION, FRONT_LEFT_Y_LOCATION),
     new Translation2d(FRONT_RIGHT_X_LOCATION, FRONT_RIGHT_Y_LOCATION),
     new Translation2d(BACK_LEFT_X_LOCATION, BACK_LEFT_Y_LOCATION),
     new Translation2d(BACK_RIGHT_X_LOCATION, BACK_RIGHT_Y_LOCATION));
 
-    //Swerve General
-    public static final double GEAR_RATIO = 12.8 / 1;
-    public static final double DRIVE_GEAR_RATIO = 6.75 / 1;
-    public static final double ANGLE_CONVERSION_FACTOR = 1 / 12.8;
-    public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
-    public static final double DRIVE_POSITION_CONVERSION_FACTOR  = (WHEEL_DIAMETER * Math.PI) / DRIVE_GEAR_RATIO;
-    public static final double DRIVE_VELOCITY_CONVERSION_FACOTR = DRIVE_POSITION_CONVERSION_FACTOR / 60;
-    public static final double MAX_DRIVE_SPEED_MPS = Units.feetToMeters(15.1);
+public static final SensorDirectionValue ABSOLUTE_SENSOR_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
 
     //Joysticks
     public static final double DEADBAND = 0.1;

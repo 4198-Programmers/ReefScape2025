@@ -49,12 +49,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {
-    if (DriverStation.isTest()) {
-      System.out.println("Saving Recording");
-      m_robotContainer.saveRecording();
-    }
-  }
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}

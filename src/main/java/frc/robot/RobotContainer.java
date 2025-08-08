@@ -27,30 +27,25 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ManipulatorCommand;
 import frc.robot.commands.ManipulatorToPoint;
 import frc.robot.commands.OuttakeCommand;
-import frc.robot.commands.ResetToAbsolutes;
+import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.PhotonSubsystem;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.RotateManipulatorSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.GeneralElevatorCommand;
-import frc.robot.commands.GyroSetAngle90;
-import frc.robot.commands.GyroSetAngleNeg90;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
-import frc.robot.commands.SwerveTeleopDrive;
 import frc.robot.commands.TrajectoryFollowing;
 import frc.robot.commands.ZeroGyro;
 import frc.robot.commands.AutoCommands.AutoResetOdometry;
-import frc.robot.commands.AutoCommands.RecordingDrive;
-import frc.robot.commands.AutoCommands.ReplayJoystick;
-import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Constants.ManipulatorConstants;
 
 public class RobotContainer {    
@@ -114,41 +109,23 @@ public class RobotContainer {
     NamedCommands.registerCommand("L2ReefPlace", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 1));
     NamedCommands.registerCommand("HumanPlayer", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 0));
     NamedCommands.registerCommand("OuttakeCommand", new OuttakeCommand(intakeSubsystem, -0.30).withTimeout(2));
-    NamedCommands.registerCommand("ZeroGyro", new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem).withTimeout(0.1));
+    NamedCommands.registerCommand("ZeroGyro", new ZeroGyro(swerveSubsystem).withTimeout(0.1));
     NamedCommands.registerCommand("L1Reef", new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 4).withTimeout(1));
     NamedCommands.registerCommand("AlignCenterAprilTag", new ChaseTagCommand(Constants.PHOTON_CAMERA, swerveSubsystem, () -> swerveSubsystem.getPose(), Constants.AprilTagConstants.APRILTAG_MIDDLE).withTimeout(5));
     NamedCommands.registerCommand("ResetTo1MeterAway", new AutoResetOdometry(swerveSubsystem, 6.8, 4.007, 180));
     NamedCommands.registerCommand("ManipulatorDown", new ManipulatorCommand(manipulatorSubsystem, leftJoystick, -0.2).withTimeout(1));
-    NamedCommands.registerCommand("RobotForwardDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.4, () -> 0.0, () -> false, () -> false).withTimeout(1));
-    NamedCommands.registerCommand("RobotBackDrive", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> 0.4, () -> 0.0, () -> false, () -> false).withTimeout(0.5));
+    NamedCommands.registerCommand("RobotForwardDrive", new SwerveCommand(swerveSubsystem, () -> 0.0, () -> -0.4, () -> 0.0, () -> false, false).withTimeout(1));
+    NamedCommands.registerCommand("RobotBackDrive", new SwerveCommand(swerveSubsystem, () -> 0.0, () -> 0.4, () -> 0.0, () -> false, false).withTimeout(0.5));
     NamedCommands.registerCommand("FollowLeftPath", new TrajectoryFollowing(swerveSubsystem).withTimeout(3));
     autoContainer.SetupAutoOptions(autoChooser);
 
-    if (DriverStation.isTest()) { // if it's in test mode, it does a custom drive command to record
-      swerveSubsystem.setDefaultCommand(new RecordingDrive(
-        swerveSubsystem, 
-        () -> leftJoystick.getX(),
-        () -> leftJoystick.getY(), 
-        () -> middleJoystick.getX(), 
-        () -> slowDriveButton.getAsBoolean(),
-        () -> true,
-        () -> recordInputs.getAsBoolean(),
-        () -> elevatorPositionOne, 
-        () -> elevatorPositionTwo, 
-        () -> elevatorPositionThree, 
-        () -> elevatorPositionFour, 
-        () -> rightJoystick,
-        () -> intakeButton,
-        () -> outtakeButton));
-    } else {
-      swerveSubsystem.setDefaultCommand(new SwerveTeleopDrive(
+      swerveSubsystem.setDefaultCommand(new SwerveCommand(
         swerveSubsystem, 
         () -> leftJoystick.getX(),
         () -> leftJoystick.getY(), 
         () -> leftJoystick.getZ(), 
         () -> slowDriveButton.getAsBoolean(),
-        () -> true));
-    }
+        true));
 
     configureBindings();
     System.out.println(autoChooser.toString());
@@ -178,8 +155,7 @@ public class RobotContainer {
         elevatorPositionThree.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 2)); //Level 3
         elevatorPositionFour.whileTrue(new ManipulatorToPoint(manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, 3)); //Level 4
         
-        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem, poseEstimatorSubsystem));
-        resetAbsoluteButton.whileTrue(new ResetToAbsolutes(swerveSubsystem));
+        resetGyroButton.whileTrue(new ZeroGyro(swerveSubsystem));
 
         manipulatorRotateButton.onTrue(rotateManipulatorSubsystem.RotateManipulatorCommand());
         zeroManipulator.whileTrue(manipulatorSubsystem.ZeroManipulatorCommand());
@@ -192,8 +168,7 @@ public class RobotContainer {
         
         moveElevatorUpButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, true));
         moveElevatorDownButton.whileTrue(new GeneralElevatorCommand(elevatorSubsystem, false));
-        replayInputs.whileTrue(new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
-  }
+        }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -209,9 +184,6 @@ public class RobotContainer {
     /**
      * Save the recorded joystick inputs to a file
      */
-    public void saveRecording() {
-        swerveSubsystem.logRecordedInputs();
-    }
 
     public void assignManipulatorToStick() {
       manipulatorSubsystem.setDefaultCommand(new ManipulatorCommand(manipulatorSubsystem, rightJoystick, 0));

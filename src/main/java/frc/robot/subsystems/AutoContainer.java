@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.AutoManipulatorCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ManipulatorToPoint;
-import frc.robot.commands.SwerveTeleopDrive;
-import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.commands.AutoCommands.*;
 
 public class AutoContainer extends SubsystemBase{
@@ -60,7 +58,7 @@ public class AutoContainer extends SubsystemBase{
         sendableChooser.addOption("TestLeft", swerveSubsystem.getAutonomousCommand("TestLeft"));
    
         // sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false, () -> false));
-        sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
+        // sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
         sendableChooser.addOption("L4Test", new AutoManipulatorCommand(manipulatorSubsystem));
     }
 }
