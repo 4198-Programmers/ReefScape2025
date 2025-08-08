@@ -38,7 +38,7 @@ public class RotateManipulatorSubsystem extends SubsystemBase {
         rotatingConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pid(0.11, 0.0, 1.5)
-            .outputRange(-0.4, 0.4);
+            .outputRange(-0.3, 0.3);
         rotatingMotor.configure(rotatingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
