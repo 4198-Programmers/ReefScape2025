@@ -33,7 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorConfig.closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
           .pid(0.1,0.0,0.04)
-          .outputRange(-1.0, 0.7);
+          .outputRange(-1.0, 0.4);
 
     elevatorMotor.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

@@ -145,7 +145,7 @@ public class RobotContainer {
         swerveSubsystem, 
         () -> leftJoystick.getX(),
         () -> leftJoystick.getY(), 
-        () -> leftJoystick.getZ(), 
+        () -> middleJoystick.getX(), 
         () -> slowDriveButton.getAsBoolean(),
         () -> true));
     }
