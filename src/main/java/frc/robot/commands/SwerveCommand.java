@@ -33,7 +33,7 @@ public class SwerveCommand extends Command {
             ySpeedValue = ySpeedValue / 2;
             rotationSpeedValue = rotationSpeedValue / 2;
         }
-        swerveSubsystem.drive(xSpeedValue, ySpeedValue, rotationSpeedValue, fieldOriented);
+        swerveSubsystem.drive(xSpeedValue, -ySpeedValue, rotationSpeedValue, fieldOriented);
     }
         
 

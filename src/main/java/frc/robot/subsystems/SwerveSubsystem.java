@@ -111,9 +111,9 @@ public class SwerveSubsystem extends SubsystemBase {
         // odometry.update(gyro.getRotation2d(), getSwerveModulePositions());
         // System.out.println(getRobotRelativeSpeeds());
         // System.out.println(frontLeftSwerveModule.getState());
-        System.out.println(gyro.getRotation2d());
+        // System.out.println(gyro.getRotation2d());
         // System.out.println(getRobotRelativeSpeeds());
-        System.out.println(getPose().getRotation().getDegrees());
+        // System.out.println(getPose().getRotation().getDegrees());
 
     }
 

@@ -39,6 +39,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
             manipulatorMotor.configure(manipulatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    
+
 
     /**
      * Turns the primary joint of the manipulator.
@@ -102,7 +104,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        //  System.out.println(manipulatorEncoder.getPosition());
+        // System.out.println(manipulatorEncoder.getPosition());
+        // System.out.println(manipulatorMotor.getOutputCurrent());
     }
 
     @Override

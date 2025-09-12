@@ -97,7 +97,7 @@ public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hyp
 public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
 public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
 public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
-public static final double FRONT_LEFT_ANGLE_OFFSET = 0.372073125;
+public static final double FRONT_LEFT_ANGLE_OFFSET = -0.203369140625 + 0.5;
 
 //Swerve Front Right
 public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
@@ -146,7 +146,7 @@ public static final SwerveDriveKinematics SWERVE_DRIVE_KINEMATICS = new SwerveDr
 public static final SensorDirectionValue ABSOLUTE_SENSOR_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
 
     //Joysticks
-    public static final double DEADBAND = 0.1;
+    public static final double DEADBAND = 0.15;
     public static final int RIGHT_JOYSTICK_PORT = 2;
     public static final int MIDDLE_JOYSTICK_PORT = 1;
     public static final int LEFT_JOYSTICK_PORT = 0;
