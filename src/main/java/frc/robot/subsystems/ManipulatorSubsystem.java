@@ -48,7 +48,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
      */
     public void turnPrimaryJoint(double speed) { // More Manual Turning
         // System.out.println(speed);
-        manipulatorMotor.set(speed);
+        manipulatorMotor.set(speed / 2);
         // System.out.println(manipulatorEncoder.getPosition());
     }
 
