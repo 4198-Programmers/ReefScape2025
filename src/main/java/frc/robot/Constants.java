@@ -66,7 +66,7 @@ public final class Constants {
     public static final double MANIPULATOR_MOTOR_DEADBAND = 0.15;
     public static final int ROTATING_MOTOR_ID = 11;
     public static final double MANIPULATOR_MOTOR_SPEED = 1.0;
-    public static final double INTAKE_MOTOR_SPEED = 1.0;
+    public static final double INTAKE_MOTOR_SPEED = .75;
     public static final int INTAKE_SENSOR_ID = 0;
 
     public static final int MANIPULATOR_ROTATE_BUTTON = 5;
@@ -97,25 +97,25 @@ public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hyp
 public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
 public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
 public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
-public static final double FRONT_LEFT_ANGLE_OFFSET = -0.203369140625 + 0.5;
+public static final double FRONT_LEFT_ANGLE_OFFSET = 0.284912109375;
 
 //Swerve Front Right
 public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
 public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
 public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 15;
-public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.140380859375;
+public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.1416015625;
 
 //Swerve Back Left
 public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
 public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
 public static final int BACK_LEFT_ANGLE_ENCODER_ID = 14;
-public static final double BAKC_LEFT_ANGLE_OFFSET = 0.04443359375;
+public static final double BAKC_LEFT_ANGLE_OFFSET = 0.04296875;
 
 //Swerve Back Right
 public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
 public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
 public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 16;
-public static final double BACK_RIGHT_ANGLE_OFFSET = 0.42333984375; 
+public static final double BACK_RIGHT_ANGLE_OFFSET = 0.419921875; 
 
 //Swerve General
 
@@ -155,7 +155,7 @@ public static final SensorDirectionValue ABSOLUTE_SENSOR_DIRECTION = SensorDirec
     public static final int RIGHT_JOYSTICK_BUTTON_TWO = 2;
     public static final int INTAKE_BUTTON = 1;
     public static final int OUTTAKE_BUTTON = 3;
-    public static final int RESET_GYRO_BUTTON = 11;
+    public static final int RESET_GYRO_BUTTON = 7;
     public static final int REsET_ABSOLUTE_BUTTON = 12;
 
     public static final PhotonCamera PHOTON_CAMERA = new PhotonCamera("frontcam");

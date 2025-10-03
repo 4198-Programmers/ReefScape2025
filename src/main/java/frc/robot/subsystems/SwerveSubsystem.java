@@ -52,7 +52,6 @@ public class SwerveSubsystem extends SubsystemBase {
                 Constants.BACK_RIGHT_ANGLE_ENCODER_ID, 
                 Constants.BACK_RIGHT_ANGLE_OFFSET,
                 4);
-
         odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d().times(-1), getSwerveModulePositions());
         resetGyro();
 
@@ -111,7 +110,7 @@ public class SwerveSubsystem extends SubsystemBase {
         // odometry.update(gyro.getRotation2d(), getSwerveModulePositions());
         // System.out.println(getRobotRelativeSpeeds());
         // System.out.println(frontLeftSwerveModule.getState());
-        // System.out.println(gyro.getRotation2d());
+        System.out.println(gyro.getRotation2d());
         // System.out.println(getRobotRelativeSpeeds());
         // System.out.println(getPose().getRotation().getDegrees());
 

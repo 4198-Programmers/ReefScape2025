@@ -54,7 +54,7 @@ public class SwerveModule extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20);
         angleMotorConfig.closedLoop
-                .pid(3, 0, 0.1)
+                .pid(1, 0, 0.1)
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .outputRange(-1,1)
                 .positionWrappingInputRange(0,1)
