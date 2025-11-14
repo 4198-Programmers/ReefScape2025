@@ -81,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase {
             },
              new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
                     new PIDConstants(.1, 0.0, 0.01), // Translation PID constants
-                    new PIDConstants(.3, 0.0, 0.01) // Rotation PID constants
+                    new PIDConstants(.25, 0.0, 0.01) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -103,6 +103,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public void resetGyro() {
         gyro.reset();
+        gyro.setAngleAdjustment(-90);
     }
 
     @Override
