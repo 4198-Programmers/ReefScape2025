@@ -29,9 +29,9 @@ public class SwerveCommand extends Command {
         double ySpeedValue = deadband(ySpeed.get(), Constants.DEADBAND);
         double rotationSpeedValue = deadband(rotationSpeed.get(), Constants.DEADBAND);
         if (slowButton.get()) {
-            xSpeedValue = xSpeedValue / 2;
-            ySpeedValue = ySpeedValue / 2;
-            rotationSpeedValue = rotationSpeedValue / 2;
+            xSpeedValue = xSpeedValue / 4;
+            ySpeedValue = ySpeedValue / 4;
+            rotationSpeedValue = rotationSpeedValue / 4;
         }
         swerveSubsystem.drive(xSpeedValue, -ySpeedValue, rotationSpeedValue, fieldOriented);
     }
