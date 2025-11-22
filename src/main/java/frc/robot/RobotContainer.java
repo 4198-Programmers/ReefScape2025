@@ -69,7 +69,7 @@ public class RobotContainer {
     private final Joystick middleJoystick = new Joystick(Constants.JOYSTICK_MIDDLE_ID);
     private final Joystick rightJoystick = new Joystick(Constants.JOYSTICK_RIGHT_ID);
 
-    private final JoystickButton slowDriveButton = new JoystickButton(middleJoystick, 2);
+    private final JoystickButton slowDriveButton = new JoystickButton(middleJoystick, 1);
     // Buttons
     private final JoystickButton climbButton = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_FORWARD_BUTTON);
     private final JoystickButton climbButtonReverse = new JoystickButton(rightJoystick, Constants.ClimbConstants.CLIMB_REVERSE_BUTTON);

@@ -11,12 +11,12 @@ import com.studica.frc.AHRS.NavXComType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +26,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontLeftSwerveModule, frontRightSwerveModule, backLeftSwerveModule, backRightSwerveModule;
     private SwerveDriveOdometry odometry;
     public AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+    
     
     public SwerveSubsystem() {
         frontLeftSwerveModule = new SwerveModule(
@@ -77,7 +78,10 @@ public class SwerveSubsystem extends SubsystemBase {
             );
 
              // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            driveRobotRelative(robotRelativeSpeeds);
+            drive(robotRelativeSpeeds.vxMetersPerSecond, 
+                  robotRelativeSpeeds.vyMetersPerSecond, 
+                  robotRelativeSpeeds.omegaRadiansPerSecond,
+                  false); // Robot relative
             },
              new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
                     new PIDConstants(.1, 0.0, 0.01), // Translation PID constants
@@ -104,6 +108,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public void resetGyro() {
         gyro.reset();
         gyro.setAngleAdjustment(-90);
+        // System.out.println("2");
     }
 
     @Override
@@ -114,7 +119,7 @@ public class SwerveSubsystem extends SubsystemBase {
         // System.out.println(gyro.getRotation2d());
         // System.out.println(getRobotRelativeSpeeds());
         // System.out.println(getPose().getRotation().getDegrees());
-
+        System.out.println(NavXComType.kMXP_SPI);
     }
 
     public Pose2d getPose(){
