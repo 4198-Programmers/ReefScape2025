@@ -119,7 +119,7 @@ public class SwerveSubsystem extends SubsystemBase {
         // System.out.println(gyro.getRotation2d());
         // System.out.println(getRobotRelativeSpeeds());
         // System.out.println(getPose().getRotation().getDegrees());
-        System.out.println(NavXComType.kMXP_SPI);
+        // System.out.println(NavXComType.kMXP_SPI);
     }
 
     public Pose2d getPose(){

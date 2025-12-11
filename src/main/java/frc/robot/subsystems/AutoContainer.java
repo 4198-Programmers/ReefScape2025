@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.AutoManipulatorCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ManipulatorToPoint;
+import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.AutoCommands.*;
 
 public class AutoContainer extends SubsystemBase{
@@ -33,9 +34,9 @@ public class AutoContainer extends SubsystemBase{
 
 
     public void SetupAutoOptions(SendableChooser<Command> sendableChooser){
-        sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
-        sendableChooser.addOption("TestAuto", swerveSubsystem.getAutonomousCommand("TestAuto"));
-        sendableChooser.addOption("ScaryTest", swerveSubsystem.getAutonomousCommand("ScaryTest"));
+        // sendableChooser.setDefaultOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
+        // sendableChooser.addOption("TestAuto", swerveSubsystem.getAutonomousCommand("TestAuto"));
+        // sendableChooser.addOption("ScaryTest", swerveSubsystem.getAutonomousCommand("ScaryTest"));
         // sendableChooser.addOption("L4Place", swerveSubsystem.getAutonomousCommand("L4Place"));
 
         // sendableChooser.addOption("PullForwardAuto", swerveSubsystem.getAutonomousCommand("PullForwardAuto"));
@@ -58,7 +59,7 @@ public class AutoContainer extends SubsystemBase{
         // sendableChooser.addOption("DiagonalRightPlace", swerveSubsystem.getAutonomousCommand("DiagonalRightPlace"));
         // sendableChooser.addOption("TestLeft", swerveSubsystem.getAutonomousCommand("TestLeft"));
    
-        // // sendableChooser.addOption("TestForward", new SwerveTeleopDrive(swerveSubsystem, () -> 0.0, () -> -0.2, () -> 0.0, () -> false, () -> false));
+        sendableChooser.setDefaultOption("TestForward", new SwerveCommand(swerveSubsystem, () -> -0.2, () -> 0.0, () -> 0.0, () -> false, false).withTimeout(3));
         // // sendableChooser.addOption("ReplayJoystick", new ReplayJoystick(swerveSubsystem, manipulatorSubsystem, elevatorSubsystem, rotateManipulatorSubsystem, intakeSubsystem));
         // sendableChooser.addOption("L4Test", new AutoManipulatorCommand(manipulatorSubsystem));
     }
