@@ -78,7 +78,8 @@ public final class Constants {
   
   public static final double WHEEL_DIAMETER = Units.inchesToMeters(4); // 4 inch diameter wheel
 
-public static final double SWERVE_ANGLE_GEAR_RATIO = 1 / 12.8;
+  public static final double blah = 150 / 7; // What a good variable name -SK
+public static final double SWERVE_ANGLE_GEAR_RATIO = 1 / blah;
 public static final double SWERVE_DRIVE_GEAR_RATIO = 1 / 6.75;
 
 // public static final double SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR = (WHEEL_DIAMETER * Math.PI) / SWERVE_DRIVE_GEAR_RATIO;
@@ -94,28 +95,28 @@ public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hyp
       SWERVE_ANGLE_GEAR_RATIO / 2);
 
 //Swerve Front Left
-public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
-public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
-public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
-public static final double FRONT_LEFT_ANGLE_OFFSET = -0.033691 + 0.5;
+public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 2;
+public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 1;
+public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 16;
+public static final double FRONT_LEFT_ANGLE_OFFSET = -0.002685546875;
 
 //Swerve Front Right
-public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
-public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 4;
-public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 15;
-public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.1416015625;
+public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 4;
+public static final int FRONT_RIGHT_ANGLE_MOTOR_ID = 3;
+public static final int FRONT_RIGHT_ANGLE_ENCODER_ID = 14;
+public static final double FRONT_RIGHT_ANGLE_OFFSET = -0.054931640625;
 
 //Swerve Back Left
-public static final int BACK_LEFT_DRIVE_MOTOR_ID = 7;
-public static final int BACK_LEFT_ANGLE_MOTOR_ID = 8;
-public static final int BACK_LEFT_ANGLE_ENCODER_ID = 14;
-public static final double BAKC_LEFT_ANGLE_OFFSET = 0.04296875;
-
+public static final int BACK_LEFT_DRIVE_MOTOR_ID = 8;
+public static final int BACK_LEFT_ANGLE_MOTOR_ID = 7;
+public static final int BACK_LEFT_ANGLE_ENCODER_ID = 15;
+public static final double BAKC_LEFT_ANGLE_OFFSET = -0.42041015625;
+// 
 //Swerve Back Right
-public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 5;
-public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 6;
-public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 16;
-public static final double BACK_RIGHT_ANGLE_OFFSET = 0.419921875; 
+public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 6;
+public static final int BACK_RIGHT_ANGLE_MOTOR_ID = 5;
+public static final int BACK_RIGHT_ANGLE_ENCODER_ID = 13;
+public static final double BACK_RIGHT_ANGLE_OFFSET = -0.044677734375; 
 
 //Swerve General
 

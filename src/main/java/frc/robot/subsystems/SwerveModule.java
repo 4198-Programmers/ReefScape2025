@@ -61,7 +61,6 @@ public class SwerveModule extends SubsystemBase {
                 .positionWrappingEnabled(true);
         angleMotorConfig.encoder
                 .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
-
         driveMotorConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(40);
@@ -97,6 +96,7 @@ public class SwerveModule extends SubsystemBase {
     @Override
     public void periodic() {
         // System.out.println("Module: " + moduleNumber + " Velocity: " + relativeDriveEncoder.getVelocity());
+        System.out.println(relativeAngleEncoder.getPosition());
     }
 
     public SwerveModulePosition getPosition() {
